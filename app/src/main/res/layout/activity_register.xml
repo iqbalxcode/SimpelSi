@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white"
+    tools:context=".RegisterActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"/>
+
+    <ImageView
+        android:id="@+id/img_register"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/placeholder_image" /> <com.google.android.material.textfield.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:boxStrokeWidth="0dp"
+    app:boxStrokeWidthFocused="0dp"
+    android:layout_marginTop="24dp">
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_email_register"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Masukkan Email"
+        android:inputType="textEmailAddress"
+        android:padding="16dp" />
+</com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        android:layout_marginTop="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password_register"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Masukkan Password"
+            android:inputType="textPassword"
+            android:padding="16dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        android:layout_marginTop="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:padding="16dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_kirim_register"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_background_green"
+        android:text="Kirim"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</LinearLayout>

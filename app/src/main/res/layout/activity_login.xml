@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/placeholder_image" /> <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Email"
+    android:textColor="@color/black"
+    android:textSize="14sp"
+    android:layout_marginTop="24dp"/>
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Masukkan Email"
+        android:inputType="textEmailAddress"
+        android:padding="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kata sandi"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Masukkan Kata sandi"
+            android:inputType="textPassword"
+            android:padding="16dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_lupa_sandi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lupa kata sandi?"
+        android:textColor="@color/app_green_dark"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_masuk"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_background_green"
+        android:text="Masuk"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_daftar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Belum punya akun? Daftar Disini"
+        android:textColor="@color/grey_text"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_google"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/edittext_background"
+        android:text="Masuk dengan akun google"
+        android:textColor="@color/black"
+        app:icon="@android:drawable/ic_btn_speak_now" /> </LinearLayout>
