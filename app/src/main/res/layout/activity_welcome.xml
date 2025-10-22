@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@color/white"
+    tools:context=".WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/img_welcome"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/placeholder_image" /> <TextView
+    android:id="@+id/tv_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/img_welcome"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="32dp"
+    android:text="Selamat Datang"
+    android:textColor="@color/black"
+    android:textSize="24sp"
+    android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Bersama kita wujudkan lingkungan yang bersih, hijau, dan berkelanjutan dari sampah..."
+        android:textColor="@color/grey_text"
+        android:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_mulai"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/button_background_green"
+        android:text="Mulai"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</RelativeLayout>
