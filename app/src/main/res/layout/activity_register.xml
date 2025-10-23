@@ -45,7 +45,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Register"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <!-- Gambar -->
@@ -188,6 +188,7 @@
                 android:background="@drawable/bg_login"
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Kirim"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:letterSpacing="0.05" />

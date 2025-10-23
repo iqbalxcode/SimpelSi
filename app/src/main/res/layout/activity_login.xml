@@ -133,8 +133,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lupa kata sandi?"
+                android:fontFamily="@font/montserrat_semibold"
                 android:textColor="@color/app_green_dark"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:layout_marginTop="6dp"
                 android:layout_gravity="end" />
 
@@ -168,7 +169,7 @@
                     android:text="Belum punya akun?"
                     android:textColor="@color/grey_text"
                     android:textSize="14sp"
-                    android:fontFamily="@font/montserrat_regular" />
+                    android:fontFamily="@font/montserrat_medium" />
 
                 <TextView
                     android:id="@+id/tv_daftar"
@@ -201,7 +202,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_color"
-                android:paddingStart="25dp"
+                android:paddingStart="40dp"
                 android:paddingEnd="16dp">
 
                 <ImageView
@@ -214,12 +215,12 @@
                     android:id="@+id/btn_google"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="14dp"
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/montserrat_semibold"
                     android:text="Masuk dengan akun Google"
                     android:textAllCaps="false"
-                    android:paddingLeft="25sp"
+                    android:paddingLeft="30sp"
                     android:textColor="@color/app_green_dark"
                     android:textSize="15sp"
                     android:gravity="center_vertical|start"

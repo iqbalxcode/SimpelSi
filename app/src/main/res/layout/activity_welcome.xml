@@ -59,12 +59,12 @@
         android:text="Mulai"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:backgroundTint="@null"
         app:cornerRadius="50dp"
         app:icon="@drawable/next"
         app:iconGravity="end"
-        app:iconPadding="8dp"
+        app:iconPadding="-20dp"
         app:iconTint="@color/white"
         app:rippleColor="@color/grey_text" />
 
