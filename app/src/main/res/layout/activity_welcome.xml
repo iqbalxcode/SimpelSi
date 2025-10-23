@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/montserrat_extrabold"
-        android:text="Selamat Datang"
+        android:text="@string/Selamatdatang"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -43,7 +43,7 @@
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:lineSpacingExtra="4dp"
-        android:text="Bersama kita wujudkan lingkungan yang bersih, hijau, dan berkelanjutan. Mari berpartisipasi aktif dalam menjaga kelestarian alam demi masa depan yang lebih baik."
+        android:text="@string/deskripsi"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
