@@ -1,50 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingHorizontal="24dp"
     android:background="@color/white"
     tools:context=".WelcomeActivity">
 
+    <!-- Gambar Ilustrasi -->
+
+    <!-- Judul -->
+
     <ImageView
         android:id="@+id/img_welcome"
-        android:layout_width="308dp"
-        android:layout_height="318dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/register" /> <TextView
-    android:id="@+id/tv_title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/img_welcome"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="0dp"
-    android:text="Selamat Datang"
-    android:textColor="@color/black"
-    android:textSize="24sp"
-    android:textStyle="bold" />
+        android:layout_width="wrap_content"
+        android:layout_height="345dp"
+        android:layout_marginTop="60dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
+        android:src="@drawable/welcom" />
+
+    <!-- Subjudul -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/montserrat_extrabold"
+        android:text="Selamat Datang"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_subtitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_title"
-        android:layout_marginTop="46dp"
+        android:layout_height="137dp"
+        android:layout_marginTop="26dp"
+        android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
-        android:text="Bersama kita wujudkan lingkungan yang bersih, hijau, dan berkelanjutan.Mari berpartisipasi aktif dalam menjaga kelestarian alam demi masa depan yang lebih baik. "
-        android:textColor="@color/grey_text"
-        android:textSize="16sp" />
+        android:lineSpacingExtra="4dp"
+        android:text="Bersama kita wujudkan lingkungan yang bersih, hijau, dan berkelanjutan. Mari berpartisipasi aktif dalam menjaga kelestarian alam demi masa depan yang lebih baik."
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <!-- Tombol Mulai -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_mulai"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/button_background_green"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_login"
+        android:fontFamily="@font/montserrat_semibold"
         android:text="Mulai"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="16sp"
+        app:backgroundTint="@null"
+        app:cornerRadius="50dp"
+        app:icon="@drawable/next"
+        app:iconGravity="end"
+        app:iconPadding="8dp"
+        app:iconTint="@color/white"
+        app:rippleColor="@color/grey_text" />
 
-</RelativeLayout>
+</LinearLayout>
