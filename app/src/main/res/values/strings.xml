@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">SimpelSi
-    </string>
+    <string name="app_name">SimpelSi</string>
+    <string name="Selamatdatang">Selamat Datang</string>
+    <string name="deskripsi">Bersama kita wujudkan lingkungan yang bersih, hijau, dan berkelanjutan. Mari berpartisipasi aktif dalam menjaga kelestarian alam demi masa depan yang lebih baik.</string>
+    <string name="mulai">Mulai</string>
 </resources>

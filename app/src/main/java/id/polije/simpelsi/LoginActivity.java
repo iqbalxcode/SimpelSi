@@ -2,6 +2,9 @@ package id.polije.simpelsi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +41,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        TextView textView = findViewById(R.id.tv_title);
+        Shader shader = new LinearGradient(
+                0, 0, 0, textView.getTextSize(),
+                new int[]{Color.parseColor("#388E3C"), Color.parseColor("#379683")},
+                null, Shader.TileMode.CLAMP);
+        textView.getPaint().setShader(shader);
+
 
         btnMasuk.setOnClickListener(new View.OnClickListener() {
             @Override
