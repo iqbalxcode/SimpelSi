@@ -6,58 +6,60 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView tvDaftar, tvLupaSandi;
-    Button btnMasuk;
+    private TextView tvDaftar, tvLupaSandi, tvTitle;
+    private Button btnMasuk, btnGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // 🔹 Inisialisasi view
         tvDaftar = findViewById(R.id.tv_daftar);
         tvLupaSandi = findViewById(R.id.tv_lupa_sandi);
+        tvTitle = findViewById(R.id.tv_title);
         btnMasuk = findViewById(R.id.btn_masuk);
+        btnGoogle = findViewById(R.id.btn_google);
 
-        tvDaftar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Pindah ke RegisterActivity
-                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(i);
-            }
-        });
-
-        tvLupaSandi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Pindah ke ForgotPasswordActivity
-                Intent i = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(i);
-            }
-        });
-        TextView textView = findViewById(R.id.tv_title);
+        // 🔹 Efek gradasi pada judul
         Shader shader = new LinearGradient(
-                0, 0, 0, textView.getTextSize(),
+                0, 0, 0, tvTitle.getTextSize(),
                 new int[]{Color.parseColor("#388E3C"), Color.parseColor("#379683")},
-                null, Shader.TileMode.CLAMP);
-        textView.getPaint().setShader(shader);
+                null,
+                Shader.TileMode.CLAMP
+        );
+        tvTitle.getPaint().setShader(shader);
 
+        // 🔹 Tombol "Daftar" → ke RegisterActivity
+        tvDaftar.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
 
-        btnMasuk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Logika login di sini
-                // Jika sukses, pindah ke MainActivity (Halaman utama)
-                // Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                // startActivity(i);
-                // finish();
-            }
+        // 🔹 Tombol "Lupa Sandi" → ke ForgotPasswordActivity
+        tvLupaSandi.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
+        });
+
+        // 🔹 Tombol "Masuk" → nanti isi logika login
+        btnMasuk.setOnClickListener(v -> {
+            // TODO: Tambahkan logika login di sini
+            // Contoh:
+            // Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            // startActivity(intent);
+            // finish();
+        });
+
+        // 🔹 Tombol "Masuk dengan Google" → ke VerificationActivity
+        btnGoogle.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, VerificationActivity.class);
+            startActivity(intent);
         });
     }
 }
