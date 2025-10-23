@@ -35,11 +35,18 @@
         android:id="@+id/et_email_register"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@drawable/edittext_background"
+        android:background="@drawable/bg_color"
         android:hint="Masukkan Email"
         android:inputType="textEmailAddress"
         android:padding="16dp" />
 </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Masukan Password"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -48,12 +55,13 @@
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         android:layout_marginTop="16dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password_register"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Masukkan Password"
+            android:background="@drawable/bg_color"
+            android:hint="Minimal 8 huruf"
             android:inputType="textPassword"
             android:padding="16dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +77,7 @@
             android:id="@+id/et_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/bg_color"
             android:hint="Confirm Password"
             android:inputType="textPassword"
             android:padding="16dp" />

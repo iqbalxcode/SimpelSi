@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/img_welcome"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="308dp"
+        android:layout_height="318dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:src="@drawable/placeholder_image" /> <TextView
@@ -19,7 +19,7 @@
     android:layout_height="wrap_content"
     android:layout_below="@id/img_welcome"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="32dp"
+    android:layout_marginTop="0dp"
     android:text="Selamat Datang"
     android:textColor="@color/black"
     android:textSize="24sp"
@@ -30,9 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_title"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="46dp"
         android:gravity="center"
-        android:text="Bersama kita wujudkan lingkungan yang bersih, hijau, dan berkelanjutan dari sampah..."
+        android:text="Bersama kita wujudkan lingkungan yang bersih, hijau, dan berkelanjutan.Mari berpartisipasi aktif dalam menjaga kelestarian alam demi masa depan yang lebih baik. "
         android:textColor="@color/grey_text"
         android:textSize="16sp" />
 

@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/edittext_background"
+        android:background="@drawable/bg_color"
         android:hint="Masukkan Email"
         android:inputType="textEmailAddress"
         android:padding="16dp" />
@@ -53,7 +53,7 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/bg_color"
             android:hint="Masukkan Kata sandi"
             android:inputType="textPassword"
             android:padding="16dp" />
@@ -92,7 +92,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/edittext_background"
+        android:background="@drawable/bg_color"
         android:text="Masuk dengan akun google"
         android:textColor="@color/black"
-        app:icon="@android:drawable/ic_btn_speak_now" /> </LinearLayout>
+        app:icon="@android:drawable/ic_btn_speak_now" />
+</LinearLayout>
