@@ -51,9 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         btnMasuk.setOnClickListener(v -> {
             // TODO: Tambahkan logika login di sini
             // Contoh:
-            // Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            // startActivity(intent);
-            // finish();
+             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+             startActivity(intent);
         });
 
         // 🔹 Tombol "Masuk dengan Google" → ke VerificationActivity
