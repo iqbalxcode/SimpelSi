@@ -29,6 +29,8 @@ android {
         }
     }
     compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -75,5 +77,10 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
         implementation ("com.android.volley:volley:1.2.1") // Untuk HTTP request
         implementation ("com.google.android.gms:play-services-auth:20.7.0") // Untuk Google Sign-In
-
+// Untuk koneksi ke API (HTTP Client)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+// Untuk mengubah JSON ke Java (POJO)
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+// (Opsional) Untuk logging, sangat membantu debugging
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 }
