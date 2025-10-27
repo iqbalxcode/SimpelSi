@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "95298524305",
+    "project_id": "simpelsi",
+    "storage_bucket": "simpelsi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95298524305:android:9314e27487def0fa801b30",
+        "android_client_info": {
+          "package_name": "id.polije.simpelsi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0cel2s5xyRyy3_hfuvkxwiUQHcwPyVLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
