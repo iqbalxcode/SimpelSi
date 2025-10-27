@@ -77,7 +77,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
         implementation ("com.android.volley:volley:1.2.1") // Untuk HTTP request
-        implementation ("com.google.android.gms:play-services-auth:20.7.0") // Untuk Google Sign-In
+        implementation ("com.google.android.gms:play-services-auth:20.7.0")
+    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    // Untuk Google Sign-In
 // Untuk koneksi ke API (HTTP Client)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 // Untuk mengubah JSON ke Java (POJO)

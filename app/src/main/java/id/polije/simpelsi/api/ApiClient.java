@@ -25,7 +25,7 @@ public class ApiClient {
 
                     // Salin Cookie dan User-Agent dari browser Anda
                     // Ini harus diganti setiap kali cookie kedaluwarsa!
-                    String cookie = "__test=e0c8f23560cfe77dd61c0a527c3232e5"; // ⚠️ GANTI COOKIE INI
+                    String cookie = "__test=90217758eae290f298b28406f44b229a"; // ⚠️ GANTI COOKIE INI
                     String userAgent = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"; // ⚠️ GANTI USER-AGENT INI
 
                     Request request = original.newBuilder()
