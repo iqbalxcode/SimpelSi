@@ -10,15 +10,14 @@ public class LoginResponse {
     @SerializedName("message")
     private String message;
 
-    @SerializedName("user")
+    // ✅ ubah ini
+    @SerializedName("data")  // <-- sesuaikan dengan field JSON dari PHP
     private User user;
 
-    // ✅ TAMBAHKAN getStatus() — INI YANG BIKIN MERAH!
     public String getStatus() {
         return status;
     }
 
-    // ✅ isSuccess() — BOLEH DIPAKAI (lebih aman dari null)
     public boolean isSuccess() {
         return "success".equals(status);
     }
@@ -31,7 +30,6 @@ public class LoginResponse {
         return user;
     }
 
-    // ✅ Inner class User — SUDAH BENAR
     public static class User {
         @SerializedName("id_masyarakat")
         private String id;
