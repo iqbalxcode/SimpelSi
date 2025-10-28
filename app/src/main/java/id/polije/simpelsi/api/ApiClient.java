@@ -1,52 +1,42 @@
 package id.polije.simpelsi.api;
 
-import java.io.IOException;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+// Import yang tidak perlu sudah dihapus
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+// ❗️ (Saran: lihat bagian Opsional di bawah untuk import logging)
+// import okhttp3.OkHttpClient;
+// import okhttp3.logging.HttpLoggingInterceptor;
+
 
 public class ApiClient {
 
-    // Alamat dasar web server Anda
-    public static final String BASE_URL = "https://simpelsi.byethost31.com/";
+    // Alamat dasar web server Anda yang baru
+    public static final String BASE_URL = "http://simpelsi.medianewsonline.com/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {
         if (retrofit == null) {
 
-            // ⚠️ INTERCEPTOR UNTUK MASALAH BYETHOST ⚠️
-            Interceptor headerInterceptor = new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request original = chain.request();
+            // ⚠️ Kode Interceptor, Cookie, dan User-Agent sudah dihapus ⚠️
 
-                    // Salin Cookie dan User-Agent dari browser Anda
-                    // Ini harus diganti setiap kali cookie kedaluwarsa!
-                    String cookie = "__test=90217758eae290f298b28406f44b229a"; // ⚠️ GANTI COOKIE INI
-                    String userAgent = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"; // ⚠️ GANTI USER-AGENT INI
+            // ------------------------------------------------------------------
+            // OPSIONAL: Sangat disarankan untuk menambahkan logging
+            // Ini akan mencetak request & response API ke Logcat,
+            // sangat membantu debugging!
+            /*
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-                    Request request = original.newBuilder()
-                            .header("User-Agent", userAgent)
-                            .header("Cookie", cookie)
-                            .method(original.method(), original.body())
-                            .build();
-
-                    return chain.proceed(request);
-                }
-            };
-
-            // Buat OkHttpClient dan tambahkan Interceptor
             OkHttpClient client = new OkHttpClient.Builder()
-                    .addInterceptor(headerInterceptor)
+                    .addInterceptor(logging)
                     .build();
+            */
+            // ------------------------------------------------------------------
 
-            // Bangun Retrofit
+            // Bangun Retrofit (versi sederhana)
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .client(client) // <-- Gunakan client kustom
+                    // .client(client) // <-- Hapus tanda comment ini jika Anda pakai logging
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
