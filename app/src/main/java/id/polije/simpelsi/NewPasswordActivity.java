@@ -2,14 +2,22 @@ package id.polije.simpelsi; // ⚠️ Sesuaikan package Anda
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent; // ❗️ Import Intent
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log; // ❗️ Import Log
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-// ... (Anda akan butuh import Retrofit di sini nanti)
+// ❗️ Import untuk API, Model, dan Retrofit
+import id.polije.simpelsi.api.ApiClient;
+import id.polije.simpelsi.api.ApiInterface;
+import id.polije.simpelsi.model.ResetRequest;
+import id.polije.simpelsi.model.ResetResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewPasswordActivity extends AppCompatActivity {
 
@@ -17,26 +25,37 @@ public class NewPasswordActivity extends AppCompatActivity {
     Button btnKirim;
     EditText etNewPassword, etConfirmPassword;
 
-    // ❗️ Anda perlu email pengguna dari halaman sebelumnya
+    // ❗️ Variabel untuk menyimpan data dari Intent
     String userEmail;
+    String userOtp; // Anda juga perlu OTP dari halaman verifikasi
+
+    // ❗️ Deklarasi ApiInterface
+    ApiInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_password); // ⚠️ Gunakan layout baru
 
-        // ❗️ (Disarankan) Ambil email dari Intent
-        // userEmail = getIntent().getStringExtra("USER_EMAIL");
-        // if (userEmail == null) {
-        //     Toast.makeText(this, "Email tidak ditemukan, silakan ulangi", Toast.LENGTH_LONG).show();
-        //     finish();
-        // }
+        // ❗️ Ambil email DAN OTP dari Intent (dikirim dari VerificationActivity)
+        userEmail = getIntent().getStringExtra("USER_EMAIL");
+        userOtp = getIntent().getStringExtra("USER_OTP"); // ❗️ Pastikan VerificationActivity mengirim ini
+
+        // Validasi data intent
+        if (userEmail == null || userOtp == null) {
+            Toast.makeText(this, "Sesi tidak valid, silakan ulangi", Toast.LENGTH_LONG).show();
+            finish();
+            return; // Hentikan eksekusi jika data tidak ada
+        }
 
         // Inisialisasi komponen
         btnBack = findViewById(R.id.btn_back_new_pass);
         btnKirim = findViewById(R.id.btn_kirim_new_pass);
         etNewPassword = findViewById(R.id.et_new_password);
         etConfirmPassword = findViewById(R.id.et_confirm_password);
+
+        // ❗️ Inisialisasi ApiInterface
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         // Tombol kembali
         btnBack.setOnClickListener(v -> {
@@ -75,22 +94,46 @@ public class NewPasswordActivity extends AppCompatActivity {
         // 4. Jika semua valid, kirim ke server
         Toast.makeText(this, "Mengirim password baru...", Toast.LENGTH_SHORT).show();
 
-        // TODO: Panggil API 'reset_password.php' Anda di sini
-        // Gunakan Retrofit untuk mengirim 'userEmail' dan 'newPassword'
-        // ... (logika Retrofit) ...
+        // --- ⬇️ INI PERBAIKANNYA (Logika API) ⬇️ ---
 
-        // --- ⬇️ INI PERBAIKANNYA ⬇️ ---
-        // Asumsikan API sukses:
+        // Panggil API 'reset_password.php'
+        ResetRequest request = new ResetRequest(userEmail, userOtp, newPassword);
+        Call<ResetResponse> call = apiInterface.resetPassword(request);
 
-        Toast.makeText(this, "Password berhasil diubah!", Toast.LENGTH_LONG).show();
+        call.enqueue(new Callback<ResetResponse>() {
+            @Override
+            public void onResponse(Call<ResetResponse> call, Response<ResetResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
 
-        // Pindah ke LoginActivity
-        Intent intent = new Intent(NewPasswordActivity.this, LoginActivity.class);
+                    if (response.body().isSuccess()) {
+                        // SUKSES DARI API
+                        Toast.makeText(NewPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
-        // Bersihkan stack activity agar tidak bisa kembali ke halaman ini
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish(); // Tutup activity ini
+                        // Pindah ke LoginActivity
+                        Intent intent = new Intent(NewPasswordActivity.this, LoginActivity.class);
+                        // Bersihkan stack activity
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish(); // Tutup activity ini
+
+                    } else {
+                        // GAGAL DARI API (misal: OTP salah, dll)
+                        Toast.makeText(NewPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    // GAGAL KONEKSI (Error 404, 500, dll)
+                    Toast.makeText(NewPasswordActivity.this, "Gagal terhubung ke server. Kode: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResetResponse> call, Throwable t) {
+                // GAGAL JARINGAN (Internet mati, dll)
+                Toast.makeText(NewPasswordActivity.this, "Koneksi Gagal: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("RESET_PASS_FAILURE", "Error: " + t.getMessage(), t);
+            }
+        });
         // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
     }
 }
