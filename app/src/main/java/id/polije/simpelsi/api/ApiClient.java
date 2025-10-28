@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     // Alamat dasar web server Anda yang baru
-    public static final String BASE_URL = "http://simpelsi.medianewsonline.com/";
+    public static final String BASE_URL = "http://simpelsi.medianewsonline.com/api/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {

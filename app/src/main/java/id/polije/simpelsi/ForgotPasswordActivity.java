@@ -26,7 +26,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         tvKembaliLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, VerificationActivity.class);
                 startActivity(intent);
                 finish(); // Opsional: agar user tidak bisa kembali ke halaman lupa password
             }
