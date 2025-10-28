@@ -2,16 +2,14 @@ package id.polije.simpelsi; // ⚠️ Sesuaikan package Anda
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent; // ❗️ Import Intent
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-// ❗️ Anda perlu import untuk API nantinya
-// import id.polije.simpelsi.api.ApiClient;
-// import id.polije.simpelsi.api.ApiInterface;
-// ... (dan model Retrofit)
+// ... (Anda akan butuh import Retrofit di sini nanti)
 
 public class NewPasswordActivity extends AppCompatActivity {
 
@@ -27,7 +25,7 @@ public class NewPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_password); // ⚠️ Gunakan layout baru
 
-        // ❗️ Ambil email dari Intent (dikirim dari VerificationActivity)
+        // ❗️ (Disarankan) Ambil email dari Intent
         // userEmail = getIntent().getStringExtra("USER_EMAIL");
         // if (userEmail == null) {
         //     Toast.makeText(this, "Email tidak ditemukan, silakan ulangi", Toast.LENGTH_LONG).show();
@@ -81,11 +79,18 @@ public class NewPasswordActivity extends AppCompatActivity {
         // Gunakan Retrofit untuk mengirim 'userEmail' dan 'newPassword'
         // ... (logika Retrofit) ...
 
-        // Jika sukses:
-        // Toast.makeText(this, "Password berhasil diubah!", Toast.LENGTH_LONG).show();
-        // Intent intent = new Intent(NewPasswordActivity.this, LoginActivity.class);
-        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        // startActivity(intent);
+        // --- ⬇️ INI PERBAIKANNYA ⬇️ ---
+        // Asumsikan API sukses:
 
+        Toast.makeText(this, "Password berhasil diubah!", Toast.LENGTH_LONG).show();
+
+        // Pindah ke LoginActivity
+        Intent intent = new Intent(NewPasswordActivity.this, LoginActivity.class);
+
+        // Bersihkan stack activity agar tidak bisa kembali ke halaman ini
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish(); // Tutup activity ini
+        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
     }
 }

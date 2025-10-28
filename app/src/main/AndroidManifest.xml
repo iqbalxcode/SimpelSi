@@ -42,6 +42,9 @@
         <activity
             android:name=".VerificationActivity"
             android:exported="false" />
+        <activity
+            android:name=".NewPasswordActivity"
+            android:exported="false" />
 
     </application>
 
