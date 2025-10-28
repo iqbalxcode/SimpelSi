@@ -29,8 +29,8 @@
             <!-- Gambar atas -->
             <ImageView
                 android:id="@+id/img_login"
-                android:layout_width="260dp"
-                android:layout_height="277dp"
+                android:layout_width="222dp"
+                android:layout_height="234dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
