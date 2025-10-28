@@ -55,7 +55,7 @@ public class NewPasswordActivity extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.et_confirm_password);
 
         // ❗️ Inisialisasi ApiInterface
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        apiInterface = ApiClient.getService().create(ApiInterface.class);
 
         // Tombol kembali
         btnBack.setOnClickListener(v -> {

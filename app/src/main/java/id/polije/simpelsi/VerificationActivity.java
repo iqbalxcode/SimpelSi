@@ -62,7 +62,7 @@ public class VerificationActivity extends AppCompatActivity {
         tvKirimUlang = findViewById(R.id.tv_kirim_ulang);
 
         // ❗️ 4. Inisialisasi ApiInterface
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        apiInterface = ApiClient.getService().create(ApiInterface.class);
 
         setupOtpInputs();
         setupClickListeners();

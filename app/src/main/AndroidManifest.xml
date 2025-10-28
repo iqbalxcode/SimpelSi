@@ -17,6 +17,11 @@
         android:theme="@style/Theme.SimpelSi"
         tools:targetApi="31">
 
+
+        <meta-data
+            android:name="com.google.android.gms.auth.api.signin.GoogleSignInOptions"
+            android:value="@string/server_client_id" />
+
         <activity
             android:name=".WelcomeActivity"
             android:exported="true">

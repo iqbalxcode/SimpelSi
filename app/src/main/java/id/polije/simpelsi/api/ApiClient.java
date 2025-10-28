@@ -5,20 +5,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-
 public class ApiClient {
 
-    // --- ⬇️ PERBAIKAN DI SINI ⬇️ ---
-    // Tambahkan "/api/" di akhir BASE_URL Anda
-    public static final String BASE_URL = "http://simpelsi.medianewsonline.com/api/";
-    // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
+    // 🌐 Base URL API kamu
+    private static final String BASE_URL = "http://simpelsi.medianewsonline.com/api/";
 
-    private static Retrofit retrofit;
+    // Simpan instance Retrofit agar tidak dibuat ulang
+    private static Retrofit retrofit = null;
 
-    public static Retrofit getClient() {
+    // 🔒 Method internal untuk buat Retrofit
+    private static Retrofit getClient() {
         if (retrofit == null) {
-
-            // (Saran: Tetap gunakan logging ini untuk debugging)
+            // Logging request & response agar mudah debug
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -26,13 +24,17 @@ public class ApiClient {
                     .addInterceptor(logging)
                     .build();
 
-            // Bangun Retrofit
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .client(client) // <-- Menggunakan client dengan logging
+                    .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
         return retrofit;
+    }
+
+    // ✅ Method publik untuk digunakan di Activity
+    public static Retrofit getService() {
+        return getClient();
     }
 }

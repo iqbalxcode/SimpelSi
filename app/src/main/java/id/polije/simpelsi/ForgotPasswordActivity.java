@@ -43,7 +43,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email); // ⚠️ Pastikan ID ini benar di XML
 
         // ❗️ 2. Inisialisasi ApiInterface
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        apiInterface = ApiClient.getService().create(ApiInterface.class);
 
         // Aksi klik
         tvKembaliLogin.setOnClickListener(new View.OnClickListener() {

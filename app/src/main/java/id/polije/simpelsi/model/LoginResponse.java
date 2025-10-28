@@ -10,23 +10,30 @@ public class LoginResponse {
     @SerializedName("message")
     private String message;
 
-    @SerializedName("data")
-    private UserData data; // Ini akan null jika login gagal
+    @SerializedName("user")
+    private User user;
 
-    // Getter
-    public boolean isSuccess() {
-        return status != null && status.equals("success");
+    // ✅ TAMBAHKAN getStatus() — INI YANG BIKIN MERAH!
+    public String getStatus() {
+        return status;
     }
+
+    // ✅ isSuccess() — BOLEH DIPAKAI (lebih aman dari null)
+    public boolean isSuccess() {
+        return "success".equals(status);
+    }
+
     public String getMessage() {
         return message;
     }
-    public UserData getData() {
-        return data;
+
+    public User getUser() {
+        return user;
     }
 
-    // Class untuk data pengguna di dalam JSON
-    public static class UserData {
-        @SerializedName("id_masyarakat") // atau id_masyarakat
+    // ✅ Inner class User — SUDAH BENAR
+    public static class User {
+        @SerializedName("id_masyarakat")
         private String id;
 
         @SerializedName("nama")
@@ -35,7 +42,6 @@ public class LoginResponse {
         @SerializedName("email")
         private String email;
 
-        // Getter
         public String getId() { return id; }
         public String getNama() { return nama; }
         public String getEmail() { return email; }
