@@ -24,30 +24,20 @@
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:paddingHorizontal="24dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:paddingVertical="16dp">
 
             <!-- Gambar atas -->
             <ImageView
                 android:id="@+id/img_login"
-                android:layout_width="322dp"
-                android:layout_height="322dp"
+                android:layout_width="260dp"
+                android:layout_height="277dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
+                android:maxWidth="300dp"
+                android:maxHeight="300dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/welcom" />
-
-            <!-- Judul aplikasi -->
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SimpelSi"
-                android:textColor="@color/app_green_dark"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/montserrat_extrabold"
-                android:layout_marginTop="12dp" />
+                android:src="@drawable/icon" />
 
             <!-- Label Email -->
             <TextView
@@ -67,10 +57,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                app:boxCornerRadiusTopStart="50dp"
-                app:boxCornerRadiusTopEnd="50dp"
-                app:boxCornerRadiusBottomStart="50dp"
-                app:boxCornerRadiusBottomEnd="50dp"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusBottomEnd="30dp"
                 app:boxStrokeColor="@color/grey_text"
                 app:boxBackgroundMode="outline"
                 app:hintEnabled="false">
@@ -78,7 +68,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email_login"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
                     android:hint="Masukkan Emailmu"
                     android:paddingHorizontal="20dp"
                     android:inputType="textEmailAddress"
@@ -105,10 +96,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                app:boxCornerRadiusTopStart="50dp"
-                app:boxCornerRadiusTopEnd="50dp"
-                app:boxCornerRadiusBottomStart="50dp"
-                app:boxCornerRadiusBottomEnd="50dp"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusBottomEnd="30dp"
                 app:boxStrokeColor="@color/grey_text"
                 app:boxBackgroundMode="outline"
                 app:endIconMode="password_toggle"
@@ -118,7 +109,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password_login"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
                     android:hint="Masukkan Kata sandi"
                     android:paddingHorizontal="20dp"
                     android:inputType="textPassword"
@@ -153,7 +145,7 @@
                 android:textSize="18sp"
                 android:letterSpacing="0.05" />
 
-            <!-- Belum punya akun + Daftar Disini (sejajar dan rata tengah) -->
+            <!-- Belum punya akun + Daftar Disini -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -182,7 +174,6 @@
                     android:fontFamily="@font/montserrat_semibold" />
             </LinearLayout>
 
-
             <!-- Atau -->
             <TextView
                 android:id="@+id/tv_atau"
@@ -191,7 +182,7 @@
                 android:text="────────  atau  ────────"
                 android:textColor="@color/grey_text"
                 android:textSize="14sp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_gravity="center_horizontal" />
 
             <!-- Tombol Google -->
@@ -202,7 +193,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_color"
-                android:paddingStart="40dp"
+                android:paddingStart="16dp"
                 android:paddingEnd="16dp">
 
                 <ImageView
@@ -211,22 +202,18 @@
                     android:src="@drawable/google"
                     android:contentDescription="Google icon" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <TextView
                     android:id="@+id/btn_google"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="14dp"
-                    android:background="@android:color/transparent"
                     android:fontFamily="@font/montserrat_semibold"
                     android:text="Masuk dengan akun Google"
                     android:textAllCaps="false"
-                    android:paddingLeft="30sp"
                     android:textColor="@color/app_green_dark"
                     android:textSize="15sp"
-                    android:gravity="center_vertical|start"
-                    android:stateListAnimator="@null" />
+                    android:gravity="center_vertical|start" />
             </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>
