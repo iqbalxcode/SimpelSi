@@ -82,7 +82,7 @@
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_email"
+                    android:id="@+id/et_email_lupa_sandi"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:fontFamily="@font/montserrat_regular"

@@ -14,7 +14,7 @@ public class ApiClient {
     private static Retrofit retrofit = null;
 
     // 🔒 Method internal untuk buat Retrofit
-    private static Retrofit getClient() {
+    public static Retrofit getClient() {
         if (retrofit == null) {
             // Logging request & response agar mudah debug
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
