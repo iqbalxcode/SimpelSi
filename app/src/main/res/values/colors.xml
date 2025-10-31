@@ -3,9 +3,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="app_green_dark">#006400</color>
-
+    <color name="green">#006400</color>
     <color name="app_green_light">#388E3C</color>
     <color name="grey_light">#F5F5F5</color>
     <color name="grey_text">#888888</color>
+
+
+    <color name="green_dark">#0D7A4C</color>
+    <color name="light_gray">#E0E0E0</color>
+    <color name="red">#EF0606</color>
+
 </resources>

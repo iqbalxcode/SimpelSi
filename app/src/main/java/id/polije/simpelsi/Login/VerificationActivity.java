@@ -1,4 +1,4 @@
-package id.polije.simpelsi; // ⚠️ Pastikan package Anda benar
+package id.polije.simpelsi.Login; // ⚠️ Pastikan package Anda benar
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 // ❗️ Import untuk API, Model, dan Retrofit
+import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.model.OtpRequest;
@@ -62,8 +63,7 @@ public class VerificationActivity extends AppCompatActivity {
         tvKirimUlang = findViewById(R.id.tv_kirim_ulang);
 
         // ❗️ 4. Inisialisasi ApiInterface
-        apiInterface = ApiClient.getService().create(ApiInterface.class);
-
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         setupOtpInputs();
         setupClickListeners();
     }

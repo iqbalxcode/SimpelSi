@@ -1,10 +1,9 @@
-package id.polije.simpelsi;
+package id.polije.simpelsi.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 import android.util.Log;
 
 // Retrofit & Model
+import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.model.RegisterRequest;
@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password_register);
 
         // PERBAIKAN 1: Pakai getService() bukan getClient()
-        apiInterface = ApiClient.getService().create(ApiInterface.class);
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
 
         // Tombol Kirim
         btnKirim.setOnClickListener(v -> {

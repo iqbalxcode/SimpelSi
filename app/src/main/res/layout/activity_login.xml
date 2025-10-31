@@ -6,28 +6,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LoginActivity">
+    tools:context=".Login.LoginActivity">
 
-    <!-- Logo -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_logo_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
     <ImageView
         android:id="@+id/img_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:layout_marginTop="48dp"
         android:src="@drawable/logo"
         android:contentDescription="@string/app_name"
         app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_logo_top"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- ScrollView untuk isi form -->
     <ScrollView
         android:id="@+id/scroll_login"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
+        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/img_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +48,6 @@
             android:paddingTop="32dp"
             android:paddingBottom="32dp">
 
-            <!-- Label Email -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +57,6 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:layout_marginTop="24dp" />
 
-            <!-- Input Email -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_email_login"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -81,7 +84,6 @@
                     android:fontFamily="@font/montserrat_regular" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Label Password -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +93,6 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:layout_marginTop="16dp" />
 
-            <!-- Input Password -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_password_login"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -121,19 +122,17 @@
                     android:fontFamily="@font/montserrat_regular" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Lupa kata sandi -->
             <TextView
                 android:id="@+id/tv_lupa_sandi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lupa kata sandi?"
                 android:fontFamily="@font/montserrat_semibold"
-                android:textColor="@color/app_green_dark"
+                android:textColor="@color/green"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"
                 android:layout_gravity="end" />
 
-            <!-- Tombol Masuk -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_masuk"
                 android:layout_width="match_parent"
@@ -147,7 +146,6 @@
                 android:textSize="18sp"
                 android:letterSpacing="0.05" />
 
-            <!-- Belum punya akun -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,13 +167,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" Daftar Disini"
-                    android:textColor="@color/app_green_dark"
+                    android:textColor="@color/green"
                     android:textStyle="bold"
                     android:textSize="14sp"
                     android:fontFamily="@font/montserrat_semibold" />
             </LinearLayout>
 
-            <!-- Garis pemisah -->
             <TextView
                 android:id="@+id/tv_atau"
                 android:layout_width="wrap_content"
@@ -186,7 +183,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center_horizontal" />
 
-            <!-- Tombol Google -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -204,14 +200,14 @@
 
                 <TextView
                     android:id="@+id/btn_google"
-                    android:layout_width="244dp"
-                    android:layout_height="41dp"
-                    android:layout_marginStart="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:fontFamily="@font/montserrat_semibold"
                     android:gravity="center_vertical|start"
                     android:text="Masuk dengan akun Google"
                     android:textAllCaps="false"
-                    android:textColor="@color/app_green_dark"
+                    android:textColor="@color/green"
                     android:textSize="15sp" />
             </LinearLayout>
 

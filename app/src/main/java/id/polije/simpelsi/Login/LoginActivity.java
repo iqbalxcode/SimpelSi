@@ -1,9 +1,8 @@
-package id.polije.simpelsi;
+package id.polije.simpelsi.Login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,8 +18,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.common.SignInButton;
 
+import id.polije.simpelsi.fitur.HomeActivity;
+import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.model.LoginRequest;
@@ -82,25 +82,26 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email_login);
         etPassword = findViewById(R.id.et_password_login);
 
-        apiInterface = ApiClient.getService().create(ApiInterface.class);
+        // ✅ inisialisasi Retrofit secara global
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        // Konfigurasi GoogleSignInOptions
+        // Google Sign In config
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                // mintalah ID token jika server membutuhkan idToken untuk verifikasi
                 .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
 
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // klik daftar / lupa sandi
+        // tombol daftar & lupa sandi
         tvDaftar.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
         tvLupaSandi.setOnClickListener(v -> startActivity(new Intent(this, ForgotPasswordActivity.class)));
 
-        // login manual
+        // tombol login manual
         btnMasuk.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
+
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Email dan password wajib diisi", Toast.LENGTH_SHORT).show();
                 return;
@@ -109,12 +110,15 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Format email tidak valid", Toast.LENGTH_SHORT).show();
                 return;
             }
+
             btnMasuk.setEnabled(false);
             btnMasuk.setText("Memproses...");
+
+            // ✅ panggil loginUser()
             loginUser(email, password);
         });
 
-        // google sign in
+        // tombol Google login
         btnGoogle.setOnClickListener(v -> {
             if (isGoogleLoading) return;
             isGoogleLoading = true;
@@ -125,23 +129,62 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // Manual login
     private void loginUser(String email, String password) {
+        if (apiInterface == null) {
+            Toast.makeText(this, "Gagal inisialisasi koneksi server", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         LoginRequest request = new LoginRequest(email, password);
         Call<LoginResponse> call = apiInterface.loginUser(request);
+
         call.enqueue(new Callback<LoginResponse>() {
-            @Override public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 btnMasuk.setEnabled(true);
                 btnMasuk.setText("Masuk");
-                handleLoginResponse(response);
+
+                if (response.isSuccessful() && response.body() != null) {
+                    LoginResponse res = response.body();
+
+                    // ✅ Cek status dari server
+                    if ("success".equalsIgnoreCase(res.getStatus())) {
+                        // Ambil user dari response
+                        LoginResponse.User user = res.getUser();
+
+                        // Simpan sesi pengguna
+                        saveUserSession(user.getId(), user.getNama(), user.getEmail());
+
+                        // Beri notifikasi
+                        Toast.makeText(LoginActivity.this,
+                                "Selamat datang, " + user.getNama(),
+                                Toast.LENGTH_SHORT).show();
+
+                        // ✅ Pindah ke HomeActivity
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this,
+                                res.getMessage() != null ? res.getMessage() : "Login gagal",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this,
+                            "Login gagal: " + response.message(),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
-            @Override public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 btnMasuk.setEnabled(true);
                 btnMasuk.setText("Masuk");
-                Toast.makeText(LoginActivity.this, "Koneksi gagal: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     // Kirim data google ke server
     private void loginWithGoogle(String googleId, String email, String name, boolean verified) {
@@ -161,7 +204,7 @@ public class LoginActivity extends AppCompatActivity {
     private void resetGoogleButton() {
         isGoogleLoading = false;
         btnGoogle.setEnabled(true);
-        btnGoogle.setText("Masuk dengan Google");
+        btnGoogle.setText("Masuk dengan akun Google");
     }
 
     private void handleLoginResponse(Response<LoginResponse> response) {

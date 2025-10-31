@@ -1,4 +1,4 @@
-package id.polije.simpelsi;
+package id.polije.simpelsi.Login;
 
 import android.Manifest;
 import android.app.NotificationChannel;
@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log; // ❗️ Pastikan Log di-import
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +22,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 // Import untuk API, Model, dan Retrofit
+import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.model.OtpRequest;

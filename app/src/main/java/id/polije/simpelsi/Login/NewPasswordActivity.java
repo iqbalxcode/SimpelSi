@@ -1,4 +1,4 @@
-package id.polije.simpelsi; // ⚠️ Sesuaikan package Anda
+package id.polije.simpelsi.Login; // ⚠️ Sesuaikan package Anda
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 // ❗️ Import untuk API, Model, dan Retrofit
+import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.model.ResetRequest;
@@ -55,7 +56,7 @@ public class NewPasswordActivity extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.et_confirm_password);
 
         // ❗️ Inisialisasi ApiInterface
-        apiInterface = ApiClient.getService().create(ApiInterface.class);
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
 
         // Tombol kembali
         btnBack.setOnClickListener(v -> {

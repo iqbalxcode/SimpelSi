@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
     <application
         android:usesCleartextTraffic="true"
@@ -23,7 +26,7 @@
             android:value="@string/server_client_id" />
 
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".Login.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,24 +35,28 @@
         </activity>
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".fitur.HomeActivity"
             android:exported="false" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".Login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Login.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".Login.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".VerificationActivity"
+            android:name=".Login.VerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".NewPasswordActivity"
+            android:name=".Login.NewPasswordActivity"
             android:exported="false" />
+        <activity android:name=".fitur.PengajuanLaporanActivity"
+            android:exported="false"/>
+        <activity android:name=".fitur.CekStatusLaporanActivity"
+            android:exported="false"/>
 
     </application>
 

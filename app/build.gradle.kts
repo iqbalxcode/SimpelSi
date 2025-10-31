@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.gms.google-services") // WAJIB UNTUK GOOGLE LOGIN
+    id("com.google.gms.google-services")
+    id ("org.jetbrains.kotlin.android")// WAJIB UNTUK GOOGLE LOGIN
 }
 
 android {
@@ -85,10 +85,15 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation(libs.material)
     // TESTING
     // ===============================
     testImplementation(libs.junit)
     testImplementation("junit:junit:4.13.2")
+    //upload
+    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

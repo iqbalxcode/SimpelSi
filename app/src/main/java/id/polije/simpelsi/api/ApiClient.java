@@ -34,7 +34,8 @@ public class ApiClient {
     }
 
     // ✅ Method publik untuk digunakan di Activity
-    public static Retrofit getService() {
-        return getClient();
+    public static ApiInterface getService() {
+        return getClient().create(ApiInterface.class);
     }
+
 }

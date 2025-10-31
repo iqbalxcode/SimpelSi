@@ -6,14 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F9F9F9"
-    tools:context=".HomeActivity">
+    tools:context=".fitur.HomeActivity">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -21,98 +23,120 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp"
+                android:id="@+id/headerContainer">
 
                 <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/icon" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Dinas Lingkungan Hidup"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:id="@+id/img_logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/logo"
+                    android:contentDescription="Logo"
+                    android:layout_marginEnd="8dp"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kabupaten Nganjuk"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/darker_gray" />
+                    android:orientation="vertical"
+                    android:layout_marginLeft="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dinas Lingkungan Hidup"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kabupaten Nganjuk"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/bannerPlaceholder"
+            <ImageView
+                android:id="@+id/img_banner"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_card_rounded_border" />
+                android:layout_height="177dp"
+                android:layout_marginTop="100dp"
+                android:contentDescription="Banner DLH"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_desa_bagor" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Visi &amp; Misi"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:lineSpacingExtra="4dp"
                 android:text="Dinas mempunyai tugas membantu Walikota melaksanakan urusan pemerintahan di bidang lingkungan hidup yang menjadi kewenangan Daerah dan tugas pembantuan yang diberikan pada Daerah sesuai dengan visi, misi dan program Walikota sebagaimana dijabarkan dalam Rencana Pembangunan Jangka Menengah Daerah."
-                android:lineSpacingExtra="4dp" />
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Layanan yang bisa dikelola :"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textStyle="normal"
                 android:textColor="@android:color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/layananCekStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="4dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_card_rounded_white"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="12dp"
                     android:clickable="true"
                     android:focusable="true">
 
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_cek_status" />
+                        android:src="@drawable/ic_cek_status"
+                        android:contentDescription="Cek Status" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Cek Status Laporan"
                         android:textAlignment="center"
-                        android:textSize="12sp" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -120,25 +144,27 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="4dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_card_rounded_white"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="12dp"
                     android:clickable="true"
                     android:focusable="true">
 
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_artikel" />
+                        android:src="@drawable/ic_artikel"
+                        android:contentDescription="Artikel" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Artikel Edukasi"
                         android:textAlignment="center"
-                        android:textSize="12sp" />
+                        android:textSize="14sp"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -146,30 +172,31 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="4dp"
                     android:background="@drawable/bg_card_rounded_white"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="12dp"
                     android:clickable="true"
                     android:focusable="true">
 
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_tps" />
+                        android:src="@drawable/ic_tps"
+                        android:contentDescription="Info TPS" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Info TPS"
                         android:textAlignment="center"
-                        android:textSize="12sp" />
+                        android:textSize="14sp"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/headerDokumentasi"
+                android:id="@+id/headerTrendingArtikel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -182,15 +209,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Dokumentasi Kegiatan :"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:text="Trending Artikel :"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black" />
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:src="@drawable/ic_arrow_right"
+                    android:contentDescription="Lihat semua" />
             </LinearLayout>
 
             <HorizontalScrollView
@@ -200,6 +228,7 @@
                 android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/trendingArtikelContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -214,13 +243,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:src="@drawable/img_desa_wilangan"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"
+                            android:contentDescription="Desa Wilangan" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Kecamatan Wilangan"
-                            android:textAlignment="center"/>
+                            android:text="Desa Wilangan"
+                            android:textSize="14sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -233,97 +265,77 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:src="@drawable/img_desa_bagor"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"
+                            android:contentDescription="Desa Bagor" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Kecamatan Bagor"
-                            android:textAlignment="center"/>
+                            android:text="Desa Bagor"
+                            android:textSize="14sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"/>
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="12dp">
 
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:src="@drawable/img_desa_wilangan"
+                            android:scaleType="centerCrop"
+                            android:contentDescription="Desa Wilangan" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Desa Wilangan"
+                            android:textSize="14sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="12dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:src="@drawable/img_desa_wilangan"
+                            android:scaleType="centerCrop"
+                            android:contentDescription="Desa Wilangan" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Desa Wilangan"
+                            android:textSize="14sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
 
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/bottomNav"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:weightSum="3"
         android:background="@android:color/white"
-        android:elevation="8dp"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/navHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_home"
-                app:tint="#4CAF50" /> <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home"
-            android:textColor="#4CAF50" android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/navLaporan"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_laporan"
-                app:tint="#757575" /> <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pengajuan Laporan"
-            android:textColor="#757575" android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/navProfil"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_profil"
-                app:tint="#757575" /> <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Profill"
-            android:textColor="#757575" android:textSize="12sp" />
-        </LinearLayout>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
