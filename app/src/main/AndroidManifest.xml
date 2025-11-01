@@ -55,7 +55,7 @@
             android:exported="false" />
         <activity android:name=".fitur.PengajuanLaporanActivity"
             android:exported="false"/>
-        <activity android:name=".fitur.CekStatusLaporanActivity"
+        <activity android:name=".CekStatusLaporan.CekStatusLaporanActivity"
             android:exported="false"/>
 
     </application>

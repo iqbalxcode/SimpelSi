@@ -1,11 +1,12 @@
 package id.polije.simpelsi.model;
 
 import java.util.List;
+import id.polije.simpelsi.CekStatusLaporan.Laporan;
 
 public class ResponseLaporan {
     private String status;
-    private List<LaporanModel> data;
+    private List<Laporan> data;
 
     public String getStatus() { return status; }
-    public List<LaporanModel> getData() { return data; }
+    public List<Laporan> getData() { return data; }
 }

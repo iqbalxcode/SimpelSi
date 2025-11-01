@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import id.polije.simpelsi.CekStatusLaporan.CekStatusLaporanActivity;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.model.ResponseModel;
@@ -23,7 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import id.polije.simpelsi.R;
 import id.polije.simpelsi.Utils.FileUtils;
@@ -65,6 +70,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnpilihtanggal = findViewById(R.id.btnpilihtanggal);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_pengajuan);
 
         // Ambil parent layout upload box dari XML
         uploadBox = (LinearLayout) tvUploadFileName.getParent();
@@ -181,6 +187,22 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         String ketStr = etKeterangan.getText().toString().trim();
         String tanggalStr = etTanggal.getText().toString().trim();
 
+        // 🔹 Ubah format tanggal ke format MySQL (yyyy-MM-dd)
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date = inputFormat.parse(tanggalStr);
+            tanggalStr = outputFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Format tanggal tidak valid", Toast.LENGTH_SHORT).show();
+            pd.dismiss();
+            return;
+        }
+
+        // Log untuk memastikan tanggal tidak kosong
+        Log.d("UPLOAD_TANGGAL", "Tanggal dikirim: " + tanggalStr);
+
         // Siapkan body untuk dikirim ke server
         RequestBody nama = RequestBody.create(MultipartBody.FORM, namaStr);
         RequestBody lokasi = RequestBody.create(MultipartBody.FORM, lokasiStr);
@@ -210,7 +232,6 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
                 }
             }
 
-
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 pd.dismiss();
@@ -218,6 +239,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
     private void clearForm() {

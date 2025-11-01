@@ -8,7 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class ApiClient {
 
     // 🌐 Base URL API kamu
-    private static final String BASE_URL = "http://simpelsi.medianewsonline.com/api/";
+    public static final String BASE_URL = "http://simpelsi.medianewsonline.com/api/";
 
     // Simpan instance Retrofit agar tidak dibuat ulang
     private static Retrofit retrofit = null;

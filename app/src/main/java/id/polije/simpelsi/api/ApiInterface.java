@@ -1,17 +1,6 @@
 package id.polije.simpelsi.api;
 
-import id.polije.simpelsi.model.LoginRequest;
-import id.polije.simpelsi.model.LoginResponse;
-import id.polije.simpelsi.model.OtpRequest;
-import id.polije.simpelsi.model.OtpResponse;
-import id.polije.simpelsi.model.RegisterRequest;
-import id.polije.simpelsi.model.RegisterResponse;
-import id.polije.simpelsi.model.ResetRequest;
-import id.polije.simpelsi.model.ResetResponse;
-import id.polije.simpelsi.model.ResponseLaporan;
-import id.polije.simpelsi.model.ResponseModel;
-import id.polije.simpelsi.model.VerifyRequest;
-import id.polije.simpelsi.model.VerifyResponse;
+import id.polije.simpelsi.model.*;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -21,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -52,7 +42,8 @@ public interface ApiInterface {
             @Part MultipartBody.Part foto
     );
 
-    @GET("get_laporan.php")
-    Call<ResponseLaporan> getLaporan();
 
+    // ✅ diperbaiki di sini
+    @GET("get_laporan.php")
+    Call<ResponseLaporan> getLaporan(@Query("id_masyarakat") String idMasyarakat);
 }
