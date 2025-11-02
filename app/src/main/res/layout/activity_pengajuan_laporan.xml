@@ -97,7 +97,7 @@
                 <LinearLayout
                     android:id="@+id/layoutUploadBox"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="200dp"
                     android:orientation="vertical"
                     android:gravity="center"
                     android:background="@drawable/bg_upload_box"
@@ -105,6 +105,17 @@
                     android:clickable="true"
                     android:focusable="true">
 
+                    <!-- Tambahkan ImageView untuk preview foto -->
+                    <ImageView
+                        android:id="@+id/imgPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:visibility="gone"
+                        android:contentDescription="Preview foto" />
+
+                    <!-- Teks default (muncul kalau belum ada foto) -->
                     <TextView
                         android:id="@+id/tvUploadFileName"
                         android:layout_width="wrap_content"
@@ -113,7 +124,6 @@
                         android:textColor="@color/grey_text"
                         android:textStyle="italic" />
                 </LinearLayout>
-
 
                 <!-- Baris Tanggal dan Tombol Hapus -->
                 <LinearLayout
