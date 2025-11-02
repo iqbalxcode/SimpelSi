@@ -35,6 +35,7 @@ public interface ApiInterface {
     @Multipart
     @POST("upload_foto.php")
     Call<ResponseModel> uploadLaporan(
+            @Part("id_masyarakat")  RequestBody id_masyarkat,
             @Part("nama") RequestBody nama,
             @Part("lokasi") RequestBody lokasi,
             @Part("keterangan") RequestBody keterangan,

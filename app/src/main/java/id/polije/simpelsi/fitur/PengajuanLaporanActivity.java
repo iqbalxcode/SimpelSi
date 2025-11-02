@@ -3,9 +3,13 @@ package id.polije.simpelsi.fitur;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -46,7 +50,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
     private EditText etNama, etLokasi, etKeterangan, etTanggal;
     private TextView tvUploadFileName;
     private Button btnUpload, btnHapusFoto;
-    private ImageView btnBack, btnpilihtanggal;
+    private ImageView btnBack, btnpilihtanggal, imgPreview;
     private LinearLayout uploadBox;
     private Uri imageUri;
     private File imageFile;
@@ -69,11 +73,10 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         btnHapusFoto = findViewById(R.id.btnHapusFoto);
         btnBack = findViewById(R.id.btnBack);
         btnpilihtanggal = findViewById(R.id.btnpilihtanggal);
+        imgPreview = findViewById(R.id.imgPreview);
+        uploadBox = findViewById(R.id.layoutUploadBox);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.nav_pengajuan);
-
-        // Ambil parent layout upload box dari XML
-        uploadBox = (LinearLayout) tvUploadFileName.getParent();
 
         // Pilih tanggal
         btnpilihtanggal.setOnClickListener(v -> showDatePicker());
@@ -84,6 +87,9 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         // Tombol hapus
         btnHapusFoto.setOnClickListener(v -> {
             imageFile = null;
+            imageUri = null;
+            imgPreview.setImageDrawable(null);
+            imgPreview.setVisibility(View.GONE);
             tvUploadFileName.setText("Format: .jpg / .png");
             Toast.makeText(this, "Foto dihapus", Toast.LENGTH_SHORT).show();
         });
@@ -141,6 +147,15 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
+
+            // Tampilan preview di imageview
+            imgPreview.setVisibility(View.VISIBLE);
+            imgPreview.setImageURI(imageUri); // ✅ perbaikan: gunakan setImageURI, bukan setImageDrawable
+
+            // Tampilan nama file
+            String fileName = getFileName(imageUri);
+            tvUploadFileName.setText(fileName);
+
             String path = FileUtils.getPath(this, imageUri);
             if (path != null) {
                 imageFile = new File(path);
@@ -150,6 +165,26 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
             }
         }
     }
+
+    private String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) { // ✅ huruf kecil 'cursor' & tambahkan kolom
+                    result = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        }
+        if (result == null) { // ✅ tambahkan fallback untuk path file
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result; // ✅ tambahkan return
+    }
+
 
     private boolean validateForm() {
         if (etNama.getText().toString().isEmpty()) {
@@ -187,6 +222,17 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         String ketStr = etKeterangan.getText().toString().trim();
         String tanggalStr = etTanggal.getText().toString().trim();
 
+        // id masyarakat
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+        String idMasyarakat = prefs.getString("id_masyarakat", null);
+
+        if (idMasyarakat == null){
+            pd.dismiss();
+            Toast.makeText(this, "ID masyarakat tidak ditemukan. Silahkan Login ulang.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        RequestBody idBody = RequestBody.create(MultipartBody.FORM, idMasyarakat);
+
         // 🔹 Ubah format tanggal ke format MySQL (yyyy-MM-dd)
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -202,6 +248,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
 
         // Log untuk memastikan tanggal tidak kosong
         Log.d("UPLOAD_TANGGAL", "Tanggal dikirim: " + tanggalStr);
+        Log.d("UPLOAD_DEBUG", "ID masyarakat" + idMasyarakat);
 
         // Siapkan body untuk dikirim ke server
         RequestBody nama = RequestBody.create(MultipartBody.FORM, namaStr);
@@ -215,7 +262,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
 
         // Panggil API upload laporan
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseModel> call = api.uploadLaporan(nama, lokasi, keterangan, tanggal, fotoPart);
+        Call<ResponseModel> call = api.uploadLaporan(idBody,nama, lokasi, keterangan, tanggal, fotoPart);
 
         call.enqueue(new Callback<ResponseModel>() {
 
