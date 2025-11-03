@@ -11,4 +11,11 @@
     <string name="server_client_id">
         625117876303-707tdpdp7qf20u1lbf9mqa9kvgnki36s.apps.googleusercontent.com
     </string>
+    <string name="keluar">Keluar</string>
+    <string name="apakah_anda_ingin_keluar">apakah_anda_ingin_keluar</string>
+    <string name="website">website</string>
+    <string name="visi_misi">visi_misi</string>
+    <string name="profil_kami">profil_kami</string>
+    <string name="profil">profil</string>
+    <string name="kembali">kembali</string>
 </resources>
