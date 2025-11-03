@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".artikel.ArtikelActivity">
+    tools:context=".ArtikelEdukasiActivity">
 
     <!-- Toolbar -->
     <LinearLayout
@@ -21,7 +21,7 @@
             android:id="@+id/btn_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_arrow_right"
+            android:src="@drawable/ic_arrow_back"
             android:contentDescription="Kembali" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:id="@+id/logo_simpelsi"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/logo"
+            android:src="@drawable/logo_simpelsi"
             android:contentDescription="Logo Simpelsi" />
     </LinearLayout>
 
@@ -71,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_desa_wilangan" />
+                        android:src="@drawable/artikel1" />
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_desa_bagor" />
+                        android:src="@drawable/artikel2" />
 
                     <LinearLayout
                         android:orientation="vertical"
