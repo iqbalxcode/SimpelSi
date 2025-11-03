@@ -31,7 +31,7 @@ public class NewPasswordActivity extends AppCompatActivity {
     String userOtp; // Anda juga perlu OTP dari halaman verifikasi
 
     // ❗️ Deklarasi ApiInterface
-    ApiInterface apiInterface;
+    ApiInterface apiInterface; // Variabel ini yang akan kita gunakan
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,9 @@ public class NewPasswordActivity extends AppCompatActivity {
         etNewPassword = findViewById(R.id.et_new_password);
         etConfirmPassword = findViewById(R.id.et_confirm_password);
 
-        // ❗️ Inisialisasi ApiInterface
-        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        // ❗️ Inisialisasi ApiInterface (PERBAIKAN DI SINI)
+        // Kita inisialisasi variabel 'apiInterface' yang ada di level kelas
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         // Tombol kembali
         btnBack.setOnClickListener(v -> {
@@ -99,6 +100,8 @@ public class NewPasswordActivity extends AppCompatActivity {
 
         // Panggil API 'reset_password.php'
         ResetRequest request = new ResetRequest(userEmail, userOtp, newPassword);
+
+        // Sekarang 'apiInterface' tidak lagi null
         Call<ResetResponse> call = apiInterface.resetPassword(request);
 
         call.enqueue(new Callback<ResetResponse>() {

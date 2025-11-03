@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log; // ❗️ Import Log
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-// ❗️ Import untuk API, Model, dan Retrofit
-import id.polije.simpelsi.R;
+// Import untuk API, Model, dan Retrofit
+import id.polije.simpelsi.R; // ❗️ Pastikan import R ada
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.model.OtpRequest;
@@ -28,13 +28,11 @@ import retrofit2.Response;
 public class VerificationActivity extends AppCompatActivity {
 
     EditText otp1, otp2, otp3, otp4;
-
-    // ❗️ 1. Deklarasikan tombol
     ImageButton btnBack;
     Button btnKirim;
     TextView tvKirimUlang;
 
-    // ❗️ 2. Deklarasikan ApiInterface dan variabel email
+    // ❗️ Deklarasi ApiInterface dan variabel email
     private ApiInterface apiInterface;
     private String userEmail;
 
@@ -43,7 +41,7 @@ public class VerificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verifikasi);
 
-        // ❗️ 3. Ambil email dari Intent (WAJIB)
+        // Ambil email dari Intent (WAJIB)
         userEmail = getIntent().getStringExtra("USER_EMAIL");
         if (userEmail == null || userEmail.isEmpty()) {
             Toast.makeText(this, "Terjadi kesalahan, email tidak ditemukan.", Toast.LENGTH_LONG).show();
@@ -56,14 +54,14 @@ public class VerificationActivity extends AppCompatActivity {
         otp2 = findViewById(R.id.otp_2);
         otp3 = findViewById(R.id.otp_3);
         otp4 = findViewById(R.id.otp_4);
-
-        // Hubungkan tombol dengan ID di XML
         btnBack = findViewById(R.id.btn_back);
         btnKirim = findViewById(R.id.btn_kirim);
         tvKirimUlang = findViewById(R.id.tv_kirim_ulang);
 
-        // ❗️ 4. Inisialisasi ApiInterface
-        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        // --- ⬇️ INI PERBAIKANNYA (Menambahkan inisialisasi) ⬇️ ---
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
+
         setupOtpInputs();
         setupClickListeners();
     }
@@ -77,9 +75,8 @@ public class VerificationActivity extends AppCompatActivity {
             finish(); // Tutup activity ini dan kembali ke sebelumnya
         });
 
-        // ❗️ 5. TOMBOL KIRIM (Disesuaikan dengan API)
+        // Tombol Kirim (Disesuaikan dengan API)
         btnKirim.setOnClickListener(v -> {
-            // Ambil semua OTP
             String otp = otp1.getText().toString().trim() +
                     otp2.getText().toString().trim() +
                     otp3.getText().toString().trim() +
@@ -89,12 +86,11 @@ public class VerificationActivity extends AppCompatActivity {
                 Toast.makeText(this, "Kode OTP harus 4 digit", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             // Panggil method untuk verifikasi
             verifyOtp(userEmail, otp);
         });
 
-        // ❗️ 6. Tombol Kirim Ulang (Disesuaikan dengan API)
+        // Tombol Kirim Ulang (Disesuaikan dengan API)
         tvKirimUlang.setOnClickListener(v -> {
             // Panggil method untuk kirim ulang OTP
             resendOtp(userEmail);
@@ -102,46 +98,38 @@ public class VerificationActivity extends AppCompatActivity {
     }
 
     /**
-     * ❗️ Method untuk memanggil API verify_otp.php
+     * Method untuk memanggil API verify_otp.php
      */
     private void verifyOtp(String email, String otp) {
         Toast.makeText(this, "Memverifikasi...", Toast.LENGTH_SHORT).show();
 
         VerifyRequest request = new VerifyRequest(email, otp);
+
+        // ❗️ BARIS INI (111) SEKARANG AMAN KARENA apiInterface SUDAH DIINISIALISASI
         Call<VerifyResponse> call = apiInterface.verifyOtp(request);
 
         call.enqueue(new Callback<VerifyResponse>() {
             @Override
             public void onResponse(Call<VerifyResponse> call, Response<VerifyResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-
                     if (response.body().isSuccess()) {
                         // SUKSES DARI API
                         Toast.makeText(VerificationActivity.this, "Verifikasi Berhasil!", Toast.LENGTH_SHORT).show();
-
-                        // Pindah ke NewPasswordActivity
                         Intent intent = new Intent(VerificationActivity.this, NewPasswordActivity.class);
-
-                        // (PENTING) Kirim email DAN OTP ke activity berikutnya
                         intent.putExtra("USER_EMAIL", email);
                         intent.putExtra("USER_OTP", otp); // Kirim OTP yg sudah terverifikasi
-
                         startActivity(intent);
-
                     } else {
                         // GAGAL DARI API (misal: OTP salah atau kedaluwarsa)
                         Toast.makeText(VerificationActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     }
-
                 } else {
-                    // GAGAL KONEKSI (Error 404, 500, dll)
                     Toast.makeText(VerificationActivity.this, "Gagal terhubung. Kode: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<VerifyResponse> call, Throwable t) {
-                // GAGAL JARINGAN (Internet mati, dll)
                 Toast.makeText(VerificationActivity.this, "Koneksi Gagal: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.e("VERIFY_OTP_FAILURE", "Error: " + t.getMessage(), t);
             }
@@ -149,7 +137,7 @@ public class VerificationActivity extends AppCompatActivity {
     }
 
     /**
-     * ❗️ Method untuk memanggil API request_otp.php (lagi)
+     * Method untuk memanggil API request_otp.php (lagi)
      */
     private void resendOtp(String email) {
         Toast.makeText(this, "Mengirim ulang kode OTP...", Toast.LENGTH_SHORT).show();
@@ -161,13 +149,11 @@ public class VerificationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<OtpResponse> call, Response<OtpResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Cukup tampilkan pesan dari server (berhasil atau gagal)
                     Toast.makeText(VerificationActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(VerificationActivity.this, "Gagal meminta OTP baru.", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<OtpResponse> call, Throwable t) {
                 Toast.makeText(VerificationActivity.this, "Koneksi Gagal: " + t.getMessage(), Toast.LENGTH_LONG).show();
@@ -175,10 +161,9 @@ public class VerificationActivity extends AppCompatActivity {
         });
     }
 
-    // --- Kode Anda yang lain (sudah benar) ---
+    // --- Kode setupOtpInputs dan GenericTextWatcher Anda (sudah benar) ---
 
     private void setupOtpInputs() {
-        // ... (Kode setupOtpInputs Anda sudah benar) ...
         otp1.addTextChangedListener(new GenericTextWatcher(otp1, otp2));
         otp2.addTextChangedListener(new GenericTextWatcher(otp2, otp3));
         otp3.addTextChangedListener(new GenericTextWatcher(otp3, otp4));
@@ -209,9 +194,7 @@ public class VerificationActivity extends AppCompatActivity {
         });
     }
 
-    // Kelas bantu untuk pindah otomatis
     private class GenericTextWatcher implements TextWatcher {
-        // ... (Kode GenericTextWatcher Anda sudah benar) ...
         private final EditText currentView;
         private final EditText nextView;
 
@@ -222,10 +205,8 @@ public class VerificationActivity extends AppCompatActivity {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
         @Override
         public void afterTextChanged(Editable s) {
             if (s.length() == 1 && nextView != null) {

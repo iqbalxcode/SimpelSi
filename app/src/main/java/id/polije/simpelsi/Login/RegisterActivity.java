@@ -1,4 +1,4 @@
-package id.polije.simpelsi.Login;
+package id.polije.simpelsi.Login; // Menggunakan package utama
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,13 +9,18 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import android.util.Log;
+import id.polije.simpelsi.R;
+import id.polije.simpelsi.api.ApiClient;
 
 // Retrofit & Model
-import id.polije.simpelsi.R;
+// import id.polije.simpelsi.R; // Import R tidak diperlukan di sini
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.model.RegisterRequest;
 import id.polije.simpelsi.model.RegisterResponse;
+// Import LoginActivity dari package yang benar
+import id.polije.simpelsi.Login.LoginActivity;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnKirim;
     private ImageButton btnBack;
     private EditText etNama, etEmail, etPassword;
+
+    // Variabel class yang akan kita gunakan
     private ApiInterface apiInterface;
 
     @Override
@@ -39,8 +46,10 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email_register);
         etPassword = findViewById(R.id.et_password_register);
 
-        // PERBAIKAN 1: Pakai getService() bukan getClient()
-        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        // --- ⬇️ INI PERBAIKAN UTAMANYA ⬇️ ---
+        // Inisialisasi variabel class 'apiInterface', BUKAN variabel lokal baru
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
 
         // Tombol Kirim
         btnKirim.setOnClickListener(v -> {
@@ -48,24 +57,21 @@ public class RegisterActivity extends AppCompatActivity {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
 
-            // Validasi
+            // Validasi (Kode Anda sudah bagus)
             if (nama.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Semua data wajib diisi!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             if (password.length() < 8) {
                 Toast.makeText(this, "Password minimal 8 karakter", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            // PERBAIKAN 2: Validasi email format
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(this, "Format email tidak valid", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // PERBAIKAN 3: Nonaktifkan tombol saat proses
+            // Nonaktifkan tombol (Kode Anda sudah bagus)
             btnKirim.setEnabled(false);
             btnKirim.setText("Memproses...");
 
@@ -81,19 +87,21 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void performRegister(String nama, String email, String password) {
         RegisterRequest request = new RegisterRequest(nama, email, password);
+
+        // Sekarang 'apiInterface' tidak lagi null
         Call<RegisterResponse> call = apiInterface.registerUser(request);
 
         call.enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                // Aktifkan kembali tombol
+                // Aktifkan kembali tombol (Ganti 'Daftar' menjadi 'Kirim' agar konsisten)
                 btnKirim.setEnabled(true);
-                btnKirim.setText("Daftar");
+                btnKirim.setText("Kirim");
 
                 if (response.isSuccessful() && response.body() != null) {
                     RegisterResponse res = response.body();
 
-                    if (res.isSuccess()) {
+                    if (res.isSuccess()) { // Pastikan Anda punya method isSuccess() di RegisterResponse
                         Toast.makeText(RegisterActivity.this, res.getMessage(), Toast.LENGTH_LONG).show();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         finish();
@@ -109,8 +117,9 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                // Aktifkan kembali tombol
                 btnKirim.setEnabled(true);
-                btnKirim.setText("Daftar");
+                btnKirim.setText("Kirim");
 
                 Toast.makeText(RegisterActivity.this,
                         "Koneksi gagal: " + t.getMessage(),
