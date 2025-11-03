@@ -93,6 +93,8 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+    // Library CircleImageView
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
