@@ -33,14 +33,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView tvDaftar, tvLupaSandi;
     private Button btnMasuk;
-    private TextView btnGoogle; // bisa diganti SignInButton kalau mau
+    private TextView btnGoogle;
     private EditText etEmail, etPassword;
     private ApiInterface apiInterface;
 
     private GoogleSignInClient googleSignInClient;
     private boolean isGoogleLoading = false;
 
-    // ActivityResultLauncher untuk startActivityForResult (Google SignIn)
+    // ActivityResultLauncher untuk Google SignIn
     private final ActivityResultLauncher<Intent> googleSignInLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -51,14 +51,15 @@ public class LoginActivity extends AppCompatActivity {
                             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                             try {
                                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                                // Ambil token/id/email/nama
-                                String idToken = account.getIdToken(); // kalau di-request
+                                String idToken = account.getIdToken();
                                 String googleId = account.getId();
                                 String email = account.getEmail();
                                 String name = account.getDisplayName();
 
-                                // Panggil login ke server
-                                loginWithGoogle(googleId, email, name, true);
+                                // ❗️ ERROR: Ini akan crash kecuali Anda memperbaiki ApiInterface & LoginRequest
+                                // loginWithGoogle(googleId, email, name, true);
+                                Toast.makeText(this, "Fitur Google Login belum terhubung ke server.", Toast.LENGTH_LONG).show();
+                                resetGoogleButton(); // Reset tombol
                             } catch (ApiException e) {
                                 resetGoogleButton();
                                 Toast.makeText(this, "Google sign in failed: " + e.getStatusCode(), Toast.LENGTH_SHORT).show();
@@ -82,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email_login);
         etPassword = findViewById(R.id.et_password_login);
 
-        // ✅ inisialisasi Retrofit secara global
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         // Google Sign In config
@@ -93,11 +93,9 @@ public class LoginActivity extends AppCompatActivity {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // tombol daftar & lupa sandi
         tvDaftar.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
         tvLupaSandi.setOnClickListener(v -> startActivity(new Intent(this, ForgotPasswordActivity.class)));
 
-        // tombol login manual
         btnMasuk.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -113,8 +111,6 @@ public class LoginActivity extends AppCompatActivity {
 
             btnMasuk.setEnabled(false);
             btnMasuk.setText("Memproses...");
-
-            // ✅ panggil loginUser()
             loginUser(email, password);
         });
 
@@ -147,20 +143,24 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse res = response.body();
 
-                    // ✅ Cek status dari server
-                    if ("success".equalsIgnoreCase(res.getStatus())) {
-                        // Ambil user dari response
-                        LoginResponse.User user = res.getUser();
+                    // ❗️ PERBAIKAN: Sesuaikan dengan model LoginResponse.java Anda
+                    if (res.isSuccess()) { // Menggunakan isSuccess()
+
+                        LoginResponse.UserData user = res.getData(); // Menggunakan getData() dan UserData
+
+                        // Pastikan user tidak null
+                        if (user == null) {
+                            Toast.makeText(LoginActivity.this, "Gagal mendapatkan data user.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
                         // Simpan sesi pengguna
-                        saveUserSession(user.getId(), user.getNama(), user.getEmail());
+                        saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail()); // Menggunakan getter yang benar
 
-                        // Beri notifikasi
                         Toast.makeText(LoginActivity.this,
                                 "Selamat datang, " + user.getNama(),
                                 Toast.LENGTH_SHORT).show();
 
-                        // ✅ Pindah ke HomeActivity
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                         finish();
@@ -186,8 +186,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    // Kirim data google ke server
+    // ❗️ ERROR: Method ini tidak akan berfungsi sampai Anda:
+    // 1. Menambahkan constructor baru ke LoginRequest.java
+    // 2. Menambahkan method loginGoogle() ke ApiInterface.java
+    // 3. Membuat file login_google.php di server Anda
     private void loginWithGoogle(String googleId, String email, String name, boolean verified) {
+        /*
         LoginRequest request = new LoginRequest(googleId, email, name, verified);
         apiInterface.loginGoogle(request).enqueue(new Callback<LoginResponse>() {
             @Override public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -199,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Server error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        */
     }
 
     private void resetGoogleButton() {
@@ -207,28 +212,30 @@ public class LoginActivity extends AppCompatActivity {
         btnGoogle.setText("Masuk dengan akun Google");
     }
 
+    // ❗️ ERROR: Method ini juga bergantung pada model `User` yang tidak sesuai
     private void handleLoginResponse(Response<LoginResponse> response) {
+        /*
         if (response.isSuccessful() && response.body() != null) {
             LoginResponse res = response.body();
-            if ("success".equals(res.getStatus())) {
-                LoginResponse.User user = res.getUser();
-                saveUserSession(user.getId(), user.getNama(), user.getEmail());
+            if ("success".equals(res.getStatus())) { // Seharusnya res.isSuccess()
+                LoginResponse.User user = res.getUser(); // Seharusnya res.getData()
+                saveUserSession(user.getId(), user.getNama(), user.getEmail()); // Seharusnya user.getId_masyarakat()
                 Toast.makeText(this, "Selamat datang, " + user.getNama() + "!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(this, HomeActivity.class));
                 finish();
-            } else {
-                String msg = res.getMessage() != null ? res.getMessage() : "Login gagal";
-                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
-        }
+            } else { ... }
+        } else { ... }
+        */
     }
 
     private void saveUserSession(String id, String nama, String email) {
         SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("id", id);
+
+        // --- ⬇️ INI PERBAIKAN KRITIS UNTUK ERROR ANDA ⬇️ ---
+        editor.putString("id_masyarakat", id); // ❗️ Ganti "id" menjadi "id_masyarakat"
+        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
+
         editor.putString("nama", nama);
         editor.putString("email", email);
         editor.putBoolean("is_logged_in", true);
