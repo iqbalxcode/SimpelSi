@@ -1,6 +1,7 @@
 package id.polije.simpelsi.Login
 
 import android.content.Intent
+import android.content.SharedPreferences // ❗️ Import SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,9 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import id.polije.simpelsi.R
+import id.polije.simpelsi.fitur.HomeActivity // ❗️ Import HomeActivity Anda
 import id.polije.simpelsi.ui.theme.SimpelSiTheme
 
-// 🎨 Deklarasi Font Montserrat Extra Bold (Dipindahkan ke level file)
+// 🎨 Deklarasi Font (Sudah benar)
 val MontserratExtraBold = FontFamily(
     Font(R.font.montserrat_extrabold, FontWeight.ExtraBold)
 )
@@ -35,19 +37,42 @@ val MontseratSemiBold = FontFamily(
 class WelcomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            SimpelSiTheme {
-                Surface(color = Color.White) {
-                    ResponsiveWelcomeScreen {
-                        // Saat tombol "Mulai" ditekan, pindah ke halaman LoginActivity
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
+
+        // --- ⬇️ PERBAIKAN LOGIKA SESI DI SINI ⬇️ ---
+
+        // 1. Cek SharedPreferences (nama harus sama dengan di LoginActivity)
+        val prefs: SharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+
+        // 2. Cek key "is_logged_in"
+        val isLoggedIn: Boolean = prefs.getBoolean("is_logged_in", false)
+
+        if (isLoggedIn) {
+            // 3. JIKA SUDAH LOGIN: Langsung ke HomeActivity
+            // (Melewati layar Welcome ini seluruhnya)
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish() // Tutup WelcomeActivity agar tidak bisa "back" ke sini
+        } else {
+            // 4. JIKA BELUM LOGIN: Tampilkan layar Welcome
+            setContent {
+                SimpelSiTheme {
+                    Surface(color = Color.White) {
+                        ResponsiveWelcomeScreen {
+                            // Saat tombol "Mulai" ditekan, pindah ke LoginActivity
+                            startActivity(Intent(this, LoginActivity::class.java))
+                            finish() // Tutup WelcomeActivity
+                        }
                     }
                 }
             }
         }
+        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
     }
 }
+
+// ❗️ Kode Composable Anda di bawah ini tidak perlu diubah.
+// (ResponsiveWelcomeScreen dan WelcomeScreenPreview sudah benar)
 
 @Composable
 fun ResponsiveWelcomeScreen(onMulaiClick: () -> Unit) {
@@ -66,20 +91,16 @@ fun ResponsiveWelcomeScreen(onMulaiClick: () -> Unit) {
             screenWidth < 600.dp -> 300.dp
             else -> 400.dp
         }
-
         val titleSize = when {
-            screenWidth < 360.dp -> 30.sp // Disesuaikan agar judul tidak terlalu kecil
+            screenWidth < 360.dp -> 30.sp
             screenWidth < 600.dp -> 38.sp
             else -> 40.sp
         }
-
         val textSize = when {
             screenWidth < 360.dp -> 14.sp
             screenWidth < 600.dp -> 16.sp
             else -> 16.sp
         }
-        // Deklarasi MontserratExtraBold yang sebelumnya ada di sini telah dihapus.
-        // --- Akhir Variabel Responsif ---
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -91,10 +112,9 @@ fun ResponsiveWelcomeScreen(onMulaiClick: () -> Unit) {
             Text(
                 text = "Selamat Datang",
                 color = Color(0xFF006400),
-                // 👇 Menggunakan variabel titleSize yang responsif
                 fontSize = titleSize,
                 fontWeight = FontWeight.ExtraBold,
-                fontFamily = MontserratExtraBold, // Menggunakan deklarasi level-file
+                fontFamily = MontserratExtraBold,
             )
 
             Image(
@@ -130,10 +150,7 @@ fun ResponsiveWelcomeScreen(onMulaiClick: () -> Unit) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    // 1. Spacer: Mendorong Teks ke Kanan (setengah lebar)
                     Spacer(modifier = Modifier.weight(0.5f))
-
-                    // 2. Teks "Mulai" (Diposisikan secara visual di tengah)
                     Text(
                         text = "Mulai",
                         color = Color.White,
@@ -141,11 +158,7 @@ fun ResponsiveWelcomeScreen(onMulaiClick: () -> Unit) {
                         fontWeight = FontWeight.SemiBold,
                         fontFamily = MontseratSemiBold
                     )
-
-                    // 3. Spacer: Mendorong Ikon ke Kanan (setengah lebar)
                     Spacer(modifier = Modifier.weight(0.5f))
-
-                    // 4. Icon: Ditempatkan paling akhir di kanan
                     Icon(
                         painter = painterResource(id = R.drawable.next),
                         contentDescription = "Mulai",
@@ -161,7 +174,6 @@ fun ResponsiveWelcomeScreen(onMulaiClick: () -> Unit) {
 }
 
 
-// ✅ Ditaruh DI LUAR fungsi utama, agar Compose Preview bisa berjalan
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun WelcomeScreenPreview() {

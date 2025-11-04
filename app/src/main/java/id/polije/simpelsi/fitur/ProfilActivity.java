@@ -1,6 +1,9 @@
 package id.polije.simpelsi.fitur;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent; // ❗️ Import Intent
+import android.content.SharedPreferences; // ❗️ Import SharedPreferences
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +13,12 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+// ❗️ Import semua Activity tujuan navigasi Anda
+import id.polije.simpelsi.Login.LoginActivity;
 import id.polije.simpelsi.R;
+// (Pastikan nama package dan class ini benar)
+// import id.polije.simpelsi.fitur.HomeActivity;
+// import id.polije.simpelsi.fitur.PengajuanLaporanActivity;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -35,18 +43,22 @@ public class ProfilActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
 
         // Setup Bottom Navigation
-        bottomNavigationView.setSelectedItemId(R.id.nav_profil); // Asumsi ID menu profil adalah nav_profil
+        bottomNavigationView.setSelectedItemId(R.id.nav_profil);
 
+        // --- ⬇️ PERBAIKAN 1: Navigasi Bawah ⬇️ ---
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
                 // Navigasi ke Home
-                Toast.makeText(this, "Ke Halaman Home", Toast.LENGTH_SHORT).show();
-                // Contoh: startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                overridePendingTransition(0, 0); // Transisi instan
+                finish(); // Tutup activity ini
                 return true;
             } else if (itemId == R.id.nav_pengajuan) {
                 // Navigasi ke Pengajuan Laporan
-                Toast.makeText(this, "Ke Pengajuan Laporan", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ProfilActivity.this, PengajuanLaporanActivity.class));
+                overridePendingTransition(0, 0); // Transisi instan
+                finish(); // Tutup activity ini
                 return true;
             } else if (itemId == R.id.nav_profil) {
                 // Sudah di Profil
@@ -54,10 +66,11 @@ public class ProfilActivity extends AppCompatActivity {
             }
             return false;
         });
+        // --- ⬆️ AKHIR PERBAIKAN 1 ⬆️ ---
 
         // Setup Listener untuk tombol Kembali
         backButton.setOnClickListener(v -> {
-            onBackPressed(); // Kembali ke layar sebelumnya
+            onBackPressed(); // (Sudah benar)
         });
 
         // Setup Listener untuk menu-menu
@@ -76,14 +89,27 @@ public class ProfilActivity extends AppCompatActivity {
             // Implementasi intent untuk membuka browser ke URL website
         });
 
-        // Setup Listener untuk tombol Keluar
+        // --- ⬇️ PERBAIKAN 2: Tombol Logout ⬇️ ---
         logoutButton.setOnClickListener(v -> {
-            // Logika untuk proses Logout
+            // Tampilkan Toast
             Toast.makeText(this, "Anda Telah Keluar", Toast.LENGTH_SHORT).show();
-            // Contoh: Hapus token sesi dan kembali ke LoginActivity
-            // Intent intent = new Intent(ProfilActivity.this, LoginActivity.class);
-            // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            // startActivity(intent);
+
+            // Hapus data sesi dari SharedPreferences
+            SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.clear(); // Menghapus semua data (id_masyarakat, nama, is_logged_in)
+            editor.apply(); // Simpan perubahan
+
+            // Kembali ke LoginActivity
+            Intent intent = new Intent(ProfilActivity.this, LoginActivity.class);
+
+            // Hapus semua activity sebelumnya (PENTING!)
+            // Ini mencegah pengguna menekan "back" dan kembali ke Home/Profil
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(intent);
+            finish(); // Tutup ProfilActivity
         });
+        // --- ⬆️ AKHIR PERBAIKAN 2 ⬆️ ---
     }
 }
