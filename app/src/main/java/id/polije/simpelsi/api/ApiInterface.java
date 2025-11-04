@@ -32,8 +32,9 @@ public interface ApiInterface {
     @POST("reset_password.php")
     Call<ResetResponse> resetPassword(@Body ResetRequest request);
 
+    // --- ⬇️ PERBAIKAN DI SINI ⬇️ ---
     @Multipart
-    @POST("upload_foto.php")
+    @POST("upload_laporan.php") // ❗️ Ganti nama file menjadi "upload_laporan.php"
     Call<ResponseModel> uploadLaporan(
             @Part("id_masyarakat")  RequestBody id_masyarkat,
             @Part("nama") RequestBody nama,
@@ -42,9 +43,9 @@ public interface ApiInterface {
             @Part("tanggal") RequestBody tanggal,
             @Part MultipartBody.Part foto
     );
+    // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
 
 
-    // ✅ diperbaiki di sini
     @GET("get_laporan.php")
     Call<ResponseLaporan> getLaporan(@Query("id_masyarakat") String idMasyarakat);
 }

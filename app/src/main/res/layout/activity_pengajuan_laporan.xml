@@ -41,7 +41,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:src="@drawable/kembali"
+                    android:src="@drawable/back"
                     android:contentDescription="Kembali" />
                 <View
                     android:layout_width="0dp"
@@ -140,11 +140,10 @@
                             android:paddingVertical="8dp"
                             android:textColorHint="@color/grey_text"
                             android:background="@null" />
-
                         <ImageView
                             android:id="@+id/btnpilihtanggal"
                             android:layout_width="54dp"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:contentDescription="Tanggal"
                             android:src="@drawable/kalender" />
                     </LinearLayout>
@@ -174,15 +173,14 @@
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
                     android:layout_marginTop="6dp"
-                    android:textColorHint="@color/grey_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lokasi Foto :"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginTop="12dp" />
+                    android:textColorHint="@color/grey_text"
+                    android:textColor="@color/black" /> <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lokasi Foto :"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp" />
                 <EditText
                     android:id="@+id/etLokasi"
                     android:layout_width="match_parent"
@@ -191,21 +189,19 @@
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
                     android:layout_marginTop="6dp"
-                    android:textColorHint="@color/grey_text" />
+                    android:textColorHint="@color/grey_text"
+                    android:textColor="@color/black" /> <Button
+                android:id="@+id/tvGunakanLokasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📍 Gunakan lokasi saat ini"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/green"
+                android:layout_marginTop="6dp"
+                android:layout_gravity="end"
+                android:paddingHorizontal="16dp" />
 
-                <TextView
-                    android:id="@+id/tvGunakanLokasi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="📍 Gunakan lokasi saat ini"
-                    android:textColor="@color/green"
-                    android:textStyle="bold"
-                    android:layout_marginTop="6dp"
-                    android:layout_gravity="end"
-                    android:padding="4dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,20 +217,19 @@
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
                     android:layout_marginTop="6dp"
-                    android:textColorHint="@color/grey_text" />
-
-                <Button
-                    android:id="@+id/btnUpload"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Upload"
-                    android:textAllCaps="false"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/white"
-                    android:padding="12dp"
-                    android:fontFamily="@font/montserrat_semibold"
-                    android:background="@drawable/bg_button_pengajuan"
-                    app:backgroundTint="@null"/>
+                    android:textColorHint="@color/grey_text"
+                    android:textColor="@color/black" /> <Button
+                android:id="@+id/btnUpload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload"
+                android:textAllCaps="false"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:padding="12dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:background="@drawable/bg_button_pengajuan"
+                app:backgroundTint="@null"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
