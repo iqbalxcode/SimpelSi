@@ -50,6 +50,8 @@
         <activity
             android:name=".fitur.HomeActivity"
             android:exported="false" />
+        <activity android:name=".fitur.ProfilActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".Login.LoginActivity"
