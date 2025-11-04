@@ -163,6 +163,7 @@
         android:layout_height="wrap_content"
         android:text="@string/apakah_anda_ingin_keluar"
         android:textSize="14sp"
+        android:textColor="@color/black"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@id/logout_button"
         app:layout_constraintStart_toStartOf="parent"
