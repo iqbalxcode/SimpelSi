@@ -8,7 +8,6 @@
     android:background="@color/white"
     tools:context=".fitur.PengajuanLaporanActivity">
 
-    <!-- ScrollView utama -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
@@ -30,7 +29,6 @@
             android:paddingTop="16dp"
             android:paddingBottom="24dp">
 
-            <!-- Header -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,18 +43,15 @@
                     android:layout_height="28dp"
                     android:src="@drawable/back"
                     android:contentDescription="Kembali" />
-
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
-
                 <LinearLayout
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -75,7 +70,6 @@
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp" />
 
-            <!-- CARD FORM -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +79,6 @@
                 android:elevation="4dp"
                 android:layout_marginBottom="16dp">
 
-                <!-- Upload foto -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,7 +86,6 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_marginBottom="6dp" />
-
                 <LinearLayout
                     android:id="@+id/layoutUploadBox"
                     android:layout_width="match_parent"
@@ -104,8 +96,6 @@
                     android:layout_marginBottom="10dp"
                     android:clickable="true"
                     android:focusable="true">
-
-                    <!-- Tambahkan ImageView untuk preview foto -->
                     <ImageView
                         android:id="@+id/imgPreview"
                         android:layout_width="match_parent"
@@ -114,8 +104,6 @@
                         android:adjustViewBounds="true"
                         android:visibility="gone"
                         android:contentDescription="Preview foto" />
-
-                    <!-- Teks default (muncul kalau belum ada foto) -->
                     <TextView
                         android:id="@+id/tvUploadFileName"
                         android:layout_width="wrap_content"
@@ -125,7 +113,6 @@
                         android:textStyle="italic" />
                 </LinearLayout>
 
-                <!-- Baris Tanggal dan Tombol Hapus -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,7 +120,6 @@
                     android:gravity="center_vertical"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -142,7 +128,6 @@
                         android:gravity="center_vertical"
                         android:background="@drawable/bg_input_field"
                         android:paddingHorizontal="12dp">
-
                         <EditText
                             android:id="@+id/etTanggal"
                             android:layout_width="0dp"
@@ -155,7 +140,6 @@
                             android:paddingVertical="8dp"
                             android:textColorHint="@color/grey_text"
                             android:background="@null" />
-
                         <ImageView
                             android:id="@+id/btnpilihtanggal"
                             android:layout_width="20dp"
@@ -163,7 +147,6 @@
                             android:src="@drawable/kalender"
                             android:contentDescription="Tanggal" />
                     </LinearLayout>
-
                     <Button
                         android:id="@+id/btnHapusFoto"
                         android:layout_width="wrap_content"
@@ -176,14 +159,12 @@
                         android:paddingHorizontal="16dp" />
                 </LinearLayout>
 
-                <!-- Nama -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nama :"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
-
                 <EditText
                     android:id="@+id/etNama"
                     android:layout_width="match_parent"
@@ -194,7 +175,6 @@
                     android:layout_marginTop="6dp"
                     android:textColorHint="@color/grey_text" />
 
-                <!-- Lokasi -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -202,7 +182,6 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_marginTop="12dp" />
-
                 <EditText
                     android:id="@+id/etLokasi"
                     android:layout_width="match_parent"
@@ -213,7 +192,17 @@
                     android:layout_marginTop="6dp"
                     android:textColorHint="@color/grey_text" />
 
-                <!-- Keterangan -->
+                <Button
+                    android:id="@+id/tvGunakanLokasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📍 Gunakan lokasi saat ini"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/green"
+                    android:layout_marginTop="6dp"
+                    android:layout_gravity="end"
+                    android:paddingHorizontal="16dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,7 +210,6 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_marginTop="12dp" />
-
                 <EditText
                     android:id="@+id/etKeterangan"
                     android:layout_width="match_parent"
@@ -232,7 +220,6 @@
                     android:layout_marginTop="6dp"
                     android:textColorHint="@color/grey_text" />
 
-                <!-- Tombol Upload -->
                 <Button
                     android:id="@+id/btnUpload"
                     android:layout_width="match_parent"
@@ -249,7 +236,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
