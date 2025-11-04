@@ -140,12 +140,13 @@
                             android:paddingVertical="8dp"
                             android:textColorHint="@color/grey_text"
                             android:background="@null" />
+
                         <ImageView
                             android:id="@+id/btnpilihtanggal"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/kalender"
-                            android:contentDescription="Tanggal" />
+                            android:layout_width="54dp"
+                            android:layout_height="40dp"
+                            android:contentDescription="Tanggal"
+                            android:src="@drawable/kalender" />
                     </LinearLayout>
                     <Button
                         android:id="@+id/btnHapusFoto"
@@ -192,17 +193,19 @@
                     android:layout_marginTop="6dp"
                     android:textColorHint="@color/grey_text" />
 
-                <Button
+                <TextView
                     android:id="@+id/tvGunakanLokasi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="📍 Gunakan lokasi saat ini"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/green"
+                    android:textColor="@color/green"
+                    android:textStyle="bold"
                     android:layout_marginTop="6dp"
                     android:layout_gravity="end"
-                    android:paddingHorizontal="16dp" />
+                    android:padding="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

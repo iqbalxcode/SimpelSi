@@ -80,7 +80,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 200; // Ganti nama agar unik
 
     // --- ⬇️ VARIABEL BARU UNTUK LOKASI ⬇️ ---
-    private Button tvGunakanLokasi; // ❗️ Diubah jadi Button
+    private TextView tvGunakanLokasi;
     private FusedLocationProviderClient fusedLocationClient;
 
     /**
