@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/back"
+                android:src="@drawable/kembali"
                 android:contentDescription="Kembali"
                 android:layout_gravity="start" />
 

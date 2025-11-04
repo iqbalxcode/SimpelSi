@@ -75,6 +75,10 @@
             android:exported="false"/>
         <activity android:name=".artikel.ArtikelActivity"
             android:exported="false"/>
+        <activity android:name=".Tps.InfoTPSActivity"
+            android:exported="false"/>
+        <activity android:name=".Tps.DetailTPSActivity"
+            android:exported="false" />
 
     </application>
 

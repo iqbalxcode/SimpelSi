@@ -41,7 +41,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:src="@drawable/back"
+                    android:src="@drawable/kembali"
                     android:contentDescription="Kembali" />
                 <View
                     android:layout_width="0dp"

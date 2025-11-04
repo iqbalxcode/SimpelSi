@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <!-- Tombol Back -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentStart="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/kembali"
+                android:contentDescription="Kembali" />
+
+            <!-- Logo kanan -->
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/logo"
+                android:contentDescription="Logo" />
+        </RelativeLayout>
+
+        <!-- Judul -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TPS 1"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginTop="8dp" />
+
+        <!-- Gambar -->
+        <ImageView
+            android:id="@+id/imgTPS"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tps"
+            android:contentDescription="Foto TPS" />
+
+        <!-- Nama TPS -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama TPS :"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/tvNamaTPS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_color"
+            android:text="TPS 1 Kecamatan Wilangan"
+            android:padding="10dp"
+            android:enabled="false"
+            android:textColor="@android:color/black" />
+
+        <!-- Kecamatan -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kecamatan :"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/tvKecamatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_color"
+            android:text="Wilangan"
+            android:padding="10dp"
+            android:enabled="false"
+            android:textColor="@android:color/black" />
+
+        <!-- Lokasi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lokasi :"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/tvLokasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_color"
+            android:text="Jl. Wilangan"
+            android:padding="10dp"
+            android:enabled="false"
+            android:textColor="@android:color/black" />
+
+        <!-- Tombol Buka Maps -->
+        <LinearLayout
+            android:id="@+id/btnMapsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:background="@drawable/bg_color"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/location"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/btnMaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buka Maps"
+                android:textColor="@color/green"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Keterangan -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keterangan :"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="14dp"/>
+
+        <EditText
+            android:id="@+id/tvKeterangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_color"
+            android:padding="10dp"
+            android:enabled="false"
+            android:text="Tempat Pembuangan Sampah (TPS) 1 berada di Kecamatan Wilangan, Kelurahan Sukoharjo tepatnya di Jl. Wilangan."
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+</ScrollView>

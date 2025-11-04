@@ -21,7 +21,7 @@
             android:layout_height="28dp"
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/back"
+            android:src="@drawable/kembali"
             android:contentDescription="Kembali" />
 
         <!-- Logo + teks kanan -->

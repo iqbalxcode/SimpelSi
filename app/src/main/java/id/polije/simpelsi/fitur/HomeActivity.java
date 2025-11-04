@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import id.polije.simpelsi.CekStatusLaporan.CekStatusLaporanActivity;
 import id.polije.simpelsi.R;
+import id.polije.simpelsi.Tps.InfoTPSActivity;
 import id.polije.simpelsi.artikel.ArtikelActivity;
 
 public class HomeActivity extends AppCompatActivity {
@@ -55,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         layananInfoTPS.setOnClickListener(v -> {
-            Toast.makeText(this, "Membuka Info TPS...", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, InfoTPSActivity.class));
         });
 
         headerDokumentasi.setOnClickListener(v -> {
