@@ -87,12 +87,12 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
             Glide.with(context)
                     .load(urlProxy)
                     .centerCrop()
-                    .placeholder(R.drawable.img_desa_bagor)
-                    .error(R.drawable.img_desa_bagor)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.loading)
                     .into(holder.imgLaporan);
         } else {
             Log.w("LaporanAdapter", "Nama file foto kosong/null.");
-            holder.imgLaporan.setImageResource(R.drawable.img_desa_bagor);
+            holder.imgLaporan.setImageResource(R.drawable.loading);
         }
     }
 
