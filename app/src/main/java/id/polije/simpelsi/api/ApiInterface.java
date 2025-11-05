@@ -6,6 +6,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -17,8 +19,13 @@ public interface ApiInterface {
     @POST("login.php")
     Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
 
-    @POST("google_login.php")
-    Call<LoginResponse> loginGoogle(@Body LoginRequest googleRequest);
+    @FormUrlEncoded
+    @POST("login_google.php")
+    Call<LoginResponse> loginGoogle(
+            @Field("google_id") String googleId,
+            @Field("email") String email,
+            @Field("nama") String nama
+    );
 
     @POST("register.php")
     Call<RegisterResponse> registerUser(@Body RegisterRequest registerRequest);

@@ -1,7 +1,20 @@
-package id.polije.simpelsi.model; // ⚠️ Pastikan package ini benar
+package id.polije.simpelsi.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Model respon login dari server.
+ * Menyesuaikan dengan struktur JSON dari PHP:
+ * {
+ *   "status": "success",
+ *   "message": "Login berhasil",
+ *   "data": {
+ *       "id_masyarakat": "123",
+ *       "nama": "Dimas Aldi",
+ *       "email": "dimas@example.com"
+ *   }
+ * }
+ */
 public class LoginResponse {
 
     @SerializedName("status")
@@ -10,13 +23,11 @@ public class LoginResponse {
     @SerializedName("message")
     private String message;
 
-    // ❗️ Ini akan memperbaiki error 'getData'
-    // Nama 'data' di sini harus cocok dengan key JSON dari PHP
+    // Objek data yang berisi informasi pengguna
     @SerializedName("data")
-    private UserData data; // ❗️ Ini akan memperbaiki error 'UserData'
+    private UserData data;
 
-    // --- Getters ---
-
+    // --- Getter utama ---
     public String getStatus() {
         return status;
     }
@@ -25,36 +36,30 @@ public class LoginResponse {
         return message;
     }
 
-    // ❗️ Ini akan memperbaiki error 'getData'
     public UserData getData() {
         return data;
     }
 
-    // Method bantu
+    // --- Logika bantu ---
     public boolean isSuccess() {
         return "success".equalsIgnoreCase(status);
     }
 
     /**
-     * ❗️ Inner class 'UserData' yang hilang
-     * Ini akan memperbaiki error 'UserData'
+     * Kelas internal yang mewakili data pengguna
      */
     public static class UserData {
 
-        // ❗️ Ini akan memperbaiki error 'getId_masyarakat'
         @SerializedName("id_masyarakat")
         private String id_masyarakat;
 
-        // ❗️ Ini akan memperbaiki error 'getNama'
         @SerializedName("nama")
         private String nama;
 
-        // ❗️ Ini akan memperbaiki error 'getEmail'
         @SerializedName("email")
         private String email;
 
-        // --- Getters untuk UserData ---
-
+        // --- Getters ---
         public String getId_masyarakat() {
             return id_masyarakat;
         }
