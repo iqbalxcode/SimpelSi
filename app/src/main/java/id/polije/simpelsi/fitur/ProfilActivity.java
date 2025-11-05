@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent; // ❗️ Import Intent
 import android.content.SharedPreferences; // ❗️ Import SharedPreferences
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +13,12 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+// ❗️ Import semua Activity tujuan navigasi Anda
 import id.polije.simpelsi.Login.LoginActivity;
 import id.polije.simpelsi.R;
+// (Pastikan nama package dan class ini benar)
+// import id.polije.simpelsi.fitur.HomeActivity;
+// import id.polije.simpelsi.fitur.PengajuanLaporanActivity;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -25,8 +28,6 @@ public class ProfilActivity extends AppCompatActivity {
     private TextView menuWebsite;
     private Button logoutButton;
     private BottomNavigationView bottomNavigationView;
-    private TextView userNameText, userEmailText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +41,6 @@ public class ProfilActivity extends AppCompatActivity {
         menuWebsite = findViewById(R.id.menu_website);
         logoutButton = findViewById(R.id.logout_button);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-
-        // Tambahan inisialisasi TextView nama & email
-        userNameText = findViewById(R.id.user_name);
-        userEmailText = findViewById(R.id.user_email);
-
-        // Ambil data dari SharedPreferences
-        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
-        String nama = prefs.getString("nama", "Nama tidak ditemukan");
-        String email = prefs.getString("email", "Email tidak ditemukan");
-
-        // Tampilkan ke TextView
-        userNameText.setText(nama);
-        userEmailText.setText(email);
 
         // Setup Bottom Navigation
         bottomNavigationView.setSelectedItemId(R.id.nav_profil);
@@ -98,9 +86,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         menuWebsite.setOnClickListener(v -> {
             Toast.makeText(this, "Membuka Website", Toast.LENGTH_SHORT).show();
-            // Buka link website di browser
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.simpelsi.medianewsonline.com"));
-            startActivity(browserIntent);
+            // Implementasi intent untuk membuka browser ke URL website
         });
 
         // --- ⬇️ PERBAIKAN 2: Tombol Logout ⬇️ ---
@@ -109,14 +95,18 @@ public class ProfilActivity extends AppCompatActivity {
             Toast.makeText(this, "Anda Telah Keluar", Toast.LENGTH_SHORT).show();
 
             // Hapus data sesi dari SharedPreferences
-            // Hapus sesi login
+            SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.clear();
-            editor.apply();
+            editor.clear(); // Menghapus semua data (id_masyarakat, nama, is_logged_in)
+            editor.apply(); // Simpan perubahan
 
             // Kembali ke LoginActivity
             Intent intent = new Intent(ProfilActivity.this, LoginActivity.class);
+
+            // Hapus semua activity sebelumnya (PENTING!)
+            // Ini mencegah pengguna menekan "back" dan kembali ke Home/Profil
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
             startActivity(intent);
             finish(); // Tutup ProfilActivity
         });

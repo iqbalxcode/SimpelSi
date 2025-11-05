@@ -1,6 +1,6 @@
 package id.polije.simpelsi.CekStatusLaporan;
 
-import android.content.SharedPreferences; // ❗️ Import SharedPreferences
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,9 +20,7 @@ import java.util.List;
 import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
-// ❗️ Pastikan import 'Laporan' ini benar
 import id.polije.simpelsi.CekStatusLaporan.Laporan;
-// ❗️ Pastikan import 'ResponseLaporan' ini benar
 import id.polije.simpelsi.model.ResponseLaporan;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,9 +31,8 @@ public class CekStatusLaporanActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EditText etCariNama;
     private LaporanAdapter adapter;
-    private List<Laporan> laporanList = new ArrayList<>();
+    private List<Laporan> laporanList = new ArrayList<>(); // ❗️ List milik Activity
 
-    // ❗️ Variabel ini akan kita isi dari SharedPreferences
     private String idMasyarakat;
 
     @Override
@@ -47,31 +44,20 @@ public class CekStatusLaporanActivity extends AppCompatActivity {
         etCariNama = findViewById(R.id.etCariNama);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new LaporanAdapter(this, laporanList);
+        adapter = new LaporanAdapter(this, laporanList); // ❗️ Adapter menggunakan list ini
         recyclerView.setAdapter(adapter);
 
-        // --- ⬇️ PERBAIKAN UTAMA DI SINI ⬇️ ---
-
-        // 1. Ambil SharedPreferences (nama harus sama persis dengan di LoginActivity)
+        // Ambil SharedPreferences
         SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
-
-        // 2. Ambil "id_masyarakat" yang tersimpan
         idMasyarakat = prefs.getString("id_masyarakat", null);
 
-        // 3. Cek jika ID ada
         if (idMasyarakat == null || idMasyarakat.isEmpty()) {
             Toast.makeText(this, "Sesi Anda tidak ditemukan. Silakan login ulang.", Toast.LENGTH_LONG).show();
-            // (Opsional: Anda bisa paksa kembali ke LoginActivity di sini jika mau)
-            // finish();
-            return; // Hentikan jika tidak ada ID
+            return;
         }
 
-        // 4. Panggil loadLaporan SETELAH ID didapatkan
-        loadLaporan();
+        loadLaporan(); // Panggil setelah ID didapat
 
-        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
-
-        // 🔍 fitur pencarian berdasarkan nama (Ini sudah benar)
         etCariNama.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void afterTextChanged(Editable s) {}
@@ -84,8 +70,6 @@ public class CekStatusLaporanActivity extends AppCompatActivity {
 
     private void loadLaporan() {
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-
-        // ❗️ Panggilan ini sekarang akan berisi ID pengguna (misal: "14"), bukan null
         Call<ResponseLaporan> call = api.getLaporan(idMasyarakat);
 
         call.enqueue(new Callback<ResponseLaporan>() {
@@ -94,21 +78,27 @@ public class CekStatusLaporanActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("CEK_LAPORAN", "Response JSON: " + new Gson().toJson(response.body()));
 
-                    // ❗️ Perbaikan logika untuk menangani status "success" atau "error"
+                    // --- ⬇️ INI LOGIKA YANG BENAR ⬇️ ---
                     if ("success".equals(response.body().getStatus()) && response.body().getData() != null) {
 
-                        laporanList.clear(); // Bersihkan list sebelum diisi
+                        // 1. Bersihkan list milik Activity
+                        laporanList.clear();
+                        // 2. Tambahkan semua data baru ke list milik Activity
                         laporanList.addAll(response.body().getData());
-                        adapter.updateData(laporanList); // Update adapter dengan data baru
+                        // 3. Beri tahu adapter bahwa data sudah berubah
+                        adapter.updateData(laporanList);
 
+                        // 4. Cek JIKA list-nya KOSONG
                         if (laporanList.isEmpty()) {
                             Toast.makeText(CekStatusLaporanActivity.this, "Anda belum memiliki laporan", Toast.LENGTH_SHORT).show();
                         }
 
                     } else {
-                        // Ini terjadi jika status "error" dari PHP (misal: "Data laporan tidak ditemukan")
+                        // 5. Jika status "error" dari PHP (misal: "Data laporan tidak ditemukan")
                         Toast.makeText(CekStatusLaporanActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                    // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
+
                 } else {
                     Toast.makeText(CekStatusLaporanActivity.this, "Response gagal dari server", Toast.LENGTH_SHORT).show();
                 }
@@ -116,10 +106,9 @@ public class CekStatusLaporanActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseLaporan> call, Throwable t) {
-                Toast.makeText(CekStatusLaporanActivity.this, "Gagal memuat data: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CekStatusLaporanActivity.this, "Gagal memuat data: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.e("CEK_LAPORAN_FAIL", "Error: ", t);
             }
         });
     }
-
 }
