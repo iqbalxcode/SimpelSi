@@ -23,7 +23,7 @@ public class ArtikelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Tutup halaman saat tombol back ditekan
-                ArtikelActivity.super.onBackPressed(); // ✅ ini yang benar
+                ArtikelActivity.super.onBackPressed();
             }
         });
     }
