@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.polije.simpelsi.R;
-import id.polije.simpelsi.api.ApiClient;
+import id.polije.simpelsi.api.ApiClient; // ❗️ Pastikan import ApiClient ada
 
 public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHolder> {
     private final Context context;
@@ -48,16 +48,16 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         holder.tvKeterangan.setText("Keterangan : " + safeText(laporan.getKeterangan()));
         holder.tvTanggal.setText("Tanggal : " + safeText(laporan.getTanggal()));
 
-        // ✅ Ambil status laporan dari getter yang benar (getStatusLaporan)
-        String status = laporan.getStatusLaporan();
+
+        String status = laporan.getStatusLaporan(); // ✅ BENAR: Menggunakan camelCase
 
         if (status == null || status.isEmpty()) {
-            status = "Diproses";
+            status = "Diproses"; // Default
         }
 
         holder.tvStatus.setText(status);
 
-        // ✅ Ganti warna background sesuai status
+        // Warna label status (kode ini sudah benar)
         switch (status.toLowerCase()) {
             case "diterima":
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_status_diterima);
@@ -69,22 +69,38 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_status_diproses);
                 break;
         }
+        // --- ⬆️ AKHIR PERBAIKAN STATUS ⬆️ ---
 
-        // ✅ Tampilkan gambar
-        String fotoUrl = laporan.getFoto(); // sudah otomatis lengkap di model
-        if (fotoUrl != null && !fotoUrl.trim().isEmpty()) {
-            Log.d("LaporanAdapter", "Memuat foto: " + fotoUrl);
 
+        // --- ⬇️ PERBAIKAN 2: FOTO (SOLUSI HOTLINKING) ⬇️ ---
+
+        // 1. Ambil HANYA NAMA FILE dari model
+        String namaFileFoto = laporan.getFoto();
+
+        // 2. Cek apakah nama file valid
+        if (namaFileFoto != null && !namaFileFoto.trim().isEmpty()) {
+
+            // 3. Buat URL PROXY ke get_image.php (BUKAN ke /uploads/ langsung)
+            //    ApiClient.BASE_URL adalah "http://.../api/"
+            String urlProxy = ApiClient.BASE_URL + "get_image.php?file=" + namaFileFoto;
+
+            // Log untuk memastikan URL benar
+            Log.d("LaporanAdapter", "Memuat URL Proxy: " + urlProxy);
+
+            // 4. Muat gambar menggunakan URL Proxy
             Glide.with(context)
-                    .load(fotoUrl)
+                    .load(urlProxy)
                     .centerCrop()
-                    .placeholder(R.drawable.loading)
-                    .error(R.drawable.loading)
+                    .placeholder(R.drawable.loading) // ❗️ Pastikan R.drawable.loading ada
+                    .error(R.drawable.loading) // ❗️ Tampilkan ini jika error
                     .into(holder.imgLaporan);
         } else {
-            Log.w("LaporanAdapter", "Foto kosong/null.");
-            holder.imgLaporan.setImageResource(R.drawable.loading);
+            // Jika tidak ada nama file, tampilkan placeholder
+            Log.w("LaporanAdapter", "Nama file foto kosong/null.");
+            holder.imgLaporan.setImageResource(R.drawable.loading); // ❗️ Pastikan R.drawable.loading ada
         }
+        // --- ⬆️ AKHIR PERBAIKAN FOTO ⬆️ ---
+
     }
 
     @Override
@@ -92,6 +108,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         return laporanList != null ? laporanList.size() : 0;
     }
 
+    // --- (Method updateData Anda sudah benar) ---
     public void updateData(List<Laporan> newData) {
         laporanList.clear();
         laporanList.addAll(newData);
@@ -100,6 +117,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    // --- (Method filter Anda sudah benar) ---
     public void filter(String text) {
         laporanList.clear();
         if (text == null || text.isEmpty()) {
@@ -119,6 +137,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         return text != null && !text.isEmpty() ? text : "-";
     }
 
+    // --- (Class ViewHolder Anda sudah benar) ---
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgLaporan;
         TextView tvNama, tvLokasi, tvKeterangan, tvTanggal, tvStatus;
