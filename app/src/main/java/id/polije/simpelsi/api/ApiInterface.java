@@ -16,7 +16,8 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @POST("login.php") 
+    // 🔐 Login
+    @POST("login.php")
     Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
 
     @FormUrlEncoded
@@ -27,6 +28,7 @@ public interface ApiInterface {
             @Field("nama") String nama
     );
 
+    // 📝 Register & OTP
     @POST("register.php")
     Call<RegisterResponse> registerUser(@Body RegisterRequest registerRequest);
 
@@ -39,11 +41,11 @@ public interface ApiInterface {
     @POST("reset_password.php")
     Call<ResetResponse> resetPassword(@Body ResetRequest request);
 
-    // Ini adalah satu-satunya method upload yang benar
+    // 📤 Upload Laporan
     @Multipart
-    @POST("upload_laporan.php") // ❗️ PASTIKAN NAMA FILE INI BENAR
+    @POST("upload_laporan.php")
     Call<ResponseModel> uploadLaporan(
-            @Part("id_masyarakat")  RequestBody id_masyarkat,
+            @Part("id_masyarakat") RequestBody idMasyarakat,
             @Part("nama") RequestBody nama,
             @Part("lokasi") RequestBody lokasi,
             @Part("keterangan") RequestBody keterangan,
@@ -51,6 +53,7 @@ public interface ApiInterface {
             @Part MultipartBody.Part foto
     );
 
+    // 📥 Ambil Laporan
     @GET("get_laporan.php")
     Call<ResponseLaporan> getLaporan(@Query("id_masyarakat") String idMasyarakat);
 }
