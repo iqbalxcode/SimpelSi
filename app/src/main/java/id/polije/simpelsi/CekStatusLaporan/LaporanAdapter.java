@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.polije.simpelsi.R;
+import id.polije.simpelsi.api.ApiClient;
 
+// ❗️ Pastikan 'Laporan' di sini adalah model class yang benar (Laporan.java atau LaporanModel.java)
+//    yang sudah memiliki getter getStatus_laporan()
 public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHolder> {
     private final Context context;
     private final List<Laporan> laporanList;
@@ -26,8 +29,8 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
 
     public LaporanAdapter(Context context, List<Laporan> laporanList) {
         this.context = context;
-        this.laporanList = laporanList != null ? laporanList : new ArrayList<>();
-        this.laporanListFull = new ArrayList<>(this.laporanList);
+        this.laporanList = laporanList;
+        this.laporanListFull = new ArrayList<>(laporanList);
     }
 
     @NonNull
@@ -42,20 +45,22 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         Laporan laporan = laporanList.get(position);
         if (laporan == null) return;
 
-        Log.d("ADAPTER_BIND", "Menampilkan laporan ke-" + position + ": " + laporan.getNama());
-
         holder.tvNama.setText("Nama : " + safeText(laporan.getNama()));
         holder.tvLokasi.setText("Lokasi : " + safeText(laporan.getLokasi()));
         holder.tvKeterangan.setText("Keterangan : " + safeText(laporan.getKeterangan()));
         holder.tvTanggal.setText("Tanggal : " + safeText(laporan.getTanggal()));
 
-        // Status
-        String status = laporan.getStatusLaporan();
+        // --- ⬇️ PERBAIKAN DI SINI (LOGIKA STATUS) ⬇️ ---
+        // Kita hanya panggil satu getter yang benar, sesuai model data
+        String status = laporan.getStatus_laporan();
+
         if (status == null || status.isEmpty()) {
-            status = "Diproses";
+            status = "Diproses"; // Default
         }
+
         holder.tvStatus.setText(status);
 
+        // Warna label status (kode ini sudah benar)
         switch (status.toLowerCase()) {
             case "diterima":
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_status_diterima);
@@ -67,39 +72,36 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_status_diproses);
                 break;
         }
+        // --- ⬆️ AKHIR PERBAIKAN STATUS ⬆️ ---
 
-        // FOTO URL LANGSUNG dari API
-        String fotoUrl = laporan.getFotoUrl();
-        if (fotoUrl != null && !fotoUrl.trim().isEmpty()) {
+
+        // --- FOTO (Kode Anda di sini sudah benar) ---
+        String namaFileFoto = laporan.getFoto();
+
+        if (namaFileFoto != null && !namaFileFoto.trim().isEmpty()) {
+
+            // Buat URL PROXY ke get_image.php
+            String urlProxy = ApiClient.BASE_URL + "get_image.php?file=" + namaFileFoto;
+            Log.d("LaporanAdapter", "Memuat URL Proxy: " + urlProxy);
+
             Glide.with(context)
-                    .load(fotoUrl)
+                    .load(urlProxy)
                     .centerCrop()
                     .placeholder(R.drawable.loading)
                     .error(R.drawable.loading)
                     .into(holder.imgLaporan);
         } else {
+            Log.w("LaporanAdapter", "Nama file foto kosong/null.");
             holder.imgLaporan.setImageResource(R.drawable.loading);
         }
     }
 
     @Override
     public int getItemCount() {
-        int count = laporanList != null ? laporanList.size() : 0;
-        Log.d("ADAPTER_COUNT", "Jumlah item di adapter: " + count);
-        return count;
+        return laporanList != null ? laporanList.size() : 0;
     }
 
-    // ✅ Memperbarui data adapter
     public void updateData(List<Laporan> newData) {
-        if (newData == null) {
-            Log.e("ADAPTER", "updateData: data baru null!");
-            laporanList.clear();
-            laporanListFull.clear();
-            notifyDataSetChanged();
-            return;
-        }
-
-        Log.d("ADAPTER", "updateData dipanggil, jumlah data: " + newData.size());
         laporanList.clear();
         laporanList.addAll(newData);
         laporanListFull.clear();
@@ -107,7 +109,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    // ✅ Menambahkan fitur filter/pencarian
+
     public void filter(String text) {
         laporanList.clear();
         if (text == null || text.isEmpty()) {
@@ -115,9 +117,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         } else {
             text = text.toLowerCase();
             for (Laporan item : laporanListFull) {
-                if ((item.getNama() != null && item.getNama().toLowerCase().contains(text)) ||
-                        (item.getLokasi() != null && item.getLokasi().toLowerCase().contains(text)) ||
-                        (item.getKeterangan() != null && item.getKeterangan().toLowerCase().contains(text))) {
+                if (item.getNama() != null && item.getNama().toLowerCase().contains(text)) {
                     laporanList.add(item);
                 }
             }

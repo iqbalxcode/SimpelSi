@@ -33,13 +33,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
                 android:paddingBottom="8dp">
 
                 <ImageView
                     android:id="@+id/img_logo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginEnd="8dp"
                     android:contentDescription="Logo"
                     android:src="@drawable/logo" />
@@ -48,6 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -72,7 +74,7 @@
                 android:id="@+id/img_banner"
                 android:layout_width="match_parent"
                 android:layout_height="177dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:contentDescription="Banner DLH"
                 android:scaleType="centerCrop"
                 android:src="@drawable/dinas" />

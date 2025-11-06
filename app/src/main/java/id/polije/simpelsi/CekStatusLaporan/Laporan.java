@@ -1,86 +1,69 @@
 package id.polije.simpelsi.CekStatusLaporan;
 
-import com.google.gson.annotations.Expose;
+// ❗️ 1. Tambahkan import ini
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Model data untuk laporan masyarakat.
- * Mewakili satu entitas laporan yang dikirim dari/ke server.
- */
 public class Laporan {
 
-    @SerializedName("id_laporan")
-    @Expose
-    private String idLaporan;
+    // ❗️ 2. Tambahkan anotasi @SerializedName agar cocok dengan JSON dari PHP
 
-    @SerializedName("id_masyarakat")
-    @Expose
-    private String idMasyarakat;
+    @SerializedName("id_laporan")
+    private String id_laporan;
 
     @SerializedName("nama")
-    @Expose
     private String nama;
 
     @SerializedName("lokasi")
-    @Expose
     private String lokasi;
 
     @SerializedName("keterangan")
-    @Expose
     private String keterangan;
 
     @SerializedName("tanggal")
-    @Expose
     private String tanggal;
 
-    @SerializedName("foto_url")
-    @Expose
-    private String fotoUrl;
+    @SerializedName("foto") // Ini adalah nama file foto (misal: "gambar.jpg")
+    private String foto;
 
-    @SerializedName("status_laporan")
-    @Expose
-    private String statusLaporan;
+    @SerializedName("status_laporan") // Ini adalah key status dari PHP
+    private String status_laporan;
 
-    // === GETTER ===
-    public String getIdLaporan() {
-        return idLaporan;
-    }
+    // ❗️ 3. Variabel "status" yang ganda sudah dihapus
 
-    public String getIdMasyarakat() {
-        return idMasyarakat;
+    // --- Getter ---
+    public String getId_laporan() {
+        return id_laporan;
     }
 
     public String getNama() {
-        return nama != null ? nama : "-";
+        return nama;
     }
 
     public String getLokasi() {
-        return lokasi != null ? lokasi : "-";
+        return lokasi;
     }
 
     public String getKeterangan() {
-        return keterangan != null ? keterangan : "-";
+        return keterangan;
     }
 
     public String getTanggal() {
-        return tanggal != null ? tanggal : "-";
+        return tanggal;
     }
 
-    public String getFotoUrl() {
-        return fotoUrl;
+    public String getFoto() {
+        return foto;
     }
 
-    public String getStatusLaporan() {
-        return statusLaporan != null ? statusLaporan : "-";
+    public String getStatus_laporan() {
+        return status_laporan;
     }
 
-    // === SETTER ===
-    public void setIdLaporan(String idLaporan) {
-        this.idLaporan = idLaporan;
-    }
+    // ❗️ 4. Getter "getStatus()" yang ganda sudah dihapus
 
-    public void setIdMasyarakat(String idMasyarakat) {
-        this.idMasyarakat = idMasyarakat;
+    // --- Setter (Opsional, tidak masalah jika ada) ---
+    public void setId_laporan(String id_laporan) {
+        this.id_laporan = id_laporan;
     }
 
     public void setNama(String nama) {
@@ -99,22 +82,11 @@ public class Laporan {
         this.tanggal = tanggal;
     }
 
-    public void setFotoUrl(String fotoUrl) {
-        this.fotoUrl = fotoUrl;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
-    public void setStatusLaporan(String statusLaporan) {
-        this.statusLaporan = statusLaporan;
-    }
-
-    @Override
-    public String toString() {
-        return "Laporan{" +
-                "idLaporan='" + idLaporan + '\'' +
-                ", nama='" + nama + '\'' +
-                ", lokasi='" + lokasi + '\'' +
-                ", tanggal='" + tanggal + '\'' +
-                ", statusLaporan='" + statusLaporan + '\'' +
-                '}';
+    public void setStatus_laporan(String status_laporan) {
+        this.status_laporan = status_laporan;
     }
 }
