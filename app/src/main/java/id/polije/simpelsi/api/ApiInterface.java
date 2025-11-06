@@ -1,5 +1,7 @@
 package id.polije.simpelsi.api;
 
+import androidx.annotation.Nullable;
+
 import id.polije.simpelsi.model.*;
 
 import okhttp3.MultipartBody;
@@ -53,4 +55,37 @@ public interface ApiInterface {
 
     @GET("get_laporan.php")
     Call<ResponseLaporan> getLaporan(@Query("id_masyarakat") String idMasyarakat);
+
+
+    @Multipart
+    @POST("upload_laporan.php")
+    Call<ResponseModel> uploadLaporan(
+            @Part("id_masyarakat")  RequestBody id_masyarkat,
+            // ... (parameter upload Anda)
+            @Part MultipartBody.Part foto
+    );
+
+    // ⬇️ TAMBAHKAN DUA METHOD BARU INI ⬇️
+
+    /**
+     * Menghapus laporan (mengirim JSON)
+     */
+    @POST("hapus_laporan.php")
+    Call<ResponseModel> tarikLaporan(@Body HapusRequest request);
+
+    /**
+     * Memperbarui laporan (mengirim Multipart)
+     * Sama seperti upload, tapi DENGAN id_laporan
+     */
+    @Multipart
+    @POST("update_laporan.php")
+    Call<ResponseModel> updateLaporan(
+            @Part("id_laporan") RequestBody idLaporan,
+            @Part("id_masyarakat")  RequestBody idMasyarakat,
+            @Part("nama") RequestBody nama,
+            @Part("lokasi") RequestBody lokasi,
+            @Part("keterangan") RequestBody keterangan,
+            @Part("tanggal") RequestBody tanggal,
+            @Part @Nullable MultipartBody.Part foto// ❗️ Foto dibuat opsional (@Nullable)
+    );
 }

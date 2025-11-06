@@ -1,9 +1,11 @@
 package id.polije.simpelsi.CekStatusLaporan;
-
+import java.io.Serializable;
 import com.google.gson.annotations.SerializedName;
 
-public class Laporan {
+public class Laporan implements Serializable {
 
+    @SerializedName("created_at") // ❗️ Tambahkan ini
+    private String created_at;
     @SerializedName("id_laporan")
     private String idLaporan;
 
@@ -36,7 +38,9 @@ public class Laporan {
     public String getIdLaporan() {
         return idLaporan;
     }
-
+    public String getCreated_at() {
+        return created_at;
+    }
     public String getIdMasyarakat() {
         return idMasyarakat;
     }

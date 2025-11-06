@@ -79,6 +79,9 @@
             android:exported="false"/>
         <activity android:name=".Tps.DetailTPSActivity"
             android:exported="false" />
+        <activity
+            android:name=".fitur.EditLaporanActivity"
+            android:exported="false" />
 
     </application>
 

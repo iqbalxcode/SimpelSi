@@ -171,6 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Masukkan Nama"
+                    android:gravity="center"
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
                     android:layout_marginTop="6dp"
@@ -205,13 +206,25 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Klik tombol lokasi"
+                        android:gravity="center"
+                        android:hint="Masukkan lokasi atau klik tombol"
                         android:background="@null"
                         android:textColorHint="@color/grey_text"
                         android:textColor="@color/black"
                         android:paddingStart="8dp"
                         android:paddingVertical="12dp"/> </LinearLayout>
 
+                <Button
+                    android:id="@+id/tvGunakanLokasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📍 Gunakan lokasi saat ini"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/green"
+                    android:layout_marginTop="6dp"
+                    android:layout_gravity="end"
+                    android:paddingHorizontal="16dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -224,6 +237,7 @@
                     android:id="@+id/etKeterangan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:hint="Masukkan Keterangan foto"
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
