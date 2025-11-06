@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // --- Cek apakah sudah login ---
+        // 🔹 Cek apakah user sudah login
         SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
         if (prefs.getBoolean("is_logged_in", false)) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        // --- Inisialisasi View ---
         tvDaftar = findViewById(R.id.tv_daftar);
         tvLupaSandi = findViewById(R.id.tv_lupa_sandi);
         btnMasuk = findViewById(R.id.btn_masuk);
@@ -94,10 +95,12 @@ public class LoginActivity extends AppCompatActivity {
         btnMasuk.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
+
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Email dan password wajib diisi", Toast.LENGTH_SHORT).show();
                 return;
             }
+
             btnMasuk.setEnabled(false);
             btnMasuk.setText("Memproses...");
             loginUser(email, password);
@@ -110,15 +113,13 @@ public class LoginActivity extends AppCompatActivity {
             btnGoogle.setEnabled(false);
             btnGoogle.setText("Memproses...");
 
-            // 🔹 Sign out dulu agar popup akun muncul
             googleSignInClient.signOut().addOnCompleteListener(this, task -> {
                 Intent signInIntent = googleSignInClient.getSignInIntent();
                 googleSignInLauncher.launch(signInIntent);
             });
         });
 
-
-        // --- Navigasi ---
+        // --- Navigasi ke halaman lain ---
         tvDaftar.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
         tvLupaSandi.setOnClickListener(v -> startActivity(new Intent(this, ForgotPasswordActivity.class)));
     }
@@ -137,7 +138,13 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse res = response.body();
                     if (res.isSuccess() && res.getData() != null) {
                         LoginResponse.UserData user = res.getData();
+
+                        // ✅ Simpan data user ke SharedPreferences
                         saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail());
+
+                        // 🔍 Log untuk debugging
+                        android.util.Log.d("LOGIN_DEBUG", "Login berhasil -> ID masyarakat: " + user.getId_masyarakat());
+
                         goToHome();
                     } else {
                         Toast.makeText(LoginActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
@@ -163,18 +170,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 resetGoogleButton();
+
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse res = response.body();
-
-                    // --- Debug respon ---
-                    if (res.getStatus() == null) {
-                        Toast.makeText(LoginActivity.this, "Respon tidak valid dari server", Toast.LENGTH_LONG).show();
-                        return;
-                    }
 
                     if (res.isSuccess() && res.getData() != null) {
                         LoginResponse.UserData user = res.getData();
                         saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail());
+
+                        android.util.Log.d("LOGIN_DEBUG", "Login Google berhasil -> ID masyarakat: " + user.getId_masyarakat());
+
                         Toast.makeText(LoginActivity.this, "Login Google berhasil", Toast.LENGTH_SHORT).show();
                         goToHome();
                     } else {
@@ -193,6 +198,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void saveUserSession(String id, String nama, String email) {
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("id_masyarakat", id);
+        editor.putString("nama", nama);
+        editor.putString("email", email);
+        editor.putBoolean("is_logged_in", true);
+        editor.apply();
+
+        // ✅ Tambahkan log untuk memastikan tersimpan
+        android.util.Log.d("SESSION_SAVE", "Session disimpan -> ID masyarakat: " + id);
+    }
+
     private void goToHome() {
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -204,15 +222,5 @@ public class LoginActivity extends AppCompatActivity {
         isGoogleLoading = false;
         btnGoogle.setEnabled(true);
         btnGoogle.setText("Masuk dengan akun Google");
-    }
-
-    private void saveUserSession(String id, String nama, String email) {
-        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("id_masyarakat", id);
-        editor.putString("nama", nama);
-        editor.putString("email", email);
-        editor.putBoolean("is_logged_in", true);
-        editor.apply();
     }
 }
