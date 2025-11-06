@@ -1,14 +1,14 @@
 package id.polije.simpelsi.CekStatusLaporan;
 
-// ❗️ 1. Tambahkan import ini
 import com.google.gson.annotations.SerializedName;
 
 public class Laporan {
 
-    // ❗️ 2. Tambahkan anotasi @SerializedName agar cocok dengan JSON dari PHP
-
     @SerializedName("id_laporan")
-    private String id_laporan;
+    private String idLaporan;
+
+    @SerializedName("id_masyarakat")
+    private String idMasyarakat;
 
     @SerializedName("nama")
     private String nama;
@@ -22,48 +22,67 @@ public class Laporan {
     @SerializedName("tanggal")
     private String tanggal;
 
-    @SerializedName("foto") // Ini adalah nama file foto (misal: "gambar.jpg")
+    // 🔹 API bisa kirim "foto" atau "foto_url"
+    @SerializedName("foto")
     private String foto;
 
-    @SerializedName("status_laporan") // Ini adalah key status dari PHP
-    private String status_laporan;
+    @SerializedName("foto_url")
+    private String fotoUrl;
 
-    // ❗️ 3. Variabel "status" yang ganda sudah dihapus
+    @SerializedName("status_laporan")
+    private String statusLaporan;
 
     // --- Getter ---
-    public String getId_laporan() {
-        return id_laporan;
+    public String getIdLaporan() {
+        return idLaporan;
+    }
+
+    public String getIdMasyarakat() {
+        return idMasyarakat;
     }
 
     public String getNama() {
-        return nama;
+        return nama != null ? nama : "-";
     }
 
     public String getLokasi() {
-        return lokasi;
+        return lokasi != null ? lokasi : "-";
     }
 
     public String getKeterangan() {
-        return keterangan;
+        return keterangan != null ? keterangan : "-";
     }
 
     public String getTanggal() {
-        return tanggal;
+        return tanggal != null ? tanggal : "-";
     }
 
+    /**
+     * 🔹 Mengembalikan URL lengkap foto:
+     *  1️⃣ Jika `foto_url` sudah lengkap → gunakan itu.
+     *  2️⃣ Jika hanya nama file (foto) → buatkan URL lengkapnya.
+     */
     public String getFoto() {
-        return foto;
+        if (fotoUrl != null && !fotoUrl.trim().isEmpty()) {
+            return fotoUrl;
+        } else if (foto != null && !foto.trim().isEmpty()) {
+            return "https://simpelsi.medianewsonline.com/api/uploads/" + foto;
+        } else {
+            return null;
+        }
     }
 
-    public String getStatus_laporan() {
-        return status_laporan;
+    public String getStatusLaporan() {
+        return statusLaporan != null ? statusLaporan : "Diproses";
     }
 
-    // ❗️ 4. Getter "getStatus()" yang ganda sudah dihapus
+    // --- Setter ---
+    public void setIdLaporan(String idLaporan) {
+        this.idLaporan = idLaporan;
+    }
 
-    // --- Setter (Opsional, tidak masalah jika ada) ---
-    public void setId_laporan(String id_laporan) {
-        this.id_laporan = id_laporan;
+    public void setIdMasyarakat(String idMasyarakat) {
+        this.idMasyarakat = idMasyarakat;
     }
 
     public void setNama(String nama) {
@@ -86,7 +105,11 @@ public class Laporan {
         this.foto = foto;
     }
 
-    public void setStatus_laporan(String status_laporan) {
-        this.status_laporan = status_laporan;
+    public void setFotoUrl(String fotoUrl) {
+        this.fotoUrl = fotoUrl;
+    }
+
+    public void setStatusLaporan(String statusLaporan) {
+        this.statusLaporan = statusLaporan;
     }
 }

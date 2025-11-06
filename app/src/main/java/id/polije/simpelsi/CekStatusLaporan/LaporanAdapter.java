@@ -20,8 +20,6 @@ import java.util.List;
 import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 
-// ❗️ Pastikan 'Laporan' di sini adalah model class yang benar (Laporan.java atau LaporanModel.java)
-//    yang sudah memiliki getter getStatus_laporan()
 public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHolder> {
     private final Context context;
     private final List<Laporan> laporanList;
@@ -50,17 +48,16 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         holder.tvKeterangan.setText("Keterangan : " + safeText(laporan.getKeterangan()));
         holder.tvTanggal.setText("Tanggal : " + safeText(laporan.getTanggal()));
 
-        // --- ⬇️ PERBAIKAN DI SINI (LOGIKA STATUS) ⬇️ ---
-        // Kita hanya panggil satu getter yang benar, sesuai model data
-        String status = laporan.getStatus_laporan();
+        // ✅ Ambil status laporan dari getter yang benar (getStatusLaporan)
+        String status = laporan.getStatusLaporan();
 
         if (status == null || status.isEmpty()) {
-            status = "Diproses"; // Default
+            status = "Diproses";
         }
 
         holder.tvStatus.setText(status);
 
-        // Warna label status (kode ini sudah benar)
+        // ✅ Ganti warna background sesuai status
         switch (status.toLowerCase()) {
             case "diterima":
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_status_diterima);
@@ -72,26 +69,20 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_status_diproses);
                 break;
         }
-        // --- ⬆️ AKHIR PERBAIKAN STATUS ⬆️ ---
 
-
-        // --- FOTO (Kode Anda di sini sudah benar) ---
-        String namaFileFoto = laporan.getFoto();
-
-        if (namaFileFoto != null && !namaFileFoto.trim().isEmpty()) {
-
-            // Buat URL PROXY ke get_image.php
-            String urlProxy = ApiClient.BASE_URL + "get_image.php?file=" + namaFileFoto;
-            Log.d("LaporanAdapter", "Memuat URL Proxy: " + urlProxy);
+        // ✅ Tampilkan gambar
+        String fotoUrl = laporan.getFoto(); // sudah otomatis lengkap di model
+        if (fotoUrl != null && !fotoUrl.trim().isEmpty()) {
+            Log.d("LaporanAdapter", "Memuat foto: " + fotoUrl);
 
             Glide.with(context)
-                    .load(urlProxy)
+                    .load(fotoUrl)
                     .centerCrop()
                     .placeholder(R.drawable.loading)
                     .error(R.drawable.loading)
                     .into(holder.imgLaporan);
         } else {
-            Log.w("LaporanAdapter", "Nama file foto kosong/null.");
+            Log.w("LaporanAdapter", "Foto kosong/null.");
             holder.imgLaporan.setImageResource(R.drawable.loading);
         }
     }
@@ -108,7 +99,6 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         laporanListFull.addAll(newData);
         notifyDataSetChanged();
     }
-
 
     public void filter(String text) {
         laporanList.clear();
