@@ -249,7 +249,7 @@
                     android:id="@+id/btnUpload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="UPLOAD"
+                    android:text="Kirim"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:fontFamily="@font/montserrat_semibold"
