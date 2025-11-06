@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -63,7 +62,6 @@ import retrofit2.Response;
 
 public class PengajuanLaporanActivity extends AppCompatActivity {
 
-    // Komponen UI
     private EditText etNama, etLokasi, etKeterangan, etTanggal;
     private TextView tvUploadFileName;
     private Button btnUpload, btnHapusFoto;
@@ -71,7 +69,6 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
     private LinearLayout uploadBox;
     private BottomNavigationView bottomNavigationView;
 
-    // ... (Variabel Foto/Kamera)
     private Uri imageUri;
     private Uri cameraFileUri;
     private File imageFile;
@@ -79,10 +76,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_CAMERA_REQUEST = 101;
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 200;
 
-    // --- ⬇️ PERBAIKAN 1: UBAH TIPE DATA DARI TextView MENJADI Button ⬇️ ---
-    private Button tvGunakanLokasi; // ❗️ DIUBAH MENJADI BUTTON
     private FusedLocationProviderClient fusedLocationClient;
-    // --- ⬆️ AKHIR PERBAIKAN 1 ⬆️ ---
 
     private final ActivityResultLauncher<String> requestLocationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -92,7 +86,6 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
                     Toast.makeText(this, "Izin lokasi ditolak", Toast.LENGTH_SHORT).show();
                 }
             });
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,30 +105,37 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         imgPreview = findViewById(R.id.imgPreview);
         uploadBox = findViewById(R.id.layoutUploadBox);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
         bottomNavigationView.setSelectedItemId(R.id.nav_pengajuan);
-
-        // --- ⬇️ PERBAIKAN 2: GUNAKAN ID YANG BENAR ⬇️ ---
-        tvGunakanLokasi = findViewById(R.id.tvGunakanLokasi); // ❗️ ID Button
-        // --- ⬆️ AKHIR PERBAIKAN 2 ⬆️ ---
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // Setup Listeners
+        // ✅ Otomatis isi nama dari SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+        String namaLogin = prefs.getString("nama", "");
+        if (namaLogin != null && !namaLogin.isEmpty()) {
+            etNama.setText(namaLogin);
+            etNama.setEnabled(false); // tidak bisa diedit agar sesuai akun login
+        }
+
+        // Listener tombol tanggal
         btnpilihtanggal.setOnClickListener(v -> showDatePicker());
+
+        // Upload foto
         uploadBox.setOnClickListener(v -> selectImageSource());
         btnHapusFoto.setOnClickListener(v -> {
             clearImageSelection();
             Toast.makeText(this, "Foto dihapus", Toast.LENGTH_SHORT).show();
         });
+
         btnUpload.setOnClickListener(v -> {
             if (validateForm()) uploadLaporan();
         });
+
         btnBack.setOnClickListener(v -> finish());
 
-        // Listener Tombol Lokasi
-        tvGunakanLokasi.setOnClickListener(v -> {
-            checkLocationPermissions();
-        });
+        // Klik icon lokasi di EditText lokasi
+        ImageView iconLokasi = findViewById(R.id.iconLokasi);
+        iconLokasi.setOnClickListener(v -> checkLocationPermissions());
 
         // Bottom Navigation
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -157,12 +157,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         });
     }
 
-    // --- (Semua method di bawah ini sudah benar) ---
-    // (showDatePicker, selectImageSource, openGalleryChooser, checkCameraPermissions,
-    //  onRequestPermissionsResult, openCamera, createImageFile, onActivityResult,
-    //  displaySelectedImage, copyUriToCacheFile, getFileName, checkLocationPermissions,
-    //  getCurrentLocation, getAddressFromLocation, validateForm, uploadLaporan,
-    //  clearForm, clearImageSelection)
+    // ------------------------ METHOD TAMBAHAN ------------------------
 
     private void showDatePicker() {
         final Calendar calendar = Calendar.getInstance();
@@ -236,17 +231,18 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
 
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photoFile = null;
+        File photoFile;
         try {
             photoFile = createImageFile();
         } catch (IOException ex) {
             Log.e("Camera_Error", "Gagal membuat file gambar", ex);
             Toast.makeText(this, "Gagal menyiapkan kamera", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if (photoFile != null) {
             cameraFileUri = FileProvider.getUriForFile(this,
-                    "id.polije.simpelsi.fileprovider", // ❗️ Pastikan package name Anda benar
+                    "id.polije.simpelsi.fileprovider", // sesuaikan package name
                     photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraFileUri);
             startActivityForResult(takePictureIntent, PICK_IMAGE_CAMERA_REQUEST);
@@ -257,40 +253,24 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        return image;
+        return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
             if (requestCode == PICK_IMAGE_GALLERY_REQUEST && data != null && data.getData() != null) {
                 imageUri = data.getData();
                 String fileName = getFileName(imageUri);
                 imageFile = copyUriToCacheFile(imageUri, fileName);
-                if (imageFile != null) {
-                    displaySelectedImage();
-                } else {
-                    Toast.makeText(this, "Gagal mengambil file dari galeri", Toast.LENGTH_SHORT).show();
-                    clearImageSelection();
-                }
+                if (imageFile != null) displaySelectedImage();
             } else if (requestCode == PICK_IMAGE_CAMERA_REQUEST) {
                 imageUri = cameraFileUri;
                 String fileName = getFileName(imageUri);
                 imageFile = copyUriToCacheFile(imageUri, fileName);
-
-                if (imageFile != null) {
-                    displaySelectedImage();
-                } else {
-                    Toast.makeText(this, "Gagal menyimpan foto dari kamera", Toast.LENGTH_SHORT).show();
-                    clearImageSelection();
-                }
+                if (imageFile != null) displaySelectedImage();
             }
-        } else if (resultCode == RESULT_CANCELED) {
-            // Pengguna membatalkan
         }
     }
 
@@ -306,117 +286,62 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         try {
             File tempFile = new File(getCacheDir(), fileName);
             InputStream inputStream = getContentResolver().openInputStream(uri);
-            if (inputStream == null) {
-                Log.e("File_Copy_Error", "InputStream null");
-                return null;
-            }
             FileOutputStream outputStream = new FileOutputStream(tempFile);
             byte[] buffer = new byte[1024];
             int len;
-            while ((len = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, len);
-            }
+            while ((len = inputStream.read(buffer)) > 0) outputStream.write(buffer, 0, len);
             outputStream.close();
             inputStream.close();
             return tempFile;
         } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("File_Copy_Error", "Gagal menyalin file ke cache: " + e.getMessage());
+            Log.e("File_Copy_Error", e.getMessage());
             return null;
         }
     }
 
     private String getFileName(Uri uri) {
         String result = null;
-        if (uri.getScheme() != null && uri.getScheme().equals("content")) {
+        if ("content".equals(uri.getScheme())) {
             try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {
-                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    if (nameIndex != -1) {
-                        result = cursor.getString(nameIndex);
-                    }
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 }
-            } catch (Exception e) {
-                Log.e("GetFileName", "Error saat query nama file: " + e.getMessage());
             }
         }
         if (result == null) {
-            result = uri.getPath();
-            if (result != null) {
-                int cut = result.lastIndexOf('/');
-                if (cut != -1) {
-                    result = result.substring(cut + 1);
-                }
-            }
-        }
-        if (result == null || result.isEmpty()) {
             result = "upload_" + System.currentTimeMillis() + ".jpg";
         }
         return result;
     }
 
-
     private void checkLocationPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getCurrentLocation();
-        } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Izin Lokasi Diperlukan")
-                    .setMessage("Aplikasi ini memerlukan izin lokasi untuk mengisi alamat secara otomatis.")
-                    .setPositiveButton("OK", (dialog, which) -> {
-                        requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
-                    })
-                    .setNegativeButton("Batal", (dialog, which) -> dialog.dismiss())
-                    .create().show();
         } else {
             requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
     }
 
     private void getCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Izin lokasi tidak ada", Toast.LENGTH_SHORT).show();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
-        Toast.makeText(this, "Mencari lokasi...", Toast.LENGTH_SHORT).show();
-
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, location -> {
-                    if (location != null) {
-                        getAddressFromLocation(location);
-                    } else {
-                        Toast.makeText(this, "Gagal mendapatkan lokasi. Pastikan GPS aktif dan coba lagi.", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .addOnFailureListener(this, e -> {
-                    Log.e("Location_Error", "Gagal mendapatkan lokasi: " + e.getMessage());
-                    Toast.makeText(this, "Gagal mendapatkan lokasi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            if (location != null) getAddressFromLocation(location);
+        });
     }
 
     private void getAddressFromLocation(Location location) {
-        if (!isFinishing() && !isDestroyed()) {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            try {
-                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                if (addresses != null && !addresses.isEmpty()) {
-                    Address address = addresses.get(0);
-                    String fullAddress = address.getAddressLine(0);
-                    etLokasi.setText(fullAddress);
-                } else {
-                    etLokasi.setText("Alamat tidak ditemukan dari GPS");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("Geocoder_Error", "Gagal melakukan geocoding: " + e.getMessage());
-                etLokasi.setText("Gagal mendapatkan alamat (Error Jaringan)");
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                etLokasi.setText(addresses.get(0).getAddressLine(0));
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
 
     private boolean validateForm() {
         if (etNama.getText().toString().isEmpty()) {
@@ -445,64 +370,48 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
     private void uploadLaporan() {
         ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Mengirim laporan...");
-        pd.setCancelable(false);
         pd.show();
+
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+        String idMasyarakat = prefs.getString("id_masyarakat", null);
+
+        if (idMasyarakat == null) {
+            pd.dismiss();
+            Toast.makeText(this, "Login ulang diperlukan", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String namaStr = etNama.getText().toString().trim();
         String lokasiStr = etLokasi.getText().toString().trim();
         String ketStr = etKeterangan.getText().toString().trim();
         String tanggalStr = etTanggal.getText().toString().trim();
 
-        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
-        String idMasyarakat = prefs.getString("id_masyarakat", null);
-
-        if (idMasyarakat == null){
-            pd.dismiss();
-            Toast.makeText(this, "ID masyarakat tidak ditemukan. Silahkan Login ulang.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        RequestBody idBody = RequestBody.create(MultipartBody.FORM, idMasyarakat);
-
         try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            Date date = inputFormat.parse(tanggalStr);
-            tanggalStr = outputFormat.format(date);
+            SimpleDateFormat input = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date = input.parse(tanggalStr);
+            tanggalStr = output.format(date);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Format tanggal tidak valid", Toast.LENGTH_SHORT).show();
-            pd.dismiss();
-            return;
         }
 
-        Log.d("UPLOAD_TANGGAL", "Tanggal dikirim: " + tanggalStr);
-        Log.d("UPLOAD_DEBUG", "ID masyarakat" + idMasyarakat);
-
+        RequestBody idBody = RequestBody.create(MultipartBody.FORM, idMasyarakat);
         RequestBody nama = RequestBody.create(MultipartBody.FORM, namaStr);
         RequestBody lokasi = RequestBody.create(MultipartBody.FORM, lokasiStr);
-        RequestBody keterangan = RequestBody.create(MultipartBody.FORM, ketStr);
+        RequestBody ket = RequestBody.create(MultipartBody.FORM, ketStr);
         RequestBody tanggal = RequestBody.create(MultipartBody.FORM, tanggalStr);
-
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
         MultipartBody.Part fotoPart = MultipartBody.Part.createFormData("foto", imageFile.getName(), reqFile);
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseModel> call = api.uploadLaporan(idBody,nama, lokasi, keterangan, tanggal, fotoPart);
-
-        call.enqueue(new Callback<ResponseModel>() {
+        api.uploadLaporan(idBody, nama, lokasi, ket, tanggal, fotoPart).enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 pd.dismiss();
-                if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(PengajuanLaporanActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful()) {
+                    Toast.makeText(PengajuanLaporanActivity.this, "Laporan berhasil dikirim", Toast.LENGTH_SHORT).show();
                     clearForm();
                 } else {
-                    Log.e("UploadError", "Code: " + response.code() + ", Message: " + response.message());
-                    try {
-                        Log.e("UploadError", "Error body: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     Toast.makeText(PengajuanLaporanActivity.this, "Gagal upload laporan", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -516,9 +425,8 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
     }
 
     private void clearForm() {
-        etNama.setText("");
-        etLokasi.setText("");
         etKeterangan.setText("");
+        etLokasi.setText("");
         etTanggal.setText("");
         clearImageSelection();
     }
@@ -527,7 +435,6 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         imageFile = null;
         imageUri = null;
         cameraFileUri = null;
-        imgPreview.setImageDrawable(null);
         imgPreview.setVisibility(View.GONE);
         tvUploadFileName.setVisibility(View.VISIBLE);
         tvUploadFileName.setText("Format: .jpg / .png");
