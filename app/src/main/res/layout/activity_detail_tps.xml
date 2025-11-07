@@ -10,13 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Header -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp">
 
-            <!-- Tombol Back -->
             <ImageButton
                 android:id="@+id/btnBack"
                 android:layout_width="28dp"
@@ -26,7 +24,6 @@
                 android:src="@drawable/kembali"
                 android:contentDescription="Kembali" />
 
-            <!-- Logo kanan -->
             <ImageView
                 android:id="@+id/logoImage"
                 android:layout_width="40dp"
@@ -37,7 +34,6 @@
                 android:contentDescription="Logo" />
         </RelativeLayout>
 
-        <!-- Judul -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
@@ -49,17 +45,13 @@
             android:textSize="22sp"
             android:layout_marginTop="8dp" />
 
-        <!-- Gambar -->
-        <ImageView
-            android:id="@+id/imgTPS"
+        <fragment
+            android:id="@+id/mapPreview"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/tps"
-            android:contentDescription="Foto TPS" />
+            android:layout_marginTop="20dp" />
 
-        <!-- Nama TPS -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,30 +70,26 @@
             android:enabled="false"
             android:textColor="@android:color/black" />
 
-        <!-- Kecamatan -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kecamatan :"
+            android:text="Alamat :"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:layout_marginTop="10dp"/>
-
         <EditText
-            android:id="@+id/tvKecamatan"
+            android:id="@+id/tvAlamat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_color"
-            android:text="Wilangan"
             android:padding="10dp"
             android:enabled="false"
             android:textColor="@android:color/black" />
 
-        <!-- Lokasi -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lokasi :"
+            android:text="Lokasi (Koordinat) :"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:layout_marginTop="10dp"/>
@@ -116,7 +104,6 @@
             android:enabled="false"
             android:textColor="@android:color/black" />
 
-        <!-- Tombol Buka Maps -->
         <LinearLayout
             android:id="@+id/btnMapsContainer"
             android:layout_width="wrap_content"
@@ -143,7 +130,22 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Keterangan -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kapasitas :"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/tvKapasitas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_color"
+            android:padding="10dp"
+            android:enabled="false"
+            android:textColor="@android:color/black" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

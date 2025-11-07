@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".Tps.InfoTPSActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp">
-
-        <!-- Tombol Back -->
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="28dp"
@@ -21,8 +21,6 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/kembali"
             android:contentDescription="Kembali" />
-
-        <!-- Logo di kanan -->
         <ImageView
             android:id="@+id/logoImage"
             android:layout_width="36dp"
@@ -55,15 +53,12 @@
         android:background="@drawable/bg_color"
         android:padding="10dp"/>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTps"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp">
-
-        <LinearLayout
-            android:id="@+id/containerTPS"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_tps" />
 </LinearLayout>

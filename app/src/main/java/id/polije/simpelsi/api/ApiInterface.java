@@ -87,5 +87,8 @@ public interface ApiInterface {
             @Part("keterangan") RequestBody keterangan,
             @Part("tanggal") RequestBody tanggal,
             @Part @Nullable MultipartBody.Part foto// ❗️ Foto dibuat opsional (@Nullable)
+
     );
+    @GET("get_tps.php")
+    Call<ResponseTps> getAllTps();
 }

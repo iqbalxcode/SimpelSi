@@ -95,7 +95,9 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
     // Library CircleImageView
     implementation("de.hdodenhof:circleimageview:3.1.0")
-
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+// ❗️ TAMBAHKAN INI UNTUK GOOGLE MAPS
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
