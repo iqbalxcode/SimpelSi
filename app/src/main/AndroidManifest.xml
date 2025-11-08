@@ -94,6 +94,10 @@
             android:name=".fitur.EditLaporanActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".artikel.ArtikelDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SimpelSi" />
     </application>
 
 </manifest>

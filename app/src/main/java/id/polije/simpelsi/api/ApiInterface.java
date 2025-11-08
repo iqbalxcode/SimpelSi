@@ -91,4 +91,6 @@ public interface ApiInterface {
     );
     @GET("get_tps.php")
     Call<ResponseTps> getAllTps();
+    @GET("get_artikel.php")
+    Call<ResponseArtikel> getArtikel();
 }
