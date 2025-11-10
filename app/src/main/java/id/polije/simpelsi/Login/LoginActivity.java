@@ -113,9 +113,11 @@ public class LoginActivity extends AppCompatActivity {
             btnGoogle.setEnabled(false);
             btnGoogle.setText("Memproses...");
 
-            googleSignInClient.signOut().addOnCompleteListener(this, task -> {
-                Intent signInIntent = googleSignInClient.getSignInIntent();
-                googleSignInLauncher.launch(signInIntent);
+            googleSignInClient.signOut().addOnCompleteListener(task -> {
+                googleSignInClient.revokeAccess().addOnCompleteListener(task2 -> {
+                    Intent signInIntent = googleSignInClient.getSignInIntent();
+                    googleSignInLauncher.launch(signInIntent);
+                });
             });
         });
 
