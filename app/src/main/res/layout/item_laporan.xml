@@ -1,13 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardLaporan"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
     android:layout_marginHorizontal="16dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="6dp"
-    app:cardBackgroundColor="@color/white">
+    app:cardBackgroundColor="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -94,7 +99,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:gravity="end">
+                android:gravity="end"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnEdit"
@@ -104,7 +110,9 @@
                     android:textAllCaps="false"
                     android:paddingHorizontal="12dp"
                     android:textColor="@color/white"
-                    android:backgroundTint="@color/grey_text" />
+                    android:backgroundTint="@color/grey_text"
+                    android:focusable="false"
+                    android:clickable="true" />
 
                 <Button
                     android:id="@+id/btnHapus"
@@ -115,7 +123,9 @@
                     android:textAllCaps="false"
                     android:paddingHorizontal="12dp"
                     android:textColor="@color/white"
-                    android:backgroundTint="@color/green" />
+                    android:backgroundTint="@color/green"
+                    android:focusable="false"
+                    android:clickable="true" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

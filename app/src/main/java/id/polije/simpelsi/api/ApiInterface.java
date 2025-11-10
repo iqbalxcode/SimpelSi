@@ -2,6 +2,7 @@ package id.polije.simpelsi.api;
 
 import androidx.annotation.Nullable;
 
+import id.polije.simpelsi.CekStatusLaporan.DetailResponse;
 import id.polije.simpelsi.model.*;
 
 import okhttp3.MultipartBody;
@@ -18,7 +19,8 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @POST("login.php") 
+    // 🔹 LOGIN
+    @POST("login.php")
     Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
 
     @FormUrlEncoded
@@ -29,9 +31,11 @@ public interface ApiInterface {
             @Field("nama") String nama
     );
 
+    // 🔹 REGISTER
     @POST("register.php")
     Call<RegisterResponse> registerUser(@Body RegisterRequest registerRequest);
 
+    // 🔹 OTP
     @POST("request_otp.php")
     Call<OtpResponse> requestOtp(@Body OtpRequest request);
 
@@ -41,11 +45,11 @@ public interface ApiInterface {
     @POST("reset_password.php")
     Call<ResetResponse> resetPassword(@Body ResetRequest request);
 
-    // Ini adalah satu-satunya method upload yang benar
+    // 🔹 UPLOAD LAPORAN
     @Multipart
-    @POST("upload_laporan.php") // ❗️ PASTIKAN NAMA FILE INI BENAR
+    @POST("upload_laporan.php")
     Call<ResponseModel> uploadLaporan(
-            @Part("id_masyarakat")  RequestBody id_masyarkat,
+            @Part("id_masyarakat") RequestBody idMasyarakat,
             @Part("nama") RequestBody nama,
             @Part("lokasi") RequestBody lokasi,
             @Part("keterangan") RequestBody keterangan,
@@ -53,44 +57,38 @@ public interface ApiInterface {
             @Part MultipartBody.Part foto
     );
 
+    // 🔹 GET LAPORAN BERDASARKAN ID PENGGUNA
     @GET("get_laporan.php")
     Call<ResponseLaporan> getLaporan(@Query("id_masyarakat") String idMasyarakat);
 
-
-    @Multipart
-    @POST("upload_laporan.php")
-    Call<ResponseModel> uploadLaporan(
-            @Part("id_masyarakat")  RequestBody id_masyarkat,
-            // ... (parameter upload Anda)
-            @Part MultipartBody.Part foto
-    );
-
-    // ⬇️ TAMBAHKAN DUA METHOD BARU INI ⬇️
-
-    /**
-     * Menghapus laporan (mengirim JSON)
-     */
+    // 🔹 HAPUS LAPORAN
     @POST("hapus_laporan.php")
     Call<ResponseModel> tarikLaporan(@Body HapusRequest request);
 
-    /**
-     * Memperbarui laporan (mengirim Multipart)
-     * Sama seperti upload, tapi DENGAN id_laporan
-     */
+    // 🔹 UPDATE LAPORAN
     @Multipart
     @POST("update_laporan.php")
     Call<ResponseModel> updateLaporan(
             @Part("id_laporan") RequestBody idLaporan,
-            @Part("id_masyarakat")  RequestBody idMasyarakat,
+            @Part("id_masyarakat") RequestBody idMasyarakat,
             @Part("nama") RequestBody nama,
             @Part("lokasi") RequestBody lokasi,
             @Part("keterangan") RequestBody keterangan,
             @Part("tanggal") RequestBody tanggal,
-            @Part @Nullable MultipartBody.Part foto// ❗️ Foto dibuat opsional (@Nullable)
-
+            @Part @Nullable MultipartBody.Part foto
     );
+
+    // 🔹 GET DATA TPS
     @GET("get_tps.php")
     Call<ResponseTps> getAllTps();
+
+    // 🔹 GET ARTIKEL
     @GET("get_artikel.php")
     Call<ResponseArtikel> getArtikel();
+
+    // 🔹 GET DETAIL LAPORAN (TERMASUK BALASAN)
+    @GET("get_detail_laporan.php")
+    Call<DetailResponse> getDetailLaporan(@Query("id_laporan") String idLaporan);
+
+
 }

@@ -5,8 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,11 +35,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHolder> {
+
     private final Context context;
     private final List<Laporan> laporanList;
     private final List<Laporan> laporanListFull;
-    private String idMasyarakat;
-    private ApiInterface apiInterface; // ❗️ Tambahkan ApiInterface
+    private final String idMasyarakat;
+    private final ApiInterface apiInterface;
 
     public LaporanAdapter(Context context, List<Laporan> laporanList) {
         this.context = context;
@@ -53,7 +50,6 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         SharedPreferences prefs = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
         this.idMasyarakat = prefs.getString("id_masyarakat", null);
 
-        // ❗️ Inisialisasi ApiInterface di sini
         this.apiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
@@ -66,7 +62,6 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Ambil data HANYA untuk tampilan teks
         Laporan laporan = laporanList.get(position);
         if (laporan == null) return;
 
@@ -75,11 +70,8 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         holder.tvKeterangan.setText("Keterangan : " + safeText(laporan.getKeterangan()));
         holder.tvTanggal.setText("Tanggal : " + safeText(laporan.getTanggal()));
 
-        // --- 1. LOGIKA STATUS ---
-        String status = laporan.getStatusLaporan();
-        if (status == null || status.isEmpty()) {
-            status = "Diproses";
-        }
+        // === Status ===
+        String status = laporan.getStatusLaporan() != null ? laporan.getStatusLaporan() : "Diproses";
         holder.tvStatus.setText(status);
         switch (status.toLowerCase()) {
             case "diterima":
@@ -93,100 +85,70 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
                 break;
         }
 
-        // --- 2. LOGIKA FOTO ---
-        String namaFileFoto = laporan.getFoto();
-        if (namaFileFoto != null && !namaFileFoto.trim().isEmpty()) {
-            String urlProxy = ApiClient.BASE_URL + "get_image.php?file=" + namaFileFoto;
-            Log.d("LaporanAdapter", "Memuat URL Proxy: " + urlProxy);
-            Glide.with(context).load(urlProxy).centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading).into(holder.imgLaporan);
+        // === Gambar ===
+        String foto = laporan.getFoto();
+        if (foto != null && !foto.trim().isEmpty()) {
+            String url = ApiClient.BASE_URL + "get_image.php?file=" + foto;
+            Glide.with(context)
+                    .load(url)
+                    .centerCrop()
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.loading)
+                    .into(holder.imgLaporan);
         } else {
-            Log.w("LaporanAdapter", "Nama file foto kosong/null.");
             holder.imgLaporan.setImageResource(R.drawable.loading);
         }
 
-        // --- 3. LOGIKA TOMBOL (Hanya aktifkan visual) ---
-        // Pengecekan waktu akan dilakukan SAAT DIKLIK
-        holder.btnEdit.setEnabled(true);
-        holder.btnHapus.setEnabled(true);
-        holder.btnEdit.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.grey_text));
-        holder.btnHapus.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.green));
-
-
-        // --- ⬇️ PERBAIKAN LISTENER UNTUK ERROR LAMBDA ⬇️ ---
-
+        // === Tombol Edit ===
         holder.btnEdit.setOnClickListener(v -> {
-            int currentPosition = holder.getAdapterPosition(); // Dapatkan posisi saat diklik
-            if (currentPosition == RecyclerView.NO_POSITION) return;
-            Laporan laporanSaatDiklik = laporanList.get(currentPosition);
-
-            // ❗️ Logika Pengecekan Waktu DIPINDAHKAN KE SINI
-            if (isWithinOneHour(laporanSaatDiklik.getCreated_at())) {
+            if (isWithinOneHour(laporan.getCreated_at())) {
                 Intent intent = new Intent(context, EditLaporanActivity.class);
-                // Pastikan Laporan.java implements Serializable
-                intent.putExtra("LAPORAN_DATA", (Serializable) laporanSaatDiklik);
+                intent.putExtra("LAPORAN_DATA", laporan);
                 context.startActivity(intent);
             } else {
                 Toast.makeText(context, "Sudah lewat 1 jam, laporan tidak bisa diedit.", Toast.LENGTH_SHORT).show();
-                // (Opsional) Nonaktifkan tombol secara visual jika sudah diklik sekali
-                holder.btnEdit.setEnabled(false);
-                holder.btnEdit.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.grey_text));
             }
         });
 
+        // === Tombol Hapus ===
         holder.btnHapus.setOnClickListener(v -> {
-            int currentPosition = holder.getAdapterPosition();
-            if (currentPosition == RecyclerView.NO_POSITION) return;
-            Laporan laporanSaatDiklik = laporanList.get(currentPosition);
-
-            // ❗️ Logika Pengecekan Waktu DIPINDAHKAN KE SINI
-            if (isWithinOneHour(laporanSaatDiklik.getCreated_at())) {
+            if (isWithinOneHour(laporan.getCreated_at())) {
                 new AlertDialog.Builder(context)
-                        .setTitle("Tarik Laporan") // ❗️ Ganti Judul
-                        .setMessage("Apakah Anda yakin ingin menarik laporan ini?") // ❗️ Ganti Pesan
-                        .setPositiveButton("Tarik", (dialog, which) -> { // ❗️ Ganti Teks Tombol
-                            // Panggil API hapus/tarik dengan ID dan posisi yang benar
-                            tarikLaporan(laporanSaatDiklik.getIdLaporan(), currentPosition); // ❗️ Ganti nama method
-                        })
+                        .setTitle("Tarik Laporan")
+                        .setMessage("Apakah Anda yakin ingin menarik laporan ini?")
+                        .setPositiveButton("Tarik", (dialog, which) ->
+                                tarikLaporan(laporan.getIdLaporan(), position))
                         .setNegativeButton("Batal", null)
                         .show();
             } else {
                 Toast.makeText(context, "Sudah lewat 1 jam, laporan tidak bisa ditarik.", Toast.LENGTH_SHORT).show();
-                // (Opsional) Nonaktifkan tombol secara visual jika sudah diklik sekali
-                holder.btnHapus.setEnabled(false);
-                holder.btnHapus.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.grey_text));
             }
         });
-        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
+
+        // === Klik item buka DetailTanggapanActivity ===
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailTanggapanActivity.class);
+
+            // 🔹 Kirim ID laporan agar DetailTanggapanActivity bisa fetch detail dari server
+            intent.putExtra("id_laporan", laporan.getIdLaporan());
+
+            context.startActivity(intent);
+        });
     }
 
-    /**
-     * Method Helper BARU untuk mengecek batas waktu 1 jam
-     */
     private boolean isWithinOneHour(String createdAtTimestamp) {
         if (createdAtTimestamp == null) return false;
-
         try {
-            // Format timestamp dari database (yyyy-MM-dd HH:mm:ss)
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            Date tanggalLaporan = sdf.parse(createdAtTimestamp);
-            long waktuLaporan = tanggalLaporan.getTime();
-            long waktuSekarang = System.currentTimeMillis();
-
-            long selisihWaktu = waktuSekarang - waktuLaporan; // Selisih dalam milidetik
-            long satuJam = 3600 * 1000; // 1 jam dalam milidetik
-
-            return selisihWaktu < satuJam; // Kembalikan true jika masih di bawah 1 jam
-
+            Date tanggal = sdf.parse(createdAtTimestamp);
+            long diff = System.currentTimeMillis() - tanggal.getTime();
+            return diff < 3600 * 1000;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("TimeParseError", "Gagal parse timestamp: " + createdAtTimestamp);
-            return false; // Anggap gagal jika format waktu salah
+            return false;
         }
     }
 
-    /**
-     * ❗️ PERBAIKAN: Method diganti namanya menjadi "tarikLaporan"
-     */
     private void tarikLaporan(String idLaporan, int position) {
         if (idMasyarakat == null) {
             Toast.makeText(context, "ID Pengguna tidak ditemukan", Toast.LENGTH_SHORT).show();
@@ -194,33 +156,24 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         }
 
         ProgressDialog pd = new ProgressDialog(context);
-        pd.setMessage("Menarik laporan..."); // ❗️ Pesan diubah
+        pd.setMessage("Menarik laporan...");
         pd.show();
 
         HapusRequest request = new HapusRequest(idLaporan, idMasyarakat);
-
-        // ❗️ Panggil "tarikLaporan" dari ApiInterface
-        Call<ResponseModel> call = apiInterface.tarikLaporan(request);
-
-        call.enqueue(new Callback<ResponseModel>() {
+        apiInterface.tarikLaporan(request).enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 pd.dismiss();
-                if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    if ("success".equals(response.body().getStatus())) {
-                        // Hapus item dari list (di tampilan HP)
-                        Laporan laporanDihapus = laporanList.get(position);
-                        laporanList.remove(position);
-                        laporanListFull.remove(laporanDihapus);
-
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, getItemCount()); // ❗️ Perbaikan: Gunakan getItemCount()
-                    }
+                if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
+                    laporanList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, getItemCount());
+                    Toast.makeText(context, "Laporan berhasil ditarik", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "Gagal menarik laporan", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 pd.dismiss();
@@ -231,7 +184,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return laporanList != null ? laporanList.size() : 0;
+        return laporanList.size();
     }
 
     public void updateData(List<Laporan> newData) {

@@ -135,9 +135,6 @@ public class EditLaporanActivity extends AppCompatActivity {
         imgPreview = findViewById(R.id.imgPreview);
         uploadBox = findViewById(R.id.layoutUploadBox);
 
-        // --- ⬇️ PERBAIKAN 2: GUNAKAN ID YANG BENAR ⬇️ ---
-        tvGunakanLokasi = findViewById(R.id.tvGunakanLokasi); // ❗️ ID Button
-        // --- ⬆️ AKHIR PERBAIKAN 2 ⬆️ ---
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
