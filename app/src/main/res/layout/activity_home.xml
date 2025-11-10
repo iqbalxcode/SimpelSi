@@ -67,7 +67,6 @@
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
-
             </LinearLayout>
 
             <ImageView
@@ -130,7 +129,6 @@
                         android:layout_height="48dp"
                         android:src="@drawable/cek_status"
                         android:contentDescription="Cek Status" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -223,106 +221,16 @@
                     android:contentDescription="Lihat semua" />
             </LinearLayout>
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewTrending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:id="@+id/trendingArtikelContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:src="@drawable/img_desa_wilangan"
-                            android:scaleType="centerCrop"
-                            android:contentDescription="Desa Wilangan" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Desa Wilangan"
-                            android:textSize="14sp"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:src="@drawable/img_desa_bagor"
-                            android:scaleType="centerCrop"
-                            android:contentDescription="Desa Bagor" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Desa Bagor"
-                            android:textSize="14sp"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:src="@drawable/img_desa_wilangan"
-                            android:scaleType="centerCrop"
-                            android:contentDescription="Desa Wilangan" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Desa Wilangan"
-                            android:textSize="14sp"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:src="@drawable/img_desa_wilangan"
-                            android:scaleType="centerCrop"
-                            android:contentDescription="Desa Wilangan" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Desa Wilangan"
-                            android:textSize="14sp"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </HorizontalScrollView>
-
+                android:orientation="horizontal"
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_artikel_trending"
+                tools:orientation="horizontal" />
         </LinearLayout>
     </ScrollView>
 
@@ -338,6 +246,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
