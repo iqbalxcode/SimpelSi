@@ -76,13 +76,13 @@
                 android:layout_marginTop="50dp"
                 android:contentDescription="Banner DLH"
                 android:scaleType="centerCrop"
-                android:src="@drawable/dinas" />
+                android:src="@drawable/header" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Visi &amp; Misi"
+                android:text="Apa itu SimpelSi?"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black" />
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
-                android:text="Dinas mempunyai tugas membantu Walikota melaksanakan urusan pemerintahan di bidang lingkungan hidup yang menjadi kewenangan Daerah dan tugas pembantuan yang diberikan pada Daerah sesuai dengan visi, misi dan program Walikota sebagaimana dijabarkan dalam Rencana Pembangunan Jangka Menengah Daerah."
+                android:text="SimpelSi adalah Sistem Pelaporan Sampah Ilegal. Aplikasi untuk mempermudah masyarakat Kabupaten Nganjuk dalam menjaga kebersihan lingkungan."
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -102,7 +102,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Layanan yang bisa dikelola :"
                 android:textSize="18sp"
-                android:textStyle="normal"
+                android:textStyle="bold"
                 android:textColor="@android:color/black" />
 
             <LinearLayout
