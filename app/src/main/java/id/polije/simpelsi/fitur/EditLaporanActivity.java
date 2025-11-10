@@ -19,7 +19,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.View;
+import android.view.View; // ❗️ PERBAIKAN: Import View
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,7 +39,7 @@ import androidx.core.content.FileProvider;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView; // ❗️ PERBAIKAN: Import BottomNavigationView
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,7 +55,7 @@ import java.util.Locale;
 import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
-import id.polije.simpelsi.CekStatusLaporan.Laporan; // ❗️ Pastikan import ini benar
+import id.polije.simpelsi.CekStatusLaporan.Laporan;
 import id.polije.simpelsi.model.ResponseModel;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -69,14 +69,12 @@ public class EditLaporanActivity extends AppCompatActivity {
     // Komponen UI
     private EditText etNama, etLokasi, etKeterangan, etTanggal;
     private TextView tvUploadFileName;
-    // --- ⬇️ PERBAIKAN 1: UBAH TIPE DATA DARI TextView MENJADI Button ⬇️ ---
-    private Button btnUpload, btnHapusFoto, tvGunakanLokasi; // ❗️ DIUBAH MENJADI BUTTON
-    // --- ⬆️ AKHIR PERBAIKAN 1 ⬆️ ---
+    private Button btnUpload, btnHapusFoto;
     private ImageView btnBack, btnpilihtanggal, imgPreview;
     private LinearLayout uploadBox;
     private BottomNavigationView bottomNavigationView;
 
-    // ... (Variabel Foto/Kamera)
+    // Variabel untuk Foto/Kamera
     private Uri imageUri;
     private Uri cameraFileUri;
     private File imageFile;
@@ -84,22 +82,11 @@ public class EditLaporanActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_CAMERA_REQUEST = 101;
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 200;
 
-    private FusedLocationProviderClient fusedLocationClient;
-
     // Variabel Edit
     private Laporan laporan;
     private String idMasyarakat;
     private boolean fotoBaruDipilih = false;
     private ApiInterface apiInterface;
-
-    private final ActivityResultLauncher<String> requestLocationPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    getCurrentLocation();
-                } else {
-                    Toast.makeText(this, "Izin lokasi ditolak", Toast.LENGTH_SHORT).show();
-                }
-            });
 
 
     @Override
@@ -135,13 +122,10 @@ public class EditLaporanActivity extends AppCompatActivity {
         imgPreview = findViewById(R.id.imgPreview);
         uploadBox = findViewById(R.id.layoutUploadBox);
 
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
         // Sembunyikan BottomNav
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         if (bottomNavigationView != null) {
-            bottomNavigationView.setVisibility(View.GONE);
+            bottomNavigationView.setVisibility(View.GONE); // ❗️ PERBAIKAN: Visibility diakses
         }
 
         // Isi Form dengan Data Lama
@@ -157,7 +141,7 @@ public class EditLaporanActivity extends AppCompatActivity {
             Date date = inputFormat.parse(laporan.getTanggal());
             etTanggal.setText(outputFormat.format(date));
         } catch (Exception e) {
-            etTanggal.setText(laporan.getTanggal()); // Fallback
+            etTanggal.setText(laporan.getTanggal());
         }
 
         // Muat Foto Lama
@@ -176,23 +160,20 @@ public class EditLaporanActivity extends AppCompatActivity {
         btnpilihtanggal.setOnClickListener(v -> showDatePicker());
         uploadBox.setOnClickListener(v -> selectImageSource());
         btnHapusFoto.setOnClickListener(v -> {
-            clearImageSelection(); // Hapus foto baru (jika ada)
-            // Kembalikan ke foto lama
+            clearImageSelection();
             Glide.with(this).load(ApiClient.BASE_URL + "get_image.php?file=" + laporan.getFoto()).into(imgPreview);
             fotoBaruDipilih = false;
         });
         btnBack.setOnClickListener(v -> finish());
-        tvGunakanLokasi.setOnClickListener(v -> checkLocationPermissions());
+
+        // ❗️ Listener tvGunakanLokasi sudah dihapus
+
         btnUpload.setOnClickListener(v -> {
-            if (validateForm()) updateLaporan(); // Panggil method 'updateLaporan'
+            if (validateForm()) updateLaporan();
         });
     }
 
-    // --- (SEMUA method helper: showDatePicker, selectImageSource, openGalleryChooser,
-    //      checkCameraPermissions, onRequestPermissionsResult, openCamera, createImageFile,
-    //      onActivityResult, displaySelectedImage, copyUriToCacheFile, getFileName,
-    //      checkLocationPermissions, getCurrentLocation, getAddressFromLocation
-    //      HARUS ADA DI SINI) ---
+    // --- (Semua method helper Anda harus tetap ada) ---
 
     private void showDatePicker() {
         final Calendar calendar = Calendar.getInstance();
@@ -276,7 +257,7 @@ public class EditLaporanActivity extends AppCompatActivity {
 
         if (photoFile != null) {
             cameraFileUri = FileProvider.getUriForFile(this,
-                    "id.polije.simpelsi.fileprovider", // ❗️ Pastikan package name Anda benar
+                    "id.polije.simpelsi.fileprovider",
                     photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraFileUri);
             startActivityForResult(takePictureIntent, PICK_IMAGE_CAMERA_REQUEST);
@@ -296,7 +277,7 @@ public class EditLaporanActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            fotoBaruDipilih = true; // ❗️ Tandai bahwa foto baru sudah dipilih
+            fotoBaruDipilih = true;
 
             if (requestCode == PICK_IMAGE_GALLERY_REQUEST && data != null && data.getData() != null) {
                 imageUri = data.getData();
@@ -363,38 +344,9 @@ public class EditLaporanActivity extends AppCompatActivity {
         return result;
     }
 
-    private void checkLocationPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            getCurrentLocation();
-        } else {
-            requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-    }
 
-    private void getCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        Toast.makeText(this, "Mencari lokasi...", Toast.LENGTH_SHORT).show();
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
-            if (location != null) getAddressFromLocation(location);
-            else Toast.makeText(this, "Gagal mendapatkan lokasi. Pastikan GPS aktif.", Toast.LENGTH_SHORT).show();
-        });
-    }
-
-    private void getAddressFromLocation(Location location) {
-        if (!isFinishing() && !isDestroyed()) {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            try {
-                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                if (addresses != null && !addresses.isEmpty()) {
-                    etLokasi.setText(addresses.get(0).getAddressLine(0));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    // ❗️ METHOD LOKASI GPS (checkLocationPermissions, getCurrentLocation, getAddressFromLocation)
+    //    SUDAH DIHAPUS
 
     private boolean validateForm() {
         if (etNama.getText().toString().isEmpty()) {
