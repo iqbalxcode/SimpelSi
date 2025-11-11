@@ -40,10 +40,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_extrabold"
                 android:text="Verifikasi"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <!-- Gambar -->
@@ -54,7 +54,7 @@
                 android:layout_marginTop="24dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/lupakatasandi" />
+                android:src="@drawable/gambar" />
 
             <!-- Label -->
             <TextView
@@ -62,8 +62,8 @@
                 android:layout_height="wrap_content"
                 android:text="Masukkan Kode Verifikasi"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_bold"
                 android:layout_marginTop="24dp"
                 android:layout_gravity="center_horizontal" />
 
@@ -133,8 +133,8 @@
                 android:layout_marginTop="8dp"
                 android:text="Jika belum menerima kode, "
                 android:textColor="@color/grey_text"
-                android:textSize="13sp"
-                android:fontFamily="@font/montserrat_regular" />
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_medium" />
 
             <TextView
                 android:id="@+id/tv_kirim_ulang"
@@ -144,7 +144,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Kirim Ulang"
                 android:textColor="@color/app_green_light"
-                android:textSize="13sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_edit_email"
@@ -152,8 +152,8 @@
                 android:layout_height="wrap_content"
                 android:text="Edit, Alamat email anda"
                 android:textColor="@color/app_green_light"
-                android:textSize="13sp"
-                android:fontFamily="@font/montserrat_regular"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_medium"
                 android:layout_marginTop="4dp" />
 
             <!-- Tombol Kirim -->
@@ -163,8 +163,9 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/bg_login"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_extrabold"
                 android:text="Kirim"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:letterSpacing="0.05" />

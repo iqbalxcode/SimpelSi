@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_extrabold"
                 android:text="Register"
                 android:textColor="@color/black"
                 android:textSize="24sp"
@@ -52,15 +52,15 @@
                 android:layout_marginTop="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/register" />
+                android:src="@drawable/lupakatasandi" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Masukkan Nama"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_bold"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="start" />
 
@@ -96,8 +96,8 @@
                 android:layout_height="wrap_content"
                 android:text="Masukkan Email"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_bold"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="start" />
 
@@ -133,8 +133,8 @@
                 android:layout_height="wrap_content"
                 android:text="Masukkan Password"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_bold"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="start" />
 

@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Artikel"
-            android:textStyle="bold"
-            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_extrabold"
+            android:textSize="24sp"
             android:gravity="center"
             android:textColor="#000000" />
 

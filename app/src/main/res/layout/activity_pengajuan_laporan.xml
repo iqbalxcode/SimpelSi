@@ -41,7 +41,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:src="@drawable/back"
+                    android:src="@drawable/kembali"
                     android:contentDescription="Kembali" />
                 <View
                     android:layout_width="0dp"
@@ -66,7 +66,7 @@
                 android:text="Pengajuan Laporan"
                 android:gravity="center_horizontal"
                 android:textSize="24sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/montserrat_extrabold"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp" />
 
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:text="Upload foto *"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:layout_marginBottom="6dp" />
                 <LinearLayout
                     android:id="@+id/layoutUploadBox"
@@ -151,7 +151,7 @@
                         android:id="@+id/btnHapusFoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HAPUS"
+                        android:text="Hapus"
                         android:layout_marginStart="8dp"
                         android:backgroundTint="@color/green"
                         android:textColor="@color/white"
@@ -164,8 +164,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nama :"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:textColor="@color/black" />
                 <EditText
                     android:id="@+id/etNama"
                     android:layout_width="match_parent"
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:text="Lokasi Foto :"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:layout_marginTop="12dp" />
 
                 <LinearLayout
@@ -218,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:text="Keterangan *"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:layout_marginTop="12dp" />
 
                 <EditText

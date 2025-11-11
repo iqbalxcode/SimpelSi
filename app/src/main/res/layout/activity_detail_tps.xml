@@ -41,7 +41,7 @@
             android:text="TPS 1"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_extrabold"
             android:textSize="22sp"
             android:layout_marginTop="8dp" />
 
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nama TPS :"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:textColor="@android:color/black"
             android:layout_marginTop="20dp"/>
 
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Alamat :"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:textColor="@android:color/black"
             android:layout_marginTop="10dp"/>
         <EditText
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lokasi (Koordinat) :"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:textColor="@android:color/black"
             android:layout_marginTop="10dp"/>
 
@@ -134,7 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Kapasitas :"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:textColor="@android:color/black"
             android:layout_marginTop="10dp"/>
         <EditText
@@ -150,7 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Keterangan :"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:textColor="@android:color/black"
             android:layout_marginTop="14dp"/>
 

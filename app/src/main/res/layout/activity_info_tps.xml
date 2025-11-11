@@ -12,7 +12,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="20dp">
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="28dp"
@@ -38,7 +39,7 @@
         android:text="Info TPS"
         android:textColor="@color/black"
         android:textSize="24sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/montserrat_extrabold"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"/>
 
@@ -47,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Cari Lokasi TPS"
+        android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:layout_marginTop="25dp"
         android:drawableStart="@drawable/cari"

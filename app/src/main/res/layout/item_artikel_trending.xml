@@ -32,6 +32,7 @@
             android:text="Judul Artikel Trending"
             android:textSize="14sp"
             android:maxLines="2"
+            android:fontFamily="@font/montserrat_semibold"
             android:ellipsize="end"
             android:textColor="@color/black"/>
     </LinearLayout>

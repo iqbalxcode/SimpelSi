@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_extrabold"
                 android:text="Lupa Kata sandi?"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
@@ -53,7 +53,7 @@
                 android:layout_marginTop="24dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/lupakatasandi" />
+                android:src="@drawable/gambar" />
 
             <!-- Label Email -->
             <TextView
@@ -61,10 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="22dp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_bold"
                 android:text="Masukkan Alamat Email"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <!-- Input Email -->
             <com.google.android.material.textfield.TextInputLayout
@@ -104,13 +104,13 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Kembali ke Login?"
                 android:textColor="@color/grey_text"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_kirim"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/bg_login"
                 android:fontFamily="@font/montserrat_semibold"
                 android:letterSpacing="0.05"
@@ -118,9 +118,6 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
-
-            <!-- Teks kembali ke login -->
-
         </LinearLayout>
     </ScrollView>
 

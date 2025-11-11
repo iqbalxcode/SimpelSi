@@ -52,6 +52,7 @@
                         android:text="Nama : -"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_medium"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
@@ -60,6 +61,8 @@
                         android:layout_height="wrap_content"
                         android:text="Lokasi : -"
                         android:textColor="@color/black"
+                        android:fontFamily="@font/montserrat_medium"
+
                         android:textSize="14sp"
                         android:layout_marginBottom="4dp" />
 
@@ -69,6 +72,8 @@
                         android:layout_height="wrap_content"
                         android:text="Keterangan : -"
                         android:textColor="@color/black"
+                        android:fontFamily="@font/montserrat_medium"
+
                         android:textSize="14sp"
                         android:layout_marginBottom="4dp" />
 
@@ -77,6 +82,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tanggal : -"
+                        android:fontFamily="@font/montserrat_medium"
+
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -89,6 +96,7 @@
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="4dp"
                     android:text="Diproses"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:textSize="12sp"
@@ -107,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Edit"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:textAllCaps="false"
                     android:paddingHorizontal="12dp"
                     android:textColor="@color/white"
@@ -120,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="Hapus"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:textAllCaps="false"
                     android:paddingHorizontal="12dp"
                     android:textColor="@color/white"

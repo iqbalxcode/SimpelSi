@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.Toast; // ❗️ Import Toast
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager; // ❗️ Import
 import androidx.recyclerview.widget.RecyclerView; // ❗️ Import
 

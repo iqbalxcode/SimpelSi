@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TPS 1 Kecamatan Wilangan"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_bold"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:text="Jl. Wilangan"
+                android:fontFamily="@font/montserrat_medium"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp" />
         </LinearLayout>

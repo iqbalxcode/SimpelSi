@@ -3,8 +3,10 @@ package id.polije.simpelsi.Login;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvDaftar, tvLupaSandi, btnGoogle;
     private Button btnMasuk;
     private EditText etEmail, etPassword;
+    private ImageView ivTogglePassword;
+    private boolean isPasswordVisible = false;
+
     private ApiInterface apiInterface;
     private GoogleSignInClient googleSignInClient;
     private boolean isGoogleLoading = false;
@@ -83,13 +88,25 @@ public class LoginActivity extends AppCompatActivity {
         btnGoogle = findViewById(R.id.btn_google);
         etEmail = findViewById(R.id.et_email_login);
         etPassword = findViewById(R.id.et_password_login);
+        ivTogglePassword = findViewById(R.id.iv_toggle_password);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        // --- Konfigurasi Google Sign-In ---
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
+        // --- Fitur Toggle Mata ---
+        ivTogglePassword.setOnClickListener(v -> {
+            if (isPasswordVisible) {
+                // 🔒 Sembunyikan password
+                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                ivTogglePassword.setImageResource(R.drawable.of); // kembali ke icon mata tertutup
+                isPasswordVisible = false;
+            } else {
+                // 👁️ Tampilkan password
+                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                ivTogglePassword.setImageResource(R.drawable.eye); // ubah ke icon mata terbuka
+                isPasswordVisible = true;
+            }
+            // Biar kursor tetap di akhir teks
+            etPassword.setSelection(etPassword.getText().length());
+        });
 
         // --- Tombol login manual ---
         btnMasuk.setOnClickListener(v -> {
@@ -124,6 +141,12 @@ public class LoginActivity extends AppCompatActivity {
         // --- Navigasi ke halaman lain ---
         tvDaftar.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
         tvLupaSandi.setOnClickListener(v -> startActivity(new Intent(this, ForgotPasswordActivity.class)));
+
+        // --- Konfigurasi Google Sign-In ---
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     private void loginUser(String email, String password) {
@@ -140,13 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse res = response.body();
                     if (res.isSuccess() && res.getData() != null) {
                         LoginResponse.UserData user = res.getData();
-
-                        // ✅ Simpan data user ke SharedPreferences
                         saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail());
-
-                        // 🔍 Log untuk debugging
-                        android.util.Log.d("LOGIN_DEBUG", "Login berhasil -> ID masyarakat: " + user.getId_masyarakat());
-
                         goToHome();
                     } else {
                         Toast.makeText(LoginActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
@@ -179,9 +196,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (res.isSuccess() && res.getData() != null) {
                         LoginResponse.UserData user = res.getData();
                         saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail());
-
-                        android.util.Log.d("LOGIN_DEBUG", "Login Google berhasil -> ID masyarakat: " + user.getId_masyarakat());
-
                         Toast.makeText(LoginActivity.this, "Login Google berhasil", Toast.LENGTH_SHORT).show();
                         goToHome();
                     } else {
@@ -208,9 +222,6 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("email", email);
         editor.putBoolean("is_logged_in", true);
         editor.apply();
-
-        // ✅ Tambahkan log untuk memastikan tersimpan
-        android.util.Log.d("SESSION_SAVE", "Session disimpan -> ID masyarakat: " + id);
     }
 
     private void goToHome() {

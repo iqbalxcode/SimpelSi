@@ -62,8 +62,8 @@
                 android:layout_marginBottom="8dp"
                 android:text="Judul Artikel Akan Muncul Di Sini"
                 android:textColor="@color/black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/montserrat_extrabold"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/tvDetailTanggal"
@@ -71,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="2025-11-08 00:00:00"
                 android:textColor="@color/grey_text"
+                android:fontFamily="@font/montserrat_medium"
                 android:textSize="14sp"
                 android:layout_marginBottom="16dp" />
 
@@ -80,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:text="Deskripsi lengkap artikel akan muncul di sini..."
                 android:textColor="@color/black"
+                android:fontFamily="@font/montserrat_semibold"
                 android:textSize="16sp"
                 android:lineSpacingMultiplier="1.3" />
 

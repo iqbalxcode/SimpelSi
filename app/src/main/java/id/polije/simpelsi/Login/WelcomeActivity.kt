@@ -105,14 +105,14 @@ fun ResponsiveWelcomeScreen(onMulaiClick: () -> Unit) {
             else -> 400.dp
         }
         val titleSize = when {
-            screenWidth < 360.dp -> 30.sp
-            screenWidth < 600.dp -> 38.sp
+            screenWidth < 360.dp -> 34.sp
+            screenWidth < 600.dp -> 42.sp
             else -> 40.sp
         }
         val textSize = when {
-            screenWidth < 360.dp -> 14.sp
-            screenWidth < 600.dp -> 16.sp
-            else -> 16.sp
+            screenWidth < 360.dp -> 16.sp
+            screenWidth < 600.dp -> 18.sp
+            else -> 18.sp
         }
 
         Column(
