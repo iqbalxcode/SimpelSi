@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:text="Dinas Lingkungan Hidup"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/holo_green_dark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 

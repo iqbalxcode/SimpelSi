@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F8F8F8"
     tools:context=".CekStatusLaporan.DetailTanggapanActivity">
 
-    <!-- ScrollView agar bisa di-scroll -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +18,6 @@
             android:orientation="vertical"
             android:paddingHorizontal="20dp">
 
-            <!-- Header -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +49,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Judul -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,7 +59,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="4dp" />
 
-            <!-- Label Laporan -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,34 +68,34 @@
                 android:textColor="@color/black"
                 android:layout_marginTop="20dp" />
 
-            <!-- CardView Laporan -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="12dp"
                 android:background="@color/white"
-                app:cardElevation="6dp">
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:background="@color/white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <!-- Gambar laporan -->
                         <ImageView
                             android:id="@+id/ivFotoLaporan"
                             android:layout_width="120dp"
                             android:layout_height="80dp"
                             android:scaleType="centerCrop"
                             android:background="@drawable/rounded_image" />
-                        <!-- Data laporan -->
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -111,7 +107,7 @@
                                 android:id="@+id/tvNama"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Nama :"
+                                android:text="Nama : -"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
 
@@ -141,7 +137,6 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Status laporan -->
                     <TextView
                         android:id="@+id/tvStatus"
                         android:layout_width="wrap_content"
@@ -157,21 +152,22 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- CardView Tanggapan -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="12dp"
                 android:background="@color/white"
-                app:cardElevation="4dp">
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:background="@color/white">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -187,7 +183,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text=""
+                        android:text="Belum ada tanggapan."
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:padding="8dp" />

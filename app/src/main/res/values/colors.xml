@@ -8,6 +8,9 @@
     <color name="grey_light">#F5F5F5</color>
     <color name="grey_text">#888888</color>
 
+    <color name="status_diproses">#FFC107</color> <color name="status_diterima">#4CAF50</color> <color name="status_ditolak">#F44336</color>   <color name="text_grey">#757575</color>
+
+    <color name="background_light_grey">#F8F8F8</color>
 
     <color name="green_dark">#0D7A4C</color>
     <color name="light_gray">#E0E0E0</color>
