@@ -2,14 +2,7 @@
 
 SimpelSi adalah aplikasi mobile Android untuk **Dinas Lingkungan Hidup Kabupaten Nganjuk**. Aplikasi ini dibangun untuk memudahkan masyarakat dalam melaporkan insiden lingkungan (seperti sampah liar) dan sebagai platform edukasi serta informasi layanan.
 
-## 📱 Tangkapan Layar (Contoh)
 
-| Halaman Login | Halaman Home (Beranda) |
-| :---: | :---: |
-| ![Halaman Login](httpsLogin.png) | ![Halaman Home](Home%20Page.png) |
-| **(Ganti nama file gambar ini agar sesuai dengan file screenshot Anda)** | **(Ganti nama file gambar ini agar sesuai dengan file screenshot Anda)** |
-
-**Catatan:** Agar gambar tampil, Anda harus menambahkan file screenshot (misal: `LoginPage.png` & `HomePage.png`) ke dalam folder proyek Anda dan pastikan namanya sama.
 
 ## ✨ Fitur Utama
 
