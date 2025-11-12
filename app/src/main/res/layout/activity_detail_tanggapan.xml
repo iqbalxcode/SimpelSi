@@ -108,6 +108,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Nama : -"
+                                android:textStyle="bold"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
 
@@ -116,6 +117,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Lokasi :"
+                                android:textStyle="bold"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
 
@@ -124,6 +126,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Keterangan :"
+                                android:textStyle="bold"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
 
@@ -132,6 +135,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Tanggal :"
+                                android:textStyle="bold"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
                         </LinearLayout>

@@ -1,53 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     tools:context=".artikel.ArtikelActivity">
 
+    <ImageView
+        android:id="@+id/main_background_image_artikel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/bg"
+        android:scaleType="centerCrop"
+        android:contentDescription="Main Background"
+        android:alpha="100.0" app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="#E0FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/btn_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/kembali"
-            android:contentDescription="Kembali" />
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Artikel"
-            android:fontFamily="@font/montserrat_extrabold"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:textColor="#000000" />
+            android:padding="16dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/logo_simpelsi"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/logo"
-            android:contentDescription="Logo Simpelsi" />
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/kembali"
+                android:contentDescription="Kembali" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Artikel"
+                android:fontFamily="@font/montserrat_extrabold"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:textColor="#000000" />
+
+            <ImageView
+                android:id="@+id/logo_simpelsi"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/logo"
+                android:contentDescription="Logo Simpelsi" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewArtikel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_artikel" />
+
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewArtikel"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_artikel" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

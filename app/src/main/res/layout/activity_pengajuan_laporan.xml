@@ -7,7 +7,17 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".fitur.PengajuanLaporanActivity">
-
+    <ImageView
+        android:id="@+id/main_background_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/bg"
+        android:scaleType="centerCrop"
+        android:contentDescription="Main Background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
