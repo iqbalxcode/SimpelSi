@@ -1,4 +1,4 @@
-#  SimpelSi (Sistem Informasi Pelaporan Lingkungan)
+#  SimpelSi (Sistem Pelaporan Sampah Ilegal)
 
 SimpelSi adalah aplikasi mobile Android untuk **Dinas Lingkungan Hidup Kabupaten Nganjuk**. Aplikasi ini dibangun untuk memudahkan masyarakat dalam melaporkan insiden lingkungan (seperti sampah liar) dan sebagai platform edukasi serta informasi layanan.
 
