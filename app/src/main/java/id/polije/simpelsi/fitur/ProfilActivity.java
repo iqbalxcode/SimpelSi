@@ -1,12 +1,14 @@
 package id.polije.simpelsi.fitur;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.net.Uri; // ❗️ Import Uri
 import android.os.Bundle;
+import android.view.MenuItem; // ❗️ Import MenuItem
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +47,7 @@ public class ProfilActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
         String nama = prefs.getString("nama", "Nama tidak ditemukan");
         String email = prefs.getString("email", "Email tidak ditemukan");
-        String fotoUrl = prefs.getString("foto", ""); // opsional kalau belum ada di API
+        String fotoUrl = prefs.getString("foto", ""); // opsional
 
         // 🔹 Tampilkan data profil
         userName.setText(nama);
@@ -63,22 +65,44 @@ public class ProfilActivity extends AppCompatActivity {
         // 🔹 Tombol kembali
         backButton.setOnClickListener(v -> onBackPressed());
 
+        // --- ⬇️ PERBAIKAN LISTENER MENU ⬇️ ---
+
         // 🔹 Tombol menu "Profil Kami"
-        menuProfilKami.setOnClickListener(v ->
-                Toast.makeText(this, "Membuka Profil Kami", Toast.LENGTH_SHORT).show()
-        );
+        menuProfilKami.setOnClickListener(v -> {
+            // ❗️ Ganti URL ini dengan URL profil Anda yang sebenarnya
+            String url = "https://dlhnganjuk.co.id/profile/tentang/";
+            try {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            } catch (Exception e) {
+                Toast.makeText(this, "Tidak dapat membuka browser", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // 🔹 Tombol menu "Visi Misi"
-        menuVisiMisi.setOnClickListener(v ->
-                Toast.makeText(this, "Membuka Visi & Misi", Toast.LENGTH_SHORT).show()
-        );
-
-        // 🔹 Tombol menu "Website" - membuka browser
-        menuWebsite.setOnClickListener(v -> {
-            String url = "https://simpelsi.medianewsonline.com";
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(browserIntent);
+        menuVisiMisi.setOnClickListener(v -> {
+            // ❗️ Ganti URL ini dengan URL visi misi Anda yang sebenarnya
+            String url = "https://dlhnganjuk.co.id/profile/tugas-dan-fungsi/";
+            try {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            } catch (Exception e) {
+                Toast.makeText(this, "Tidak dapat membuka browser", Toast.LENGTH_SHORT).show();
+            }
         });
+
+        // 🔹 Tombol menu "Website" - (Sudah benar)
+        menuWebsite.setOnClickListener(v -> {
+            String url = "https://dlhnganjuk.co.id";
+            try {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            } catch (Exception e) {
+                Toast.makeText(this, "Tidak dapat membuka browser", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
 
         // 🔹 Tombol Logout
         logoutButton.setOnClickListener(v -> {

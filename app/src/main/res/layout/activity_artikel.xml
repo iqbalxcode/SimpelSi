@@ -15,7 +15,7 @@
         android:src="@drawable/bg"
         android:scaleType="centerCrop"
         android:contentDescription="Main Background"
-        android:alpha="100.0" app:layout_constraintTop_toTopOf="parent"
+        android:alpha="3.0" app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -24,7 +24,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:background="#E0FFFFFF"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

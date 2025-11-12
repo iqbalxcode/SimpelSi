@@ -20,7 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- ✅ ScrollView untuk konten yang panjang -->
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="0dp"
@@ -37,7 +36,6 @@
             android:orientation="vertical"
             android:paddingBottom="32dp">
 
-            <!-- Header -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/header"
                 android:layout_width="match_parent"
@@ -65,7 +63,6 @@
                     app:layout_constraintBottom_toBottomOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Judul Profil -->
             <TextView
                 android:id="@+id/title_profil"
                 android:layout_width="match_parent"
@@ -77,7 +74,6 @@
                 android:gravity="center"
                 android:layout_marginTop="24dp" />
 
-            <!-- Foto Profil -->
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
                 android:layout_width="100dp"
@@ -88,7 +84,6 @@
                 app:civ_border_width="2dp"
                 app:civ_border_color="@android:color/black" />
 
-            <!-- Nama -->
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
@@ -101,7 +96,6 @@
                 android:textSize="18sp"
                 tools:text="Iqbal Rakha" />
 
-            <!-- Email -->
             <TextView
                 android:id="@+id/user_email"
                 android:layout_width="match_parent"
@@ -114,7 +108,6 @@
                 android:layout_marginTop="4dp"
                 tools:text="user@email.com" />
 
-            <!-- Menu Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/menu_card"
                 android:layout_width="match_parent"
@@ -136,13 +129,15 @@
                         android:id="@+id/menu_profil_kami"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="8dp"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="8dp"
                         android:text="@string/profil_kami"
                         android:textSize="16sp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:textColor="@android:color/black"
                         android:clickable="true"
                         android:focusable="true"
+                        android:drawableEnd="@drawable/ic_arrow_right_grey"
                         android:background="?attr/selectableItemBackground" />
 
                     <View
@@ -154,13 +149,15 @@
                         android:id="@+id/menu_visi_misi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="8dp"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="8dp"
                         android:text="@string/visi_misi"
                         android:textSize="16sp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:textColor="@android:color/black"
                         android:clickable="true"
                         android:focusable="true"
+                        android:drawableEnd="@drawable/ic_arrow_right_grey"
                         android:background="?attr/selectableItemBackground" />
 
                     <View
@@ -172,27 +169,28 @@
                         android:id="@+id/menu_website"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="8dp"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="8dp"
                         android:text="@string/website"
                         android:textSize="16sp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:textColor="@android:color/black"
                         android:clickable="true"
                         android:focusable="true"
+                        android:drawableEnd="@drawable/ic_arrow_right_grey"
                         android:background="?attr/selectableItemBackground" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Logout -->
             <TextView
                 android:id="@+id/logout_prompt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/apakah_anda_ingin_keluar"
-                android:textColor="@color/grey_text"
-                android:textSize="14sp"
+                android:layout_marginTop="50dp"
                 android:gravity="center"
-                android:layout_marginTop="120dp" />
+                android:text="@string/apakah_anda_ingin_keluar"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/logout_button"
@@ -212,7 +210,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- ✅ Bottom Navigation tidak ikut scroll -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
