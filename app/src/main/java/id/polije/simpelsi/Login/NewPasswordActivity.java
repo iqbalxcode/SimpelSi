@@ -8,6 +8,7 @@ import android.util.Log; // ❗️ Import Log
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 // ❗️ Import untuk API, Model, dan Retrofit
@@ -22,7 +23,7 @@ import retrofit2.Response;
 
 public class NewPasswordActivity extends AppCompatActivity {
 
-    ImageButton btnBack;
+    ImageView btnBack;
     Button btnKirim;
     EditText etNewPassword, etConfirmPassword;
 
@@ -50,7 +51,7 @@ public class NewPasswordActivity extends AppCompatActivity {
         }
 
         // Inisialisasi komponen
-        btnBack = findViewById(R.id.btn_back_new_pass);
+        btnBack = findViewById(R.id.btnBack);
         btnKirim = findViewById(R.id.btn_kirim_new_pass);
         etNewPassword = findViewById(R.id.et_new_password);
         etConfirmPassword = findViewById(R.id.et_confirm_password);

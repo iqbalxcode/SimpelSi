@@ -42,7 +42,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         // Inisialisasi
         tvKembaliLogin = findViewById(R.id.tv_kembali_login);
-        ImageView btnBack = findViewById(R.id.btn_back);
+        btnBack = findViewById(R.id.btnBack);
         btnKirim = findViewById(R.id.btn_kirim);
         etEmail = findViewById(R.id.et_email_lupa_sandi);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -60,6 +60,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 return;
             }
             requestOtp(email); // ❗️ askNotificationPermissionAndRequestOtp DIHAPUS
+        });
+        btnBack.setOnClickListener(v -> {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         });
     }
 
@@ -108,8 +112,4 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
     }
-
-    // ❗️ Method createNotificationChannel() DIHAPUS
-
-    // ❗️ Method showOtpNotification() DIHAPUS
 }

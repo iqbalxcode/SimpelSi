@@ -23,16 +23,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
-
-            <ImageButton
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
+            android:gravity="center_horizontal" >
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_back_black"
-                android:contentDescription="Kembali"
-                android:layout_gravity="start" />
+                android:layout_marginBottom="8dp">
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/backk"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Kembali"
+                    android:clickable="true"
+                    android:focusable="true" />
+                <ImageView
+                    android:id="@+id/logoImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/logo"
+                    android:contentDescription="Logo" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_register"

@@ -10,6 +10,7 @@ import android.view.KeyEvent; // ❗️ Import
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ import retrofit2.Response;
 public class VerificationActivity extends AppCompatActivity {
 
     EditText otp1, otp2, otp3, otp4;
-    ImageButton btnBack;
+    ImageView btnBack;
     Button btnKirim;
     TextView tvKirimUlang;
 
@@ -56,7 +57,7 @@ public class VerificationActivity extends AppCompatActivity {
         otp2 = findViewById(R.id.otp_2);
         otp3 = findViewById(R.id.otp_3);
         otp4 = findViewById(R.id.otp_4);
-        btnBack = findViewById(R.id.btn_back);
+        btnBack = findViewById(R.id.btnBack);
         btnKirim = findViewById(R.id.btn_kirim);
         tvKirimUlang = findViewById(R.id.tv_kirim_ulang);
 

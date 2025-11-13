@@ -1,21 +1,23 @@
 package id.polije.simpelsi.fitur;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri; // ❗️ Import Uri
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem; // ❗️ Import MenuItem
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import id.polije.simpelsi.Login.LoginActivity;
 import id.polije.simpelsi.R;
@@ -32,7 +34,7 @@ public class ProfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
-        // 🔹 Inisialisasi View dari XML
+        // 🔹 Inisialisasi View
         profileImage = findViewById(R.id.profile_image);
         userName = findViewById(R.id.user_name);
         userEmail = findViewById(R.id.user_email);
@@ -44,86 +46,63 @@ public class ProfilActivity extends AppCompatActivity {
 
         // 🔹 Ambil data user dari SharedPreferences
         SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
-        String nama = prefs.getString("nama", "Nama tidak ditemukan");
-        String email = prefs.getString("email", "Email tidak ditemukan");
-        String fotoUrl = prefs.getString("foto", ""); // opsional
+        String nama = prefs.getString("nama", "");
+        String email = prefs.getString("email", "");
+        String fotoUrl = prefs.getString("photoUrl", "");
 
-        // 🔹 Tampilkan data profil
-        userName.setText(nama);
-        userEmail.setText(email);
+        // 🔹 Cek login dengan Google
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+            nama = account.getDisplayName();
+            email = account.getEmail();
 
-        if (!fotoUrl.isEmpty()) {
-            Glide.with(this)
-                    .load(fotoUrl)
-                    .placeholder(R.drawable.profil)
-                    .into(profileImage);
-        } else {
-            profileImage.setImageResource(R.drawable.profil);
+            if (account.getPhotoUrl() != null) {
+                fotoUrl = account.getPhotoUrl().toString();
+            }
         }
 
+        // 🔹 Tampilkan data profil
+        updateUI(nama, email, fotoUrl);
+
         // 🔹 Tombol menu "Profil Kami"
-        menuProfilKami.setOnClickListener(v -> {
-            // ❗️ Ganti URL ini dengan URL profil Anda yang sebenarnya
-            String url = "https://dlhnganjuk.co.id/profile/tentang/";
-            try {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
-            } catch (Exception e) {
-                Toast.makeText(this, "Tidak dapat membuka browser", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // 🔹 Tombol menu "Visi Misi"
-        menuVisiMisi.setOnClickListener(v -> {
-            // ❗️ Ganti URL ini dengan URL visi misi Anda yang sebenarnya
-            String url = "https://dlhnganjuk.co.id/profile/tugas-dan-fungsi/";
-            try {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
-            } catch (Exception e) {
-                Toast.makeText(this, "Tidak dapat membuka browser", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // 🔹 Tombol menu "Website" - (Sudah benar)
-        menuWebsite.setOnClickListener(v -> {
-            String url = "https://dlhnganjuk.co.id";
-            try {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
-            } catch (Exception e) {
-                Toast.makeText(this, "Tidak dapat membuka browser", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
+        menuProfilKami.setOnClickListener(v -> openWebsite("https://dlhnganjuk.co.id/profile/tentang/"));
+        menuVisiMisi.setOnClickListener(v -> openWebsite("https://dlhnganjuk.co.id/profile/tugas-dan-fungsi/"));
+        menuWebsite.setOnClickListener(v -> openWebsite("https://dlhnganjuk.co.id"));
 
         // 🔹 Tombol Logout
         logoutButton.setOnClickListener(v -> {
             Toast.makeText(this, "Anda telah keluar", Toast.LENGTH_SHORT).show();
 
+            // Hapus sesi lokal
             SharedPreferences.Editor editor = prefs.edit();
             editor.clear();
             editor.apply();
 
+            // Logout juga dari Google
+            GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this,
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestEmail()
+                            .build());
+            googleSignInClient.signOut();
+
+            // Kembali ke login
             Intent intent = new Intent(ProfilActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
         });
 
-        // 🔹 Setup Bottom Navigation
+        // 🔹 Bottom Navigation
         bottomNavigationView.setSelectedItemId(R.id.nav_profil);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-
             if (id == R.id.nav_home) {
-                startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                startActivity(new Intent(this, HomeActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
             } else if (id == R.id.nav_pengajuan) {
-                startActivity(new Intent(ProfilActivity.this, PengajuanLaporanActivity.class));
+                startActivity(new Intent(this, PengajuanLaporanActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
@@ -132,5 +111,73 @@ public class ProfilActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshGoogleProfile();
+    }
+
+    private void refreshGoogleProfile() {
+        GoogleSignInAccount lastAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if (lastAccount == null) return;
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        googleSignInClient.silentSignIn()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        GoogleSignInAccount refreshedAccount = task.getResult();
+                        if (refreshedAccount != null) {
+                            String newName = refreshedAccount.getDisplayName();
+                            String newEmail = refreshedAccount.getEmail();
+                            String newPhotoUrl = refreshedAccount.getPhotoUrl() != null
+                                    ? refreshedAccount.getPhotoUrl().toString()
+                                    : "";
+
+                            // 🔹 Simpan ulang ke SharedPreferences
+                            SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("nama", newName);
+                            editor.putString("email", newEmail);
+                            editor.putString("photoUrl", newPhotoUrl);
+                            editor.apply();
+
+                            // 🔹 Update UI
+                            updateUI(newName, newEmail, newPhotoUrl);
+                        }
+                    }
+                });
+    }
+
+    private void updateUI(String nama, String email, String fotoUrl) {
+        userName.setText(nama.isEmpty() ? "Nama tidak ditemukan" : nama);
+        userEmail.setText(email.isEmpty() ? "Email tidak ditemukan" : email);
+
+        if (!fotoUrl.isEmpty()) {
+            Glide.with(this)
+                    .load(fotoUrl)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .circleCrop()
+                    .placeholder(R.drawable.profil)
+                    .into(profileImage);
+        } else {
+            profileImage.setImageResource(R.drawable.profil);
+        }
+    }
+
+    private void openWebsite(String url) {
+        try {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        } catch (Exception e) {
+            Toast.makeText(this, "Tidak dapat membuka browser", Toast.LENGTH_SHORT).show();
+        }
     }
 }

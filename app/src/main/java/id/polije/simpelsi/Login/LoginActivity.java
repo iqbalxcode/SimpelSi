@@ -56,7 +56,13 @@ public class LoginActivity extends AppCompatActivity {
                                     String googleId = account.getId();
                                     String email = account.getEmail();
                                     String name = account.getDisplayName();
+                                    String photoUrl = account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : "";
+
                                     loginWithGoogle(googleId, email, name);
+
+                                    // Simpan foto profil ke SharedPreferences
+                                    SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                                    prefs.edit().putString("photoUrl", photoUrl).apply();
                                 }
                             } catch (ApiException e) {
                                 resetGoogleButton();
@@ -164,7 +170,10 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse res = response.body();
                     if (res.isSuccess() && res.getData() != null) {
                         LoginResponse.UserData user = res.getData();
-                        saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail());
+
+                        // 🔹 Simpan data + foto default (karena login manual)
+                        saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail(), "default");
+
                         goToHome();
                     } else {
                         Toast.makeText(LoginActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
@@ -196,7 +205,21 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (res.isSuccess() && res.getData() != null) {
                         LoginResponse.UserData user = res.getData();
-                        saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail());
+
+                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
+                        String photoUrl = "";
+
+                        // 🔹 Jika akun Google punya foto, simpan URL-nya
+                        if (account != null && account.getPhotoUrl() != null) {
+                            photoUrl = account.getPhotoUrl().toString();
+                        } else {
+                            // 🔹 Jika tidak punya foto, simpan huruf inisial nama
+                            String inisial = nama != null && !nama.isEmpty() ? nama.substring(0, 1).toUpperCase() : "U";
+                            photoUrl = "initial:" + inisial;
+                        }
+
+                        saveUserSession(user.getId_masyarakat(), user.getNama(), user.getEmail(), photoUrl);
+
                         Toast.makeText(LoginActivity.this, "Login Google berhasil", Toast.LENGTH_SHORT).show();
                         goToHome();
                     } else {
@@ -215,12 +238,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void saveUserSession(String id, String nama, String email) {
+
+    private void saveUserSession(String id, String nama, String email, String photoUrl) {
         SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("id_masyarakat", id);
         editor.putString("nama", nama);
         editor.putString("email", email);
+        editor.putString("photoUrl", photoUrl);
         editor.putBoolean("is_logged_in", true);
         editor.apply();
     }

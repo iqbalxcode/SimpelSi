@@ -199,7 +199,7 @@ fun ResponsiveWelcomeScreen(onMulaiClick: () -> Unit) {
                         )
                         Spacer(modifier = Modifier.weight(0.5f))
                         Icon(
-                            painter = painterResource(id = R.drawable.next),
+                            painter = painterResource(id = R.drawable.lanjut),
                             contentDescription = "Mulai",
                             tint = Color.White,
                             modifier = Modifier.size(24.dp)

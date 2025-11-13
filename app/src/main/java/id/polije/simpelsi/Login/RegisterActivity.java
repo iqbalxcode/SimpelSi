@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.util.Log;
 import id.polije.simpelsi.R;
@@ -28,7 +29,7 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     private Button btnKirim;
-    private ImageButton btnBack;
+    private ImageView btnBack;
     private EditText etNama, etEmail, etPassword;
 
     // Variabel class yang akan kita gunakan
@@ -41,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Inisialisasi view
         btnKirim = findViewById(R.id.btn_kirim_register);
-        btnBack = findViewById(R.id.btn_back);
+        btnBack = findViewById(R.id.btnBack);
         etNama = findViewById(R.id.et_nama_register);
         etEmail = findViewById(R.id.et_email_register);
         etPassword = findViewById(R.id.et_password_register);
