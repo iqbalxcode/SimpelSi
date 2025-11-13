@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ import retrofit2.Response;
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private TextView tvKembaliLogin;
-    ImageButton btnBack;
+    ImageView btnBack;
     Button btnKirim;
     EditText etEmail;
     ApiInterface apiInterface;
@@ -41,7 +42,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         // Inisialisasi
         tvKembaliLogin = findViewById(R.id.tv_kembali_login);
-        btnBack = findViewById(R.id.btn_back);
+        ImageView btnBack = findViewById(R.id.btn_back);
         btnKirim = findViewById(R.id.btn_kirim);
         etEmail = findViewById(R.id.et_email_lupa_sandi);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -50,7 +51,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         // Listener
         tvKembaliLogin.setOnClickListener(v -> finish());
-        btnBack.setOnClickListener(v -> finish());
 
         // Tombol Kirim (langsung panggil requestOtp)
         btnKirim.setOnClickListener(v -> {

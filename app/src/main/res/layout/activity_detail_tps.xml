@@ -44,21 +44,24 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp">
-
-                    <ImageButton
-                        android:id="@+id/btnBack"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_alignParentStart="true"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/kembali"
-                        android:contentDescription="Kembali" />
-
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="30dp">
                     <ImageView
-                        android:id="@+id/logoImage"
+                        android:id="@+id/btnBack"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/backk"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Kembali"
+                        android:clickable="true"
+                        android:focusable="true" />
+                    <ImageView
+                        android:id="@+id/logoImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/logo"

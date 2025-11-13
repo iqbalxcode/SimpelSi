@@ -36,33 +36,6 @@
             android:orientation="vertical"
             android:paddingBottom="32dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/header"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:layout_marginTop="16dp">
-
-                <ImageView
-                    android:id="@+id/back_button"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/kembali"
-                    android:src="@drawable/kembali"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/logo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <TextView
                 android:id="@+id/title_profil"
                 android:layout_width="match_parent"
@@ -72,7 +45,7 @@
                 android:fontFamily="@font/montserrat_extrabold"
                 android:textColor="@android:color/black"
                 android:gravity="center"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="100dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
@@ -114,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="75dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp">
 
@@ -181,6 +154,16 @@
                         android:background="?attr/selectableItemBackground" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/versi_0.1"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/grey_text"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/logout_prompt"

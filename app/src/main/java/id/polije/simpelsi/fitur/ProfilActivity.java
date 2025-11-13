@@ -22,7 +22,7 @@ import id.polije.simpelsi.R;
 
 public class ProfilActivity extends AppCompatActivity {
 
-    private ImageView backButton, profileImage;
+    private ImageView profileImage;
     private TextView userName, userEmail, menuProfilKami, menuVisiMisi, menuWebsite;
     private MaterialButton logoutButton;
     private BottomNavigationView bottomNavigationView;
@@ -33,7 +33,6 @@ public class ProfilActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profil);
 
         // 🔹 Inisialisasi View dari XML
-        backButton = findViewById(R.id.back_button);
         profileImage = findViewById(R.id.profile_image);
         userName = findViewById(R.id.user_name);
         userEmail = findViewById(R.id.user_email);
@@ -61,11 +60,6 @@ public class ProfilActivity extends AppCompatActivity {
         } else {
             profileImage.setImageResource(R.drawable.profil);
         }
-
-        // 🔹 Tombol kembali
-        backButton.setOnClickListener(v -> onBackPressed());
-
-        // --- ⬇️ PERBAIKAN LISTENER MENU ⬇️ ---
 
         // 🔹 Tombol menu "Profil Kami"
         menuProfilKami.setOnClickListener(v -> {

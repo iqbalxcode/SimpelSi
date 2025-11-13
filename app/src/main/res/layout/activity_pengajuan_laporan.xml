@@ -39,44 +39,14 @@
             android:paddingTop="16dp"
             android:paddingBottom="24dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp">
-
-                <ImageView
-                    android:id="@+id/btnBack"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/back"
-                    android:contentDescription="Kembali" />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/logo"
-                        android:contentDescription="Logo" />
-                </LinearLayout>
-            </LinearLayout>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pengajuan Laporan"
                 android:gravity="center_horizontal"
                 android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp" />
 
@@ -93,8 +63,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload foto *"
+                    android:textSize="12dp"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:layout_marginBottom="6dp" />
                 <LinearLayout
                     android:id="@+id/layoutUploadBox"
@@ -120,15 +91,16 @@
                         android:layout_height="wrap_content"
                         android:text="Format: .jpg / .png"
                         android:textColor="@color/grey_text"
-                        android:textStyle="italic" />
+                        android:fontFamily="@font/montserrat_medium" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tanggal :"
+                    android:textSize="12dp"
                     android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/montserrat_semibold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -154,7 +126,9 @@
                             android:layout_weight="1"
                             android:hint="Tanggal"
                             android:focusable="false"
+                            android:textSize="12dp"
                             android:clickable="true"
+                            android:fontFamily="@font/montserrat_medium"
                             android:textColor="@color/black"
                             android:paddingVertical="8dp"
                             android:textColorHint="@color/grey_text"
@@ -170,7 +144,8 @@
                         android:id="@+id/btnHapusFoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HAPUS"
+                        android:text="Hapus"
+                        android:textSize="12dp"
                         android:layout_marginStart="8dp"
                         android:backgroundTint="@color/green"
                         android:textColor="@color/white"
@@ -183,8 +158,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nama :"
+                    android:textSize="12dp"
                     android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/montserrat_semibold" />
                 <EditText
                     android:id="@+id/etNama"
                     android:layout_width="match_parent"
@@ -192,6 +168,9 @@
                     android:hint="Masukkan Nama"
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
+                    android:textSize="12dp"
+
+                    android:fontFamily="@font/montserrat_medium"
                     android:layout_marginTop="6dp"
                     android:textColorHint="@color/grey_text"
                     android:textColor="@color/black" />
@@ -200,8 +179,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lokasi Foto :"
+                    android:textSize="12dp"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:layout_marginTop="12dp" />
 
                 <LinearLayout
@@ -224,8 +204,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textSize="12dp"
                         android:hint="Klik tombol lokasi"
                         android:background="@null"
+                        android:fontFamily="@font/montserrat_medium"
                         android:textColorHint="@color/grey_text"
                         android:textColor="@color/black"
                         android:paddingStart="8dp"
@@ -235,8 +217,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Keterangan *"
+                    android:textSize="12dp"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:layout_marginTop="12dp" />
 
                 <EditText
@@ -246,6 +229,8 @@
                     android:hint="Masukkan Keterangan foto"
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/montserrat_medium"
                     android:layout_marginTop="6dp"
                     android:textColorHint="@color/grey_text"
                     android:textColor="@color/black" />
@@ -254,7 +239,8 @@
                     android:id="@+id/btnUpload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="UPLOAD"
+                    android:text="Unggah"
+                    android:textSize="12dp"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:fontFamily="@font/montserrat_semibold"

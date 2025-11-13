@@ -59,7 +59,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         View view = LayoutInflater.from(context).inflate(R.layout.item_laporan, parent, false);
         return new ViewHolder(view);
     }
-
+    
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Laporan laporan = laporanList.get(position);
@@ -73,6 +73,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         // === Status ===
         String status = laporan.getStatusLaporan() != null ? laporan.getStatusLaporan() : "Diproses";
         holder.tvStatus.setText(status);
+
         switch (status.toLowerCase()) {
             case "diterima":
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_status_diterima);
@@ -99,6 +100,23 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
             holder.imgLaporan.setImageResource(R.drawable.loading);
         }
 
+        // === Atur visibilitas tombol berdasarkan status ===
+        switch (status.toLowerCase()) {
+            case "diproses":
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnHapus.setVisibility(View.VISIBLE);
+                break;
+            case "ditolak":
+                holder.btnEdit.setVisibility(View.GONE);   // tidak bisa edit
+                holder.btnHapus.setVisibility(View.VISIBLE); // bisa hapus
+                break;
+            case "diterima":
+            default:
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnHapus.setVisibility(View.GONE);
+                break;
+        }
+
         // === Tombol Edit ===
         holder.btnEdit.setOnClickListener(v -> {
             if (isWithinOneHour(laporan.getCreated_at())) {
@@ -115,26 +133,24 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
             if (isWithinOneHour(laporan.getCreated_at())) {
                 new AlertDialog.Builder(context)
                         .setTitle("Tarik Laporan")
-                        .setMessage("Apakah Anda yakin ingin menarik laporan ini?")
-                        .setPositiveButton("Tarik", (dialog, which) ->
+                        .setMessage("Apakah Anda yakin ingin menghapus laporan ini?")
+                        .setPositiveButton("Hapus", (dialog, which) ->
                                 tarikLaporan(laporan.getIdLaporan(), position))
                         .setNegativeButton("Batal", null)
                         .show();
             } else {
-                Toast.makeText(context, "Sudah lewat 1 jam, laporan tidak bisa ditarik.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Sudah lewat 1 jam, laporan tidak bisa dihapus.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // === Klik item buka DetailTanggapanActivity ===
+        // === Klik item buka Detail ===
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailTanggapanActivity.class);
-
-            // 🔹 Kirim ID laporan agar DetailTanggapanActivity bisa fetch detail dari server
             intent.putExtra("id_laporan", laporan.getIdLaporan());
-
             context.startActivity(intent);
         });
     }
+
 
     private boolean isWithinOneHour(String createdAtTimestamp) {
         if (createdAtTimestamp == null) return false;

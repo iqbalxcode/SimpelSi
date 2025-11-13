@@ -36,7 +36,7 @@ public class ArtikelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_artikel);
 
         // 🔹 Hubungkan tombol back
-        ImageView btnBack = findViewById(R.id.btn_back);
+        ImageView btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> onBackPressed()); // Diringkas
 
         // ❗️ Inisialisasi RecyclerView

@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/status_diterima">
 
         <ImageView
             android:id="@+id/imgTrendingArtikel"
@@ -30,11 +30,12 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Judul Artikel Trending"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:maxLines="2"
-            android:fontFamily="@font/montserrat_semibold"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_medium"
             android:ellipsize="end"
-            android:textColor="@color/black"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

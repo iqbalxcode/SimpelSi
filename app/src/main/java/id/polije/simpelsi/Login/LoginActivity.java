@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
+
     }
 
     private void loginUser(String email, String password) {

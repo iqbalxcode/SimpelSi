@@ -67,10 +67,10 @@
                     <TextView
                         android:layout_width="275dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_semibold"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="Dinas Lingkungan Hidup"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -78,8 +78,8 @@
                         android:layout_height="wrap_content"
                         android:text="Kabupaten Nganjuk"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textColor="@color/status_diterima"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -87,7 +87,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
 
@@ -117,7 +117,7 @@
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
                 android:text="SimpelSi adalah Sistem Pelaporan Sampah Ilegal. Aplikasi untuk mempermudah masyarakat Kabupaten Nganjuk dalam menjaga kebersihan lingkungan."
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -145,7 +145,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_card_rounded_white"
+                    android:background="@drawable/bg_color"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp"
@@ -166,7 +166,7 @@
                         android:textAlignment="center"
                         android:fontFamily="@font/montserrat_semibold"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <!-- 2. Artikel -->
@@ -176,7 +176,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_card_rounded_white"
+                    android:background="@drawable/bg_color"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp"
@@ -196,7 +196,7 @@
                         android:text="Artikel Edukasi"
                         android:fontFamily="@font/montserrat_semibold"
                         android:textAlignment="center"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
 
@@ -206,7 +206,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_card_rounded_white"
+                    android:background="@drawable/bg_color"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp"
@@ -226,7 +226,7 @@
                         android:text="Info TPS"
                         android:fontFamily="@font/montserrat_semibold"
                         android:textAlignment="center"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
             </LinearLayout>
@@ -255,7 +255,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_arrow_right"
+                    android:src="@drawable/next"
                     android:contentDescription="Lihat semua" />
             </LinearLayout>
 

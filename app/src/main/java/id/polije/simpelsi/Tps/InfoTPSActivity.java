@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText; // ❗️ Ubah TextView ke EditText
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast; // ❗️ Import Toast
@@ -36,8 +37,7 @@ public class InfoTPSActivity extends AppCompatActivity {
     private RecyclerView recyclerViewTps;
     private TpsAdapter adapter;
     private List<Tps> tpsList = new ArrayList<>();
-
-    private ImageButton btnBack;
+    private ImageView btnBack;
     private EditText etSearch; // ❗️ Ganti tipe ke EditText
     private ApiInterface apiInterface;
 
@@ -60,8 +60,8 @@ public class InfoTPSActivity extends AppCompatActivity {
         recyclerViewTps.setAdapter(adapter);
 
         // Tombol kembali
+        btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> finish());
-
         // ❗️ Panggil API untuk memuat data
         loadDataTps();
 

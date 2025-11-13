@@ -34,16 +34,22 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="30dp">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btnBack"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentStart="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/kembali"
-                android:contentDescription="Kembali" />
+                android:layout_centerVertical="true"
+                android:src="@drawable/backk"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:contentDescription="Kembali"
+                android:clickable="true"
+                android:focusable="true" />
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -53,8 +59,8 @@
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/logo"
                     android:contentDescription="Logo" />
             </LinearLayout>
@@ -66,8 +72,8 @@
             android:layout_height="wrap_content"
             android:text="Cek Status Laporan"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold"
+            android:textSize="24sp"
+            android:fontFamily="@font/montserrat_bold"
             android:textAlignment="center"
             android:layout_marginBottom="12dp" />
 
@@ -81,8 +87,9 @@
             android:layout_marginBottom="16dp">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="14dp"
                 android:src="@drawable/cari" />
 
             <EditText
@@ -95,12 +102,12 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey_text"
                 android:paddingStart="8dp"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <TextView
             android:text="Status Laporan"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_marginBottom="8dp"

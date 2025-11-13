@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class DetailTPSActivity extends AppCompatActivity implements OnMapReadyCa
     // Variabel UI (tvKecamatan dihapus)
     private TextView tvNamaTPS, tvAlamat, tvLokasi, tvKeterangan, tvKapasitas, tvJudul;
     private TextView btnMaps;
-    private ImageButton btnBack;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +100,8 @@ public class DetailTPSActivity extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
+        btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> finish());
-
         // Panggil method pencari lokasi
         findLocationAsync(lokasiKoordinat, alamatLengkap);
     }
@@ -117,11 +118,6 @@ public class DetailTPSActivity extends AppCompatActivity implements OnMapReadyCa
         }
     }
 
-    // --- ⬇️ METHOD PENCARI LOKASI YANG DIPERBARUI ⬇️ ---
-
-    /**
-     * Mencari LatLng. Coba parsing dulu, jika gagal, baru gunakan Geocoder.
-     */
     private void findLocationAsync(String lokasi, String alamat) {
         // 1. Coba parsing koordinat (misal: "-7.60, 111.91")
         tpsLatLng = parseLatLng(lokasi);

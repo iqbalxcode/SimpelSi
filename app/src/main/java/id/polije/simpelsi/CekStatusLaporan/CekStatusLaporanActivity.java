@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton; // ❗️ Import ImageButton
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +39,7 @@ public class CekStatusLaporanActivity extends AppCompatActivity {
     private String idMasyarakat;
 
     // --- ⬇️ PERBAIKAN 1: DEKLARASIKAN TOMBOL KEMBALI ⬇️ ---
-    private ImageButton btnBack;
+    private ImageView btnBack;
     // --- ⬆️ AKHIR PERBAIKAN 1 ⬆️ ---
 
     @Override
@@ -50,7 +51,7 @@ public class CekStatusLaporanActivity extends AppCompatActivity {
         etCariNama = findViewById(R.id.etCariNama);
         // --- ⬇️ PERBAIKAN 2: INISIALISASI TOMBOL KEMBALI ⬇️ ---
         // (Pastikan ID di R.layout.activity_cek_status adalah "btnBack")
-        btnBack = findViewById(R.id.btnBack);
+        ImageView btnBack = findViewById(R.id.btnBack);
         // --- ⬆️ AKHIR PERBAIKAN 2 ⬆️ ---
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

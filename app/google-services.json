@@ -18,8 +18,12 @@
           "client_type": 1,
           "android_info": {
             "package_name": "id.polije.simpelsi",
-            "certificate_hash": "00b0dee79df88cb2a6b21a79d0a084d9efd5bd19"
+            "certificate_hash": "d0effcfb8c031194226c11ce41b5be788ebe53f9"
           }
+        },
+        {
+          "client_id": "625117876303-hhau72o52atrtlle8isj4slolc3ekk3p.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -29,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625117876303-hhau72o52atrtlle8isj4slolc3ekk3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

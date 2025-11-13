@@ -6,10 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-
     app:cardCornerRadius="10dp"
     app:cardElevation="4dp"
-
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -46,10 +44,10 @@
             <TextView
                 android:id="@+id/tvJudulArtikel"
                 android:text="Judul Artikel Akan Muncul Di Sini"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="#000000"
                 android:maxLines="2"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_medium"
                 android:ellipsize="end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

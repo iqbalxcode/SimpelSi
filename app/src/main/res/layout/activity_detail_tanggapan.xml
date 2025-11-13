@@ -55,7 +55,7 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/kembali"
+                        android:src="@drawable/ic_arrow_back_black"
                         android:contentDescription="Kembali" />
 
                     <LinearLayout

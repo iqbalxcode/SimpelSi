@@ -66,7 +66,7 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
     private EditText etNama, etLokasi, etKeterangan, etTanggal;
     private TextView tvUploadFileName;
     private Button btnUpload, btnHapusFoto;
-    private ImageView btnBack, btnpilihtanggal, imgPreview;
+    private ImageView btnpilihtanggal, imgPreview;
     private LinearLayout uploadBox;
     private BottomNavigationView bottomNavigationView;
 
@@ -101,7 +101,6 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         tvUploadFileName = findViewById(R.id.tvUploadFileName);
         btnUpload = findViewById(R.id.btnUpload);
         btnHapusFoto = findViewById(R.id.btnHapusFoto);
-        btnBack = findViewById(R.id.btnBack);
         btnpilihtanggal = findViewById(R.id.btnpilihtanggal);
         imgPreview = findViewById(R.id.imgPreview);
         uploadBox = findViewById(R.id.layoutUploadBox);
@@ -131,8 +130,6 @@ public class PengajuanLaporanActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(v -> {
             if (validateForm()) uploadLaporan();
         });
-
-        btnBack.setOnClickListener(v -> finish());
 
         // Klik icon lokasi di EditText lokasi
         ImageView iconLokasi = findViewById(R.id.iconLokasi);
