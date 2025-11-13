@@ -77,10 +77,10 @@ public class DetailTPSActivity extends AppCompatActivity implements OnMapReadyCa
         // Tampilkan data
         tvJudul.setText(tpsNama);
         tvNamaTPS.setText(tpsNama);
-        tvAlamat.setText("Alamat : " + (alamatLengkap != null ? alamatLengkap : "-"));
-        tvLokasi.setText("Lokasi : " + (lokasiKoordinat != null ? lokasiKoordinat : "-"));
+        tvAlamat.setText("" + (alamatLengkap != null ? alamatLengkap : "-"));
+        tvLokasi.setText("" + (lokasiKoordinat != null ? lokasiKoordinat : "-"));
         tvKeterangan.setText(tps.getKeterangan());
-        tvKapasitas.setText("Kapasitas : " + tps.getKapasitas());
+        tvKapasitas.setText("" + tps.getKapasitas());
 
         // Tombol buka Google Maps
         btnMaps.setOnClickListener(v -> {
