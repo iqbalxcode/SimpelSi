@@ -51,7 +51,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:src="@drawable/kembali"
+                    android:src="@drawable/back"
                     android:contentDescription="Kembali" />
                 <View
                     android:layout_width="0dp"
@@ -76,7 +76,7 @@
                 android:text="Pengajuan Laporan"
                 android:gravity="center_horizontal"
                 android:textSize="24sp"
-                android:fontFamily="@font/montserrat_extrabold"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp" />
 
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:text="Upload foto *"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/montserrat_semibold"
+                    android:textStyle="bold"
                     android:layout_marginBottom="6dp" />
                 <LinearLayout
                     android:id="@+id/layoutUploadBox"
@@ -123,6 +123,13 @@
                         android:textStyle="italic" />
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal :"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,6 +145,8 @@
                         android:gravity="center_vertical"
                         android:background="@drawable/bg_input_field"
                         android:paddingHorizontal="12dp">
+
+
                         <EditText
                             android:id="@+id/etTanggal"
                             android:layout_width="0dp"
@@ -161,7 +170,7 @@
                         android:id="@+id/btnHapusFoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hapus"
+                        android:text="HAPUS"
                         android:layout_marginStart="8dp"
                         android:backgroundTint="@color/green"
                         android:textColor="@color/white"
@@ -174,14 +183,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nama :"
-                    android:fontFamily="@font/montserrat_semibold"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
                 <EditText
                     android:id="@+id/etNama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Masukkan Nama"
-                    android:gravity="center"
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
                     android:layout_marginTop="6dp"
@@ -193,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:text="Lokasi Foto :"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/montserrat_semibold"
+                    android:textStyle="bold"
                     android:layout_marginTop="12dp" />
 
                 <LinearLayout
@@ -216,26 +224,25 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:hint="Masukkan lokasi atau klik tombol"
+                        android:hint="Klik tombol lokasi"
                         android:background="@null"
                         android:textColorHint="@color/grey_text"
                         android:textColor="@color/black"
                         android:paddingStart="8dp"
                         android:paddingVertical="12dp"/> </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Keterangan *"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/montserrat_semibold"
+                    android:textStyle="bold"
                     android:layout_marginTop="12dp" />
 
                 <EditText
                     android:id="@+id/etKeterangan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:hint="Masukkan Keterangan foto"
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
@@ -247,7 +254,7 @@
                     android:id="@+id/btnUpload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kirim"
+                    android:text="UPLOAD"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:fontFamily="@font/montserrat_semibold"
