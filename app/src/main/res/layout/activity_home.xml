@@ -23,8 +23,8 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:overScrollMode="never"
         android:fillViewport="true"
+        android:overScrollMode="never"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +39,7 @@
             android:paddingBottom="16dp"
             android:layout_marginTop="10dp">
 
+            <!-- HEADER -->
             <LinearLayout
                 android:id="@+id/headerContainer"
                 android:layout_width="match_parent"
@@ -82,15 +83,24 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/img_banner"
+            <!-- BANNER -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="177dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:contentDescription="Banner DLH"
-                android:scaleType="centerCrop"
-                android:src="@drawable/header" />
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
 
+                <ImageView
+                    android:id="@+id/img_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="177dp"
+                    android:contentDescription="Banner DLH"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/header" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- DESKRIPSI -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,16 +130,19 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:textColor="@android:color/black" />
 
+            <!-- MENU UTAMA -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
+                <!-- 1. Cek Status -->
                 <LinearLayout
                     android:id="@+id/layananCekStatus"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_card_rounded_white"
@@ -144,6 +157,7 @@
                         android:layout_height="48dp"
                         android:src="@drawable/cek_status"
                         android:contentDescription="Cek Status" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -155,10 +169,11 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
+                <!-- 2. Artikel -->
                 <LinearLayout
                     android:id="@+id/layananArtikel"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_card_rounded_white"
@@ -173,6 +188,7 @@
                         android:layout_height="48dp"
                         android:src="@drawable/artikel"
                         android:contentDescription="Artikel" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -184,10 +200,11 @@
                         android:textColor="@color/black"/>
                 </LinearLayout>
 
+                <!-- 3. Info TPS -->
                 <LinearLayout
                     android:id="@+id/layananInfoTPS"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/bg_card_rounded_white"
                     android:gravity="center"
@@ -201,6 +218,7 @@
                         android:layout_height="48dp"
                         android:src="@drawable/tps"
                         android:contentDescription="Info TPS" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -213,6 +231,7 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- TRENDING ARTIKEL -->
             <LinearLayout
                 android:id="@+id/headerTrendingArtikel"
                 android:layout_width="match_parent"
@@ -240,16 +259,17 @@
                     android:contentDescription="Lihat semua" />
             </LinearLayout>
 
+            <!-- 🔽 FIXED: Agar scroll bisa lanjut ke bawah -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewTrending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
+                android:nestedScrollingEnabled="false"
                 android:clipToPadding="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="8dp"
                 tools:listitem="@layout/item_artikel_trending"
                 tools:orientation="horizontal" />
+
         </LinearLayout>
     </ScrollView>
 
