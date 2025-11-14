@@ -10,9 +10,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="id.polije.simpelsi" />
-                  <option name="mobileSdkAppId" value="1:95298524305:android:9314e27487def0fa801b30" />
-                  <option name="projectId" value="simpelsi" />
-                  <option name="projectNumber" value="95298524305" />
+                  <option name="mobileSdkAppId" value="1:625117876303:android:4df64d5ccad9359f7fda3a" />
+                  <option name="projectId" value="iqbal-473902" />
+                  <option name="projectNumber" value="625117876303" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
