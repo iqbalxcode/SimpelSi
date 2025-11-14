@@ -42,6 +42,7 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp">
 
+                <!-- Bagian atas (back + logo + judul) -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,6 +83,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp" />
 
+                <!-- ====== Bagian laporan ====== -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,74 +108,68 @@
                         android:padding="12dp"
                         android:background="@color/white">
 
-                        <LinearLayout
+                        <!-- Foto laporan -->
+                        <ImageView
+                            android:id="@+id/ivFotoLaporan"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_height="180dp"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rounded_image" />
 
-                            <ImageView
-                                android:id="@+id/ivFotoLaporan"
-                                android:layout_width="120dp"
-                                android:layout_height="80dp"
-                                android:scaleType="centerCrop"
-                                android:background="@drawable/rounded_image" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:paddingStart="10dp">
-
-                                <TextView
-                                    android:id="@+id/tvNama"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Nama :"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/tvLokasi"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Lokasi :"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/tvKeterangan"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Keterangan :"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/tvTanggal"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Tanggal :"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </LinearLayout>
-
+                        <!-- Status di bawah gambar -->
                         <TextView
                             android:id="@+id/tvStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Status"
+                            android:text="Diterima"
                             android:textSize="12sp"
                             android:textColor="@color/white"
                             android:background="@drawable/bg_status_diterima"
-                            android:layout_gravity="end"
-                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="8dp"
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="4dp" />
+
+                        <!-- Detail laporan -->
+                        <TextView
+                            android:id="@+id/tvNama"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nama :"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:layout_marginTop="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvLokasi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lokasi :"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:layout_marginTop="6dp" />
+
+                        <TextView
+                            android:id="@+id/tvKeterangan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Keterangan :"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:layout_marginTop="6dp" />
+
+                        <TextView
+                            android:id="@+id/tvTanggal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tanggal :"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:layout_marginTop="6dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- ====== Bagian tanggapan ====== -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

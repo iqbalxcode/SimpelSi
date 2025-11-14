@@ -16,12 +16,17 @@ import com.bumptech.glide.Glide;
 import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
-// ❗️ Asumsi DetailResponse dan DataLaporan sudah Anda buat
 import id.polije.simpelsi.CekStatusLaporan.DetailResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+// 🆕 import tambahan untuk text styling
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
 
 public class DetailTanggapanActivity extends AppCompatActivity {
 
@@ -36,7 +41,6 @@ public class DetailTanggapanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_tanggapan);
 
-        // 🔹 Inisialisasi view (Sudah benar)
         btnBack = findViewById(R.id.btnBack);
         ivFotoLaporan = findViewById(R.id.ivFotoLaporan);
         tvNama = findViewById(R.id.tvNama);
@@ -48,7 +52,6 @@ public class DetailTanggapanActivity extends AppCompatActivity {
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        // 🔹 Ambil id_laporan dari Intent
         Intent intent = getIntent();
         if (intent != null) {
             idLaporan = intent.getStringExtra("id_laporan");
@@ -66,7 +69,6 @@ public class DetailTanggapanActivity extends AppCompatActivity {
     private void loadDetailLaporan(String idLaporan) {
         Toast.makeText(this, "Memuat detail laporan...", Toast.LENGTH_SHORT).show();
 
-        // ❗️ Panggilan API yang benar
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<DetailResponse> call = api.getDetailLaporan(idLaporan);
 
@@ -79,11 +81,12 @@ public class DetailTanggapanActivity extends AppCompatActivity {
                     if (body.isSuccess() && body.getData() != null) {
                         DetailResponse.DataLaporan detail = body.getData();
 
-                        // 1. Tampilkan Data Teks
-                        tvNama.setText("Nama : " + detail.getNama());
-                        tvLokasi.setText("Lokasi : " + detail.getLokasi());
-                        tvKeterangan.setText("Keterangan : " + detail.getKeterangan());
-                        tvTanggal.setText("Tanggal : " + detail.getTanggal());
+                        // 🆕 Gunakan fungsi boldLabel() agar label tebal, isi normal
+                        tvNama.setText(boldLabel("Nama : ", detail.getNama()));
+                        tvLokasi.setText(boldLabel("Lokasi : ", detail.getLokasi()));
+                        tvKeterangan.setText(boldLabel("Keterangan : ", detail.getKeterangan()));
+                        tvTanggal.setText(boldLabel("Tanggal : ", detail.getTanggal()));
+
                         tvStatus.setText(detail.getStatus());
                         tvTanggapan.setText(
                                 detail.getBalasan() != null && !detail.getBalasan().isEmpty()
@@ -91,7 +94,7 @@ public class DetailTanggapanActivity extends AppCompatActivity {
                                         : "Belum ada tanggapan."
                         );
 
-                        // 2. Atur warna status (Logika sudah benar)
+                        // 2. Atur warna status
                         String status = detail.getStatus() != null ? detail.getStatus().toLowerCase() : "";
                         switch (status) {
                             case "diterima":
@@ -105,7 +108,7 @@ public class DetailTanggapanActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        // 3. Tampilkan foto laporan (Gunakan Proxy)
+                        // 3. Tampilkan foto laporan
                         String namaFoto = detail.getFoto();
                         if (namaFoto != null && !namaFoto.isEmpty()) {
                             String urlProxy = ApiClient.BASE_URL + "get_image.php?file=" + namaFoto;
@@ -121,28 +124,31 @@ public class DetailTanggapanActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        // Respon success, tapi status error (misal: "Laporan tidak ditemukan")
                         Toast.makeText(DetailTanggapanActivity.this,
                                 body.getMessage() != null ? body.getMessage() : "Data laporan tidak ditemukan.",
                                 Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    // Gagal koneksi (kode 404/500)
                     Toast.makeText(DetailTanggapanActivity.this,
                             "Gagal memproses response dari server.", Toast.LENGTH_SHORT).show();
                 }
             }
 
-
             @Override
             public void onFailure(Call<DetailResponse> call, Throwable t) {
-                // Gagal jaringan atau timeout
                 Toast.makeText(DetailTanggapanActivity.this,
                         "Koneksi gagal/Timeout: " + t.getMessage(),
                         Toast.LENGTH_LONG).show();
                 Log.e("DetailTanggapan", "Koneksi Gagal: ", t);
             }
         });
+    }
+
+    // 🆕 Tambahan fungsi untuk membuat label bold otomatis
+    private SpannableString boldLabel(String label, String value) {
+        SpannableString s = new SpannableString(label + (value != null ? value : ""));
+        s.setSpan(new StyleSpan(Typeface.BOLD), 0, label.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return s;
     }
 }
