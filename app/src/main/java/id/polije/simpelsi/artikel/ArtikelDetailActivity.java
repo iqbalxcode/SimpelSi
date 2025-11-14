@@ -6,10 +6,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar; // ❗️ Import
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.appbar.CollapsingToolbarLayout; // ❗️ Import
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import id.polije.simpelsi.R;
 import id.polije.simpelsi.api.ApiClient;
@@ -18,10 +19,8 @@ public class ArtikelDetailActivity extends AppCompatActivity {
 
     private ImageView imgDetailArtikel;
     private TextView tvDetailJudul, tvDetailTanggal, tvDetailDeskripsi;
-    private Toolbar toolbar; // ❗️ Deklarasi Toolbar
+    private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
-
-    // ❗️ Variabel btnBack DIHAPUS dari deklarasi kelas
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +32,23 @@ public class ArtikelDetailActivity extends AppCompatActivity {
         tvDetailJudul = findViewById(R.id.tvDetailJudul);
         tvDetailTanggal = findViewById(R.id.tvDetailTanggal);
         tvDetailDeskripsi = findViewById(R.id.tvDetailDeskripsi);
-        toolbar = findViewById(R.id.toolbar); // ❗️ Inisialisasi Toolbar
+        toolbar = findViewById(R.id.toolbar);
         collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+// Lanjutkan di dalam onCreate() atau setelah layout di-inflate:
+        ImageView btnBack = findViewById(R.id.btnBack);
 
-        // --- ⬇️ PERBAIKAN KRITIS UNTUK CRASH ⬇️ ---
+// Terapkan fungsi 'finish()' ke ImageView kustom Anda
+        btnBack.setOnClickListener(v -> {
+            finish(); // Ini adalah fungsi yang sama dengan aksi tombol back bawaan
+        });
 
-        // 1. Setup Toolbar (tombol back)
+        // Setup Toolbar (tombol back)
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+           // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        // 2. Aksi tombol back (Inilah baris yang dulu crash)
-        toolbar.setNavigationOnClickListener(v -> finish());
-
-        // ❗️ Hapus baris lama findViewById(R.id.btnBack) dan setOnClickListener-nya
-        // --- ⬆️ AKHIR PERBAIKAN KRITIS ⬆️ ---
-
+        toolbar.setNavigationOnClickListener(v -> finish()); // Aksi tombol back
 
         // Ambil data Artikel dari Intent
         Artikel artikel = (Artikel) getIntent().getSerializableExtra("ARTIKEL_DATA");
@@ -61,7 +60,7 @@ public class ArtikelDetailActivity extends AppCompatActivity {
         }
 
         // Isi data ke tampilan
-        collapsingToolbar.setTitle(artikel.getJudul());
+        collapsingToolbar.setTitle(artikel.getJudul()); // Judul di toolbar saat collapse
         tvDetailJudul.setText(artikel.getJudul());
         tvDetailTanggal.setText(artikel.getTanggal());
         tvDetailDeskripsi.setText(artikel.getDeskripsi());
