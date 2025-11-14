@@ -122,7 +122,7 @@
                             android:textSize="12sp"
                             android:textColor="@color/white"
                             android:background="@drawable/bg_status_diterima"
-                            android:layout_gravity="center_horizontal"
+                            android:layout_gravity="start"
                             android:layout_marginTop="8dp"
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="4dp" />

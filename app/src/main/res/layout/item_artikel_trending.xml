@@ -2,11 +2,11 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="150dp"
+    android:layout_width="140dp"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="12dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -14,28 +14,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/status_diterima">
+        android:orientation="vertical">
 
+        <!-- Gambar -->
         <ImageView
             android:id="@+id/imgTrendingArtikel"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="95dp"
             android:scaleType="centerCrop"
             android:src="@drawable/loading" />
 
-        <TextView
-            android:id="@+id/tvTrendingJudul"
+        <!-- Bagian hijau judul (dibuat tidak melebar tebal) -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Judul Artikel Trending"
-            android:textSize="14sp"
-            android:maxLines="2"
-            android:gravity="center"
-            android:fontFamily="@font/montserrat_medium"
-            android:ellipsize="end"
-            android:textColor="@color/white"/>
+            android:background="@color/status_diterima"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="6dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvTrendingJudul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Judul Artikel Trending"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:gravity="center"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
