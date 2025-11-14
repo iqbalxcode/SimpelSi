@@ -45,7 +45,7 @@
                 android:fontFamily="@font/montserrat_extrabold"
                 android:textColor="@android:color/black"
                 android:gravity="center"
-                android:layout_marginTop="100dp" />
+                android:layout_marginTop="50dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
@@ -161,15 +161,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/versi_0.1"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/grey_text"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/logout_prompt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/apakah_anda_ingin_keluar"
                 android:textColor="@color/black"
@@ -187,7 +187,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:backgroundTint="@color/green"
                 android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="2dp"
                 app:cornerRadius="100dp"
                 app:elevation="4dp" />
         </LinearLayout>
