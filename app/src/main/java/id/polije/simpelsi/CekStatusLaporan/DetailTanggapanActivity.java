@@ -30,7 +30,7 @@ import android.graphics.Typeface;
 
 public class DetailTanggapanActivity extends AppCompatActivity {
 
-    private ImageButton btnBack;
+    private ImageView btnBack;
     private ImageView ivFotoLaporan;
     private TextView tvNama, tvLokasi, tvKeterangan, tvTanggal, tvStatus, tvTanggapan;
     private ApiInterface apiInterface;
@@ -63,7 +63,8 @@ public class DetailTanggapanActivity extends AppCompatActivity {
             }
         }
 
-        btnBack.setOnClickListener(v -> finish());
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> onBackPressed());
     }
 
     private void loadDetailLaporan(String idLaporan) {

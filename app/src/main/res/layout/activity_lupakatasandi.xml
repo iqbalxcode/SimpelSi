@@ -11,7 +11,6 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fillViewport="true"
         android:padding="24dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp">
+
                 <ImageView
                     android:id="@+id/btnBack"
                     android:layout_width="40dp"
@@ -38,9 +38,8 @@
                     android:src="@drawable/backk"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Kembali"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    android:contentDescription="Kembali" />
+
                 <ImageView
                     android:id="@+id/logoImage"
                     android:layout_width="50dp"
@@ -49,6 +48,7 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/logo"
                     android:contentDescription="Logo" />
+
             </RelativeLayout>
 
             <!-- Judul -->
@@ -65,8 +65,8 @@
             <!-- Gambar -->
             <ImageView
                 android:id="@+id/img_forgot"
-                android:layout_width="375dp"
-                android:layout_height="335dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
@@ -76,7 +76,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="22dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Masukkan Alamat Email"
@@ -135,6 +134,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
+
         </LinearLayout>
     </ScrollView>
 

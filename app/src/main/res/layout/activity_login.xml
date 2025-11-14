@@ -88,7 +88,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey_text"
                     android:textSize="18sp"
-                    android:gravity="center" />
+                    android:gravity="start" />
             </LinearLayout>
 
             <!-- ===== PASSWORD ===== -->
@@ -129,7 +129,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey_text"
                     android:textSize="18sp"
-                    android:gravity="center" />
+                    android:gravity="start" />
 
                 <ImageView
                     android:id="@+id/iv_toggle_password"

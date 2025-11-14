@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="15dp">
             <ImageView
                 android:id="@+id/btnBack"
                 android:layout_width="40dp"
@@ -68,19 +68,35 @@
             android:fontFamily="@font/montserrat_extrabold"
             android:layout_gravity="center"/>
 
-        <EditText
-            android:id="@+id/etSearch"
+        <!-- Search Bar -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cari Lokasi TPS"
-            android:fontFamily="@font/montserrat_medium"
-            android:textColorHint="@color/grey_text"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_marginTop="25dp"
-            android:drawableStart="@drawable/cari"
+            android:layout_height="48dp"
             android:background="@drawable/bg_color"
-            android:padding="10dp"/>
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="14dp"
+                android:src="@drawable/cari" />
+
+            <EditText
+                android:id="@+id/etCariNama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cari Lokasi Tps"
+                android:gravity="start"
+                android:background="@android:color/transparent"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey_text"
+                android:paddingStart="8dp"
+                android:textSize="18sp" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewTps"

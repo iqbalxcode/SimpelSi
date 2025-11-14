@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".fitur.PengajuanLaporanActivity">
+
     <ImageView
         android:id="@+id/main_background_image"
         android:layout_width="0dp"
@@ -18,6 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
@@ -59,6 +61,7 @@
                 android:elevation="4dp"
                 android:layout_marginBottom="16dp">
 
+                <!-- Upload Foto -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,6 +70,7 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/montserrat_semibold"
                     android:layout_marginBottom="6dp" />
+
                 <LinearLayout
                     android:id="@+id/layoutUploadBox"
                     android:layout_width="match_parent"
@@ -77,6 +81,7 @@
                     android:layout_marginBottom="10dp"
                     android:clickable="true"
                     android:focusable="true">
+
                     <ImageView
                         android:id="@+id/imgPreview"
                         android:layout_width="match_parent"
@@ -85,6 +90,7 @@
                         android:adjustViewBounds="true"
                         android:visibility="gone"
                         android:contentDescription="Preview foto" />
+
                     <TextView
                         android:id="@+id/tvUploadFileName"
                         android:layout_width="wrap_content"
@@ -94,6 +100,7 @@
                         android:fontFamily="@font/montserrat_medium" />
                 </LinearLayout>
 
+                <!-- Tanggal -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,6 +116,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
+
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -117,7 +125,6 @@
                         android:gravity="center_vertical"
                         android:background="@drawable/bg_input_field"
                         android:paddingHorizontal="12dp">
-
 
                         <EditText
                             android:id="@+id/etTanggal"
@@ -133,13 +140,16 @@
                             android:paddingVertical="8dp"
                             android:textColorHint="@color/grey_text"
                             android:background="@null" />
+
                         <ImageView
                             android:id="@+id/btnpilihtanggal"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/kalender"
                             android:contentDescription="Tanggal" />
+
                     </LinearLayout>
+
                     <Button
                         android:id="@+id/btnHapusFoto"
                         android:layout_width="wrap_content"
@@ -154,6 +164,7 @@
                         android:paddingHorizontal="20dp" />
                 </LinearLayout>
 
+                <!-- Nama -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -161,6 +172,7 @@
                     android:textSize="12dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/montserrat_semibold" />
+
                 <EditText
                     android:id="@+id/etNama"
                     android:layout_width="match_parent"
@@ -169,12 +181,12 @@
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
                     android:textSize="12dp"
-
                     android:fontFamily="@font/montserrat_medium"
                     android:layout_marginTop="6dp"
                     android:textColorHint="@color/grey_text"
                     android:textColor="@color/black" />
 
+                <!-- Lokasi -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -186,7 +198,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:background="@drawable/bg_input_field"
                     android:paddingHorizontal="12dp"
@@ -211,8 +224,10 @@
                         android:textColorHint="@color/grey_text"
                         android:textColor="@color/black"
                         android:paddingStart="8dp"
-                        android:paddingVertical="12dp"/> </LinearLayout>
+                        android:paddingVertical="12dp" />
+                </LinearLayout>
 
+                <!-- Keterangan -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -226,7 +241,7 @@
                     android:id="@+id/etKeterangan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Masukkan Keterangan foto"
+                    android:hint="Contoh: Organik - Daun kering / Non-organik - Botol plastik"
                     android:background="@drawable/bg_input_field"
                     android:padding="12dp"
                     android:textSize="12dp"
@@ -235,6 +250,19 @@
                     android:textColorHint="@color/grey_text"
                     android:textColor="@color/black" />
 
+                <!-- Info text tambahan -->
+                <TextView
+                    android:id="@+id/tvInfoKeterangan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tuliskan jenis sampah (organik / non-organik) dan jenis barangnya seperti daun, botol plastik, kertas, kaleng, dll."
+                    android:textSize="10dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textColor="@color/grey_text"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Button Upload -->
                 <Button
                     android:id="@+id/btnUpload"
                     android:layout_width="match_parent"
@@ -247,8 +275,8 @@
                     android:backgroundTint="@color/green"
                     android:layout_marginTop="20dp"
                     android:paddingVertical="12dp"
-                    android:layout_gravity="center"
                     app:cornerRadius="100dp" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -262,4 +290,5 @@
         app:itemTextColor="@color/nav_item_color"
         app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

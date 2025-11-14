@@ -43,35 +43,32 @@
                 android:paddingHorizontal="20dp">
 
                 <!-- Bagian atas (back + logo + judul) -->
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="10dp">
-
-                    <ImageButton
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="30dp">
+                    <ImageView
                         android:id="@+id/btnBack"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_arrow_back_black"
-                        android:contentDescription="Kembali" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/logo" />
-                    </LinearLayout>
-                </LinearLayout>
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/backk"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Kembali"
+                        android:clickable="true"
+                        android:focusable="true" />
+                    <ImageView
+                        android:id="@+id/logoImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/logo"
+                        android:contentDescription="Logo" />
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

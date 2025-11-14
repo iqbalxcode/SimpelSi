@@ -49,7 +49,7 @@ public class InfoTPSActivity extends AppCompatActivity {
         // ❗️ Inisialisasi RecyclerView
         recyclerViewTps = findViewById(R.id.recyclerViewTps); // ❗️ Ganti ID di XML
         btnBack = findViewById(R.id.btnBack);
-        etSearch = findViewById(R.id.etSearch); // ❗️ Pastikan tipe di XML adalah EditText
+        etSearch = findViewById(R.id.etCariNama); // ❗️ Pastikan tipe di XML adalah EditText
 
         // Inisialisasi API
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
