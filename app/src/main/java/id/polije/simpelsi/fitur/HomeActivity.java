@@ -42,7 +42,8 @@ public class HomeActivity extends AppCompatActivity {
     private ArtikelTrendingAdapter trendingAdapter;
     private List<Artikel> trendingArtikelList = new ArrayList<>();
     private ApiInterface apiInterface;
-    // --- ⬆️ AKHIR VARIABEL ⬆️ ---
+    private final android.os.Handler handler = new android.os.Handler();
+
 
 
     @Override
@@ -60,9 +61,13 @@ public class HomeActivity extends AppCompatActivity {
         // --- ⬆️ AKHIR SETUP ⬆️ ---
     }
 
-    /**
-     * Inisialisasi semua view dari XML
-     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.postDelayed(autoRefresh, 0); // mulai auto refresh
+    }
+
+
     private void initViews() {
         layananCekStatus = findViewById(R.id.layananCekStatus);
         layananArtikel = findViewById(R.id.layananArtikel);
@@ -75,9 +80,13 @@ public class HomeActivity extends AppCompatActivity {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
-    /**
-     * Listener untuk klik fitur layanan & header artikel
-     */
+    private final Runnable autoRefresh = new Runnable() {
+        @Override
+        public void run() {
+            loadTrendingArtikel();        // panggil API
+            handler.postDelayed(this, 5000); // refresh tiap 5 detik
+        }
+    };
     private void setupClickListeners() {
         layananCekStatus.setOnClickListener(v -> {
             startActivity(new Intent(this, CekStatusLaporanActivity.class));
