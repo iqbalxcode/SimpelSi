@@ -34,11 +34,18 @@ public class ArtikelDetailActivity extends AppCompatActivity {
         tvDetailDeskripsi = findViewById(R.id.tvDetailDeskripsi);
         toolbar = findViewById(R.id.toolbar);
         collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+// Lanjutkan di dalam onCreate() atau setelah layout di-inflate:
+        ImageView btnBack = findViewById(R.id.btnBack);
+
+// Terapkan fungsi 'finish()' ke ImageView kustom Anda
+        btnBack.setOnClickListener(v -> {
+            finish(); // Ini adalah fungsi yang sama dengan aksi tombol back bawaan
+        });
 
         // Setup Toolbar (tombol back)
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+           // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         toolbar.setNavigationOnClickListener(v -> finish()); // Aksi tombol back
