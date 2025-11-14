@@ -1,11 +1,14 @@
 package id.polije.simpelsi.fitur;
 
+import androidx.annotation.NonNull; // ❗️ Import
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog; // ❗️ Import (Untuk Popup)
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem; // ❗️ Import
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,12 +32,14 @@ public class ProfilActivity extends AppCompatActivity {
     private MaterialButton logoutButton;
     private BottomNavigationView bottomNavigationView;
 
+    private SharedPreferences prefs; // ❗️ Variabel global untuk SharedPreferences
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
-        // 🔹 Inisialsasi View
+        // 🔹 Inisialisasi View
         profileImage = findViewById(R.id.profile_image);
         userName = findViewById(R.id.user_name);
         userEmail = findViewById(R.id.user_email);
@@ -45,7 +50,7 @@ public class ProfilActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
 
         // 🔹 Ambil data user dari SharedPreferences
-        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+        prefs = getSharedPreferences("user_session", MODE_PRIVATE); // ❗️ Inisialisasi 'prefs'
         String nama = prefs.getString("nama", "");
         String email = prefs.getString("email", "");
         String fotoUrl = prefs.getString("photoUrl", "");
@@ -69,28 +74,24 @@ public class ProfilActivity extends AppCompatActivity {
         menuVisiMisi.setOnClickListener(v -> openWebsite("https://dlhnganjuk.co.id/profile/tugas-dan-fungsi/"));
         menuWebsite.setOnClickListener(v -> openWebsite("https://dlhnganjuk.co.id"));
 
-        // 🔹 Tombol Logout
+        // --- ⬇️ PERBAIKAN: Tambahkan AlertDialog untuk Logout ⬇️ ---
         logoutButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Anda telah keluar", Toast.LENGTH_SHORT).show();
-
-            // Hapus sesi lokal
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.clear();
-            editor.apply();
-
-            // Logout juga dari Google
-            GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this,
-                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestEmail()
-                            .build());
-            googleSignInClient.signOut();
-
-            // Kembali ke login
-            Intent intent = new Intent(ProfilActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            // Tampilkan popup konfirmasi
+            new AlertDialog.Builder(this)
+                    .setTitle("Konfirmasi Keluar")
+                    .setMessage("Apakah Anda yakin ingin keluar?")
+                    .setPositiveButton("Ya", (dialog, which) -> {
+                        // Jika pengguna klik "Ya", jalankan proses logout
+                        prosesLogout();
+                    })
+                    .setNegativeButton("Tidak", (dialog, which) -> {
+                        // Jika pengguna klik "Tidak", tutup dialog
+                        dialog.dismiss();
+                    })
+                    .create()
+                    .show();
         });
+        // --- ⬆️ AKHIR PERBAIKAN ⬆️ ---
 
         // 🔹 Bottom Navigation
         bottomNavigationView.setSelectedItemId(R.id.nav_profil);
@@ -111,6 +112,31 @@ public class ProfilActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    /**
+     * ❗️ Method BARU untuk memisahkan logika logout
+     */
+    private void prosesLogout() {
+        Toast.makeText(this, "Anda telah keluar", Toast.LENGTH_SHORT).show();
+
+        // Hapus sesi lokal (menggunakan 'prefs' yang sudah diinisialisasi)
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+
+        // Logout juga dari Google
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this,
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build());
+        googleSignInClient.signOut();
+
+        // Kembali ke login
+        Intent intent = new Intent(ProfilActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -141,7 +167,6 @@ public class ProfilActivity extends AppCompatActivity {
                                     : "";
 
                             // 🔹 Simpan ulang ke SharedPreferences
-                            SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("nama", newName);
                             editor.putString("email", newEmail);
