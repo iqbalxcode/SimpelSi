@@ -9,9 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +16,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.View; // ❗️ PERBAIKAN: Import View
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,9 +34,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.material.bottomnavigation.BottomNavigationView; // ❗️ PERBAIKAN: Import BottomNavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -69,7 +64,9 @@ public class EditLaporanActivity extends AppCompatActivity {
     // Komponen UI
     private EditText etNama, etLokasi, etKeterangan, etTanggal;
     private TextView tvUploadFileName;
+    // --- ⬇️ PERBAIKAN 1: HAPUS TVGUNAKANLOKASI DARI DEKLARASI ⬇️ ---
     private Button btnUpload, btnHapusFoto;
+    // --- ⬆️ AKHIR PERBAIKAN 1 ⬆️ ---
     private ImageView btnBack, btnpilihtanggal, imgPreview;
     private LinearLayout uploadBox;
     private BottomNavigationView bottomNavigationView;
@@ -88,6 +85,7 @@ public class EditLaporanActivity extends AppCompatActivity {
     private boolean fotoBaruDipilih = false;
     private ApiInterface apiInterface;
 
+    // ❗️ Launcher dan FusedLocation DIHAPUS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +107,7 @@ public class EditLaporanActivity extends AppCompatActivity {
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
+        // --- ⬇️ PERBAIKAN 2: INISIALISASI BTNPILIHTANGGAL ⬇️ ---
         // Inisialisasi komponen
         etNama = findViewById(R.id.etNama);
         etLokasi = findViewById(R.id.etLokasi);
@@ -117,15 +116,18 @@ public class EditLaporanActivity extends AppCompatActivity {
         tvUploadFileName = findViewById(R.id.tvUploadFileName);
         btnUpload = findViewById(R.id.btnUpload);
         btnHapusFoto = findViewById(R.id.btnHapusFoto);
-        btnBack = findViewById(R.id.btnBack);
-        btnpilihtanggal = findViewById(R.id.btnpilihtanggal);
+ // ❗️ Pastikan ID ini 'btnBack' di XML
+        btnpilihtanggal = findViewById(R.id.btnpilihtanggal); // ❗️ INI BARIS YANG HILANG
         imgPreview = findViewById(R.id.imgPreview);
         uploadBox = findViewById(R.id.layoutUploadBox);
+        // --- ⬆️ AKHIR PERBAIKAN 2 ⬆️ ---
+
+        // ❗️ tvGunakanLokasi DIHAPUS DARI INISIALISASI
 
         // Sembunyikan BottomNav
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         if (bottomNavigationView != null) {
-            bottomNavigationView.setVisibility(View.GONE); // ❗️ PERBAIKAN: Visibility diakses
+            bottomNavigationView.setVisibility(View.GONE);
         }
 
         // Isi Form dengan Data Lama
@@ -157,23 +159,22 @@ public class EditLaporanActivity extends AppCompatActivity {
         }
 
         // Setup Listeners
-        btnpilihtanggal.setOnClickListener(v -> showDatePicker());
+        btnpilihtanggal.setOnClickListener(v -> showDatePicker()); // ❗️ Baris 169 (Sekarang Aman)
         uploadBox.setOnClickListener(v -> selectImageSource());
         btnHapusFoto.setOnClickListener(v -> {
             clearImageSelection();
             Glide.with(this).load(ApiClient.BASE_URL + "get_image.php?file=" + laporan.getFoto()).into(imgPreview);
             fotoBaruDipilih = false;
         });
-        btnBack.setOnClickListener(v -> finish());
 
-        // ❗️ Listener tvGunakanLokasi sudah dihapus
+
 
         btnUpload.setOnClickListener(v -> {
             if (validateForm()) updateLaporan();
         });
     }
 
-    // --- (Semua method helper Anda harus tetap ada) ---
+    // --- (SEMUA METHOD HELPER HARUS ADA DI BAWAH INI) ---
 
     private void showDatePicker() {
         final Calendar calendar = Calendar.getInstance();
@@ -345,8 +346,7 @@ public class EditLaporanActivity extends AppCompatActivity {
     }
 
 
-    // ❗️ METHOD LOKASI GPS (checkLocationPermissions, getCurrentLocation, getAddressFromLocation)
-    //    SUDAH DIHAPUS
+    // ❗️ METHOD LOKASI GPS DIHAPUS
 
     private boolean validateForm() {
         if (etNama.getText().toString().isEmpty()) {
