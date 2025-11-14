@@ -199,7 +199,7 @@
                         android:textSize="12sp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
-
+ 
                 <!-- 3. Info TPS -->
                 <LinearLayout
                     android:id="@+id/layananInfoTPS"

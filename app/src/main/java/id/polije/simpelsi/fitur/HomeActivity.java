@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(new Intent(this, CekStatusLaporanActivity.class));
         });
 
-        layananArtikel.setOnClickListener(v -> {
+          layananArtikel.setOnClickListener(v -> {
             startActivity(new Intent(this, ArtikelActivity.class));
         });
 
