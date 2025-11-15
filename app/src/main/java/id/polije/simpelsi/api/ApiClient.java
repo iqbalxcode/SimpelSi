@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     // 🌐 Base URL API kamu — pastikan diakhiri dengan "/"
-    public static final String BASE_URL = "http://simpelsi.medianewsonline.com/api/";
+    public static final String BASE_URL = "https://simpelsi.pbltifnganjuk.com/api/";
 
     // Simpan instance Retrofit agar tidak dibuat ulang
     private static Retrofit retrofit = null;
