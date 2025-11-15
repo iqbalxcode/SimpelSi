@@ -163,22 +163,13 @@
                 android:textColor="@color/app_green_light"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tv_edit_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit, Alamat email anda"
-                android:textColor="@color/app_green_light"
-                android:textSize="16sp"
-                android:fontFamily="@font/montserrat_medium"
-                android:layout_marginTop="4dp" />
 
             <!-- Tombol Kirim -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_kirim"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/bg_login"
                 android:fontFamily="@font/montserrat_extrabold"
                 android:text="Kirim"

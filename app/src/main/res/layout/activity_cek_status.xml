@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Cari Nama Pelapor"
-                android:gravity="center"
+                android:gravity="start"
                 android:background="@android:color/transparent"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey_text"
