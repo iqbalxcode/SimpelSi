@@ -47,7 +47,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import id.polije.simpelsi.R;
+import id.polije.simpelsi.R; // ❗️ Pastikan ini warnanya UNGU/Aktif, bukan Merah/Abu-abu
 import id.polije.simpelsi.api.ApiClient;
 import id.polije.simpelsi.api.ApiInterface;
 import id.polije.simpelsi.CekStatusLaporan.Laporan;
@@ -61,17 +61,13 @@ import retrofit2.Response;
 
 public class EditLaporanActivity extends AppCompatActivity {
 
-    // Komponen UI
     private EditText etNama, etLokasi, etKeterangan, etTanggal;
     private TextView tvUploadFileName;
-    // --- ⬇️ PERBAIKAN 1: HAPUS TVGUNAKANLOKASI DARI DEKLARASI ⬇️ ---
     private Button btnUpload, btnHapusFoto;
-    // --- ⬆️ AKHIR PERBAIKAN 1 ⬆️ ---
     private ImageView btnBack, btnpilihtanggal, imgPreview;
     private LinearLayout uploadBox;
     private BottomNavigationView bottomNavigationView;
 
-    // Variabel untuk Foto/Kamera
     private Uri imageUri;
     private Uri cameraFileUri;
     private File imageFile;
@@ -79,36 +75,29 @@ public class EditLaporanActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_CAMERA_REQUEST = 101;
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 200;
 
-    // Variabel Edit
     private Laporan laporan;
     private String idMasyarakat;
     private boolean fotoBaruDipilih = false;
     private ApiInterface apiInterface;
-
-    // ❗️ Launcher dan FusedLocation DIHAPUS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pengajuan_laporan);
 
-        // Ambil data laporan dari Intent
         laporan = (Laporan) getIntent().getSerializableExtra("LAPORAN_DATA");
-
-        // Ambil ID Masyarakat dari SharedPreferences
         SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
         idMasyarakat = prefs.getString("id_masyarakat", null);
 
         if (laporan == null || idMasyarakat == null) {
-            Toast.makeText(this, "Gagal memuat data laporan. Coba lagi.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Gagal memuat data. Coba lagi.", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        // --- ⬇️ PERBAIKAN 2: INISIALISASI BTNPILIHTANGGAL ⬇️ ---
-        // Inisialisasi komponen
+        // --- Inisialisasi Komponen ---
         etNama = findViewById(R.id.etNama);
         etLokasi = findViewById(R.id.etLokasi);
         etKeterangan = findViewById(R.id.etKeterangan);
@@ -116,27 +105,21 @@ public class EditLaporanActivity extends AppCompatActivity {
         tvUploadFileName = findViewById(R.id.tvUploadFileName);
         btnUpload = findViewById(R.id.btnUpload);
         btnHapusFoto = findViewById(R.id.btnHapusFoto);
- // ❗️ Pastikan ID ini 'btnBack' di XML
-        btnpilihtanggal = findViewById(R.id.btnpilihtanggal); // ❗️ INI BARIS YANG HILANG
+        btnpilihtanggal = findViewById(R.id.btnpilihtanggal); // ❗️ Pastikan ID ini ada di XML
         imgPreview = findViewById(R.id.imgPreview);
         uploadBox = findViewById(R.id.layoutUploadBox);
-        // --- ⬆️ AKHIR PERBAIKAN 2 ⬆️ ---
 
-        // ❗️ tvGunakanLokasi DIHAPUS DARI INISIALISASI
-
-        // Sembunyikan BottomNav
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         if (bottomNavigationView != null) {
             bottomNavigationView.setVisibility(View.GONE);
         }
 
-        // Isi Form dengan Data Lama
+        // --- Isi Form ---
         btnUpload.setText("Simpan Perubahan");
         etNama.setText(laporan.getNama());
         etLokasi.setText(laporan.getLokasi());
         etKeterangan.setText(laporan.getKeterangan());
 
-        // Format & Isi Tanggal
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -146,35 +129,48 @@ public class EditLaporanActivity extends AppCompatActivity {
             etTanggal.setText(laporan.getTanggal());
         }
 
-        // Muat Foto Lama
         if (laporan.getFoto() != null && !laporan.getFoto().isEmpty()) {
             String urlProxy = ApiClient.BASE_URL + "get_image.php?file=" + laporan.getFoto();
             imgPreview.setVisibility(View.VISIBLE);
             tvUploadFileName.setVisibility(View.GONE);
-            Glide.with(this)
-                    .load(urlProxy)
-                    .centerCrop()
-                    .placeholder(R.drawable.loading)
-                    .into(imgPreview);
+            Glide.with(this).load(urlProxy).centerCrop().into(imgPreview);
         }
 
-        // Setup Listeners
-        btnpilihtanggal.setOnClickListener(v -> showDatePicker()); // ❗️ Baris 169 (Sekarang Aman)
-        uploadBox.setOnClickListener(v -> selectImageSource());
-        btnHapusFoto.setOnClickListener(v -> {
-            clearImageSelection();
-            Glide.with(this).load(ApiClient.BASE_URL + "get_image.php?file=" + laporan.getFoto()).into(imgPreview);
-            fotoBaruDipilih = false;
-        });
+        // --- Listener ---
 
+        // ❗️ PENGAMANAN: Cek null sebelum set listener
+        if (btnpilihtanggal != null) {
+            btnpilihtanggal.setOnClickListener(v -> showDatePicker());
+        } else {
+            Log.e("EditLaporan", "btnpilihtanggal tidak ditemukan di XML!");
+        }
 
+        if (uploadBox != null) {
+            uploadBox.setOnClickListener(v -> selectImageSource());
+        }
 
-        btnUpload.setOnClickListener(v -> {
-            if (validateForm()) updateLaporan();
-        });
+        if (btnHapusFoto != null) {
+            btnHapusFoto.setOnClickListener(v -> {
+                clearImageSelection();
+                if (laporan.getFoto() != null) {
+                    Glide.with(this).load(ApiClient.BASE_URL + "get_image.php?file=" + laporan.getFoto()).into(imgPreview);
+                }
+                fotoBaruDipilih = false;
+            });
+        }
+
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        if (btnUpload != null) {
+            btnUpload.setOnClickListener(v -> {
+                if (validateForm()) updateLaporan();
+            });
+        }
     }
 
-    // --- (SEMUA METHOD HELPER HARUS ADA DI BAWAH INI) ---
+    // ... (Method helper lainnya: showDatePicker, selectImageSource, openGalleryChooser, checkCameraPermissions, onRequestPermissionsResult, openCamera, createImageFile, onActivityResult, displaySelectedImage, copyUriToCacheFile, getFileName, validateForm, updateLaporan, clearForm, clearImageSelection TETAP SAMA)
 
     private void showDatePicker() {
         final Calendar calendar = Calendar.getInstance();
@@ -269,17 +265,14 @@ public class EditLaporanActivity extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        return image;
+        return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             fotoBaruDipilih = true;
-
             if (requestCode == PICK_IMAGE_GALLERY_REQUEST && data != null && data.getData() != null) {
                 imageUri = data.getData();
                 String fileName = getFileName(imageUri);
@@ -345,9 +338,6 @@ public class EditLaporanActivity extends AppCompatActivity {
         return result;
     }
 
-
-    // ❗️ METHOD LOKASI GPS DIHAPUS
-
     private boolean validateForm() {
         if (etNama.getText().toString().isEmpty()) {
             etNama.setError("Nama wajib diisi");
@@ -397,9 +387,6 @@ public class EditLaporanActivity extends AppCompatActivity {
         if (fotoBaruDipilih && imageFile != null) {
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
             fotoPart = MultipartBody.Part.createFormData("foto", imageFile.getName(), reqFile);
-            Log.d("UpdateLaporan", "Mengirim foto baru: " + imageFile.getName());
-        } else {
-            Log.d("UpdateLaporan", "Tidak ada foto baru dipilih.");
         }
 
         Call<ResponseModel> call = apiInterface.updateLaporan(idLaporanBody, idMasyarakatBody, namaBody, lokasiBody, ketBody, tanggalBody, fotoPart);
@@ -414,26 +401,15 @@ public class EditLaporanActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
-                    try {
-                        Log.e("UpdateError", "Code: " + response.code() + ", Body: " + response.errorBody().string());
-                    } catch (Exception e) { e.printStackTrace(); }
-                    Toast.makeText(EditLaporanActivity.this, "Gagal update laporan (Server)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditLaporanActivity.this, "Gagal update laporan", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 pd.dismiss();
-                Toast.makeText(EditLaporanActivity.this, "Error Jaringan: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(EditLaporanActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private void clearForm() {
-        etNama.setText("");
-        etLokasi.setText("");
-        etKeterangan.setText("");
-        etTanggal.setText("");
-        clearImageSelection();
     }
 
     private void clearImageSelection() {
