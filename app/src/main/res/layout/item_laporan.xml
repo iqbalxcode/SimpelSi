@@ -62,7 +62,6 @@
                         android:text="Lokasi : -"
                         android:textColor="@color/black"
                         android:fontFamily="@font/montserrat_medium"
-
                         android:textSize="14sp"
                         android:layout_marginBottom="4dp" />
 
@@ -73,7 +72,6 @@
                         android:text="Keterangan : -"
                         android:textColor="@color/black"
                         android:fontFamily="@font/montserrat_medium"
-
                         android:textSize="14sp"
                         android:layout_marginBottom="4dp" />
 
@@ -83,7 +81,6 @@
                         android:layout_height="wrap_content"
                         android:text="Tanggal : -"
                         android:fontFamily="@font/montserrat_medium"
-
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -103,10 +100,22 @@
                     android:background="@drawable/bg_status_diproses" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="end"
+                android:text="Sisa waktu edit: 59 menit"
+                android:textSize="12sp"
+                android:fontFamily="@font/montserrat_medium"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textStyle="italic"
+                android:visibility="gone" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:gravity="end"
                 android:orientation="horizontal">
 
@@ -128,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Hapus"
+                    android:text="Tarik"
                     android:fontFamily="@font/montserrat_semibold"
                     android:textAllCaps="false"
                     android:paddingHorizontal="12dp"

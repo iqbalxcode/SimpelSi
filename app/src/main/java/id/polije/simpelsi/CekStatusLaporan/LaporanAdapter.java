@@ -12,12 +12,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat; // ❗️ Import ContextCompat
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +62,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         View view = LayoutInflater.from(context).inflate(R.layout.item_laporan, parent, false);
         return new ViewHolder(view);
     }
-    
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Laporan laporan = laporanList.get(position);
@@ -100,28 +103,76 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
             holder.imgLaporan.setImageResource(R.drawable.loading);
         }
 
-        // === Atur visibilitas tombol berdasarkan status ===
-        switch (status.toLowerCase()) {
-            case "diproses":
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnHapus.setVisibility(View.VISIBLE);
-                break;
-            case "ditolak":
-                holder.btnEdit.setVisibility(View.GONE);   // tidak bisa edit
-                holder.btnHapus.setVisibility(View.VISIBLE); // bisa hapus
-                break;
-            case "diterima":
-            default:
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnHapus.setVisibility(View.GONE);
-                break;
+        // --- ⬇️ LOGIKA TIMER & VISIBILITAS TOMBOL ⬇️ ---
+
+        boolean isEligibleTime = false; // Memenuhi syarat waktu ( < 1 jam)
+        long sisaWaktuMenit = 0;
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            Date tanggalLaporan = sdf.parse(laporan.getCreated_at());
+            long waktuLaporan = tanggalLaporan.getTime();
+            long waktuSekarang = System.currentTimeMillis();
+
+            long selisihWaktu = waktuSekarang - waktuLaporan; // Milidetik
+            long satuJam = 3600 * 1000; // 1 jam dalam milidetik
+
+            if (selisihWaktu < satuJam) {
+                isEligibleTime = true;
+                long sisaWaktuMillis = satuJam - selisihWaktu;
+                sisaWaktuMenit = sisaWaktuMillis / (60 * 1000); // Konversi ke menit
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("TimeParseError", "Gagal parse: " + laporan.getCreated_at());
         }
+
+        // Logika Status + Waktu
+        // Tombol hanya aktif jika status "Diproses" DAN waktu < 1 jam
+        if ("diproses".equalsIgnoreCase(status)) {
+            holder.btnEdit.setVisibility(View.VISIBLE);
+            holder.btnHapus.setVisibility(View.VISIBLE);
+
+            if (isEligibleTime) {
+                // Masih bisa diedit
+                holder.btnEdit.setEnabled(true);
+                holder.btnHapus.setEnabled(true);
+                holder.btnEdit.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.grey_text));
+                holder.btnHapus.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.green));
+
+                // Tampilkan Timer
+                holder.tvTimer.setVisibility(View.VISIBLE);
+                holder.tvTimer.setText("Sisa waktu edit: " + sisaWaktuMenit + " menit");
+                holder.tvTimer.setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_dark));
+            } else {
+                // Waktu habis
+                holder.btnEdit.setEnabled(false);
+                holder.btnHapus.setEnabled(false);
+                holder.btnEdit.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.grey_text));
+                holder.btnHapus.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.grey_text));
+
+                holder.tvTimer.setVisibility(View.VISIBLE);
+                holder.tvTimer.setText("Waktu edit habis");
+                holder.tvTimer.setTextColor(ContextCompat.getColor(context, R.color.grey_text));
+            }
+
+        } else {
+            // Status Diterima/Ditolak/Ditarik -> Sembunyikan tombol & timer
+            holder.btnEdit.setVisibility(View.GONE);
+            holder.btnHapus.setVisibility(View.GONE);
+            holder.tvTimer.setVisibility(View.GONE);
+        }
+
+        // --- ⬆️ AKHIR LOGIKA ⬆️ ---
+
 
         // === Tombol Edit ===
         holder.btnEdit.setOnClickListener(v -> {
+            // Gunakan method isWithinOneHour yang sama untuk konsistensi
             if (isWithinOneHour(laporan.getCreated_at())) {
                 Intent intent = new Intent(context, EditLaporanActivity.class);
-                intent.putExtra("LAPORAN_DATA", laporan);
+                intent.putExtra("LAPORAN_DATA", (Serializable) laporan);
                 context.startActivity(intent);
             } else {
                 Toast.makeText(context, "Sudah lewat 1 jam, laporan tidak bisa diedit.", Toast.LENGTH_SHORT).show();
@@ -130,16 +181,20 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
 
         // === Tombol Hapus ===
         holder.btnHapus.setOnClickListener(v -> {
+            // ❗️ Perbaikan: Ambil posisi yang aman
+            int currentPos = holder.getAdapterPosition();
+            if (currentPos == RecyclerView.NO_POSITION) return;
+
             if (isWithinOneHour(laporan.getCreated_at())) {
                 new AlertDialog.Builder(context)
                         .setTitle("Tarik Laporan")
-                        .setMessage("Apakah Anda yakin ingin menghapus laporan ini?")
-                        .setPositiveButton("Hapus", (dialog, which) ->
-                                tarikLaporan(laporan.getIdLaporan(), position))
+                        .setMessage("Apakah Anda yakin ingin menarik laporan ini?")
+                        .setPositiveButton("Tarik", (dialog, which) ->
+                                tarikLaporan(laporan.getIdLaporan(), currentPos))
                         .setNegativeButton("Batal", null)
                         .show();
             } else {
-                Toast.makeText(context, "Sudah lewat 1 jam, laporan tidak bisa dihapus.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Sudah lewat 1 jam, laporan tidak bisa ditarik.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -182,6 +237,12 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
                 pd.dismiss();
                 if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
                     laporanList.remove(position);
+                    // Hapus juga dari list full agar sinkron saat filter
+                    if(position < laporanListFull.size()){
+                        // Cari objek yang sama di list full dan hapus (opsional tapi bagus)
+                        // laporanListFull.remove(...)
+                    }
+
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, getItemCount());
                     Toast.makeText(context, "Laporan berhasil ditarik", Toast.LENGTH_SHORT).show();
@@ -232,7 +293,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgLaporan;
-        TextView tvNama, tvLokasi, tvKeterangan, tvTanggal, tvStatus;
+        TextView tvNama, tvLokasi, tvKeterangan, tvTanggal, tvStatus, tvTimer; // ❗️ Tambahkan tvTimer
         Button btnEdit, btnHapus;
 
         public ViewHolder(@NonNull View itemView) {
@@ -243,6 +304,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
             tvKeterangan = itemView.findViewById(R.id.tvKeterangan);
             tvTanggal = itemView.findViewById(R.id.tvTanggal);
             tvStatus = itemView.findViewById(R.id.tvStatus);
+            tvTimer = itemView.findViewById(R.id.tvTimer); // ❗️ Inisialisasi tvTimer
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnHapus = itemView.findViewById(R.id.btnHapus);
         }
